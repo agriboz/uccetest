@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">
+    <defs>
+        <style>
+            .cls-1{fill:#727df5}.cls-2{clip-path:url(#clip-path)}
+        </style>
+        <clipPath id="clip-path">
+            <circle id="Ellipse_1" cx="22.5" cy="22.5" r="22.5" class="cls-1" data-name="Ellipse 1"/>
+        </clipPath>
+    </defs>
+    <g id="null-photo" class="cls-2">
+        <g id="noun_profile_665436" transform="translate(-.574 -3.6)">
+            <circle id="Ellipse_23" cx="7.952" cy="7.952" r="7.952" class="cls-1" data-name="Ellipse 23" transform="translate(15.137 12.743)"/>
+            <path id="Path_14" d="M25.748 3.6A22.048 22.048 0 1 0 47.8 25.648 22.061 22.061 0 0 0 25.748 3.6zM38.7 39.553c-1.619-4.334-5.142-8.953-12.952-8.953-7.762 0-11.333 4.619-12.953 8.952a19.048 19.048 0 1 1 25.905 0z" class="cls-1" data-name="Path 14" transform="translate(-2.706)"/>
+        </g>
+    </g>
+</svg>

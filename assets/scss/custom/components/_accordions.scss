@@ -1,0 +1,31 @@
+// 
+// accordions.scss
+//
+
+.custom-accordion {
+    .card {
+        + .card {
+            margin-top: 0.5rem;
+        }
+    }
+    .accordion-arrow {
+        font-size: 1.2rem;
+    }
+    a {
+        &.collapsed {
+            i.accordion-arrow {
+                &:before {
+                    content: "\F142";
+                }
+            }
+        }
+    }
+}
+
+.custom-accordion-title {
+    color: $custom-accordion-title-color;
+
+    &:hover {
+        color: lighten($custom-accordion-title-color,7.5%)
+    }
+}
