@@ -56,8 +56,8 @@ File: Main Css File
 
 
 //Pages
-/* @import "custom/pages/authentication";
-@import "custom/pages/buttons-demo";
+@import "custom/pages/authentication";
+/* @import "custom/pages/buttons-demo";
 @import "custom/pages/error";
 @import "custom/pages/faq";
 @import "custom/pages/grid-demo";
@@ -98,3 +98,6 @@ File: Main Css File
 @import "custom/plugins/simplemde";
 @import "custom/plugins/typehead";
 @import "custom/plugins/sparklines"; */
+
+// Sidebar Icons
+@import "quartz/icons.scss";

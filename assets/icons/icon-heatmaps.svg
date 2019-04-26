@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="heatmaps" width="35" height="35" viewBox="0 0 35 35">
+    <defs>
+        <style>
+            .cls-1{fill:none}.cls-2{fill:#f7f7f7}
+        </style>
+    </defs>
+    <path id="Rectangle_1680" d="M0 0h35v35H0z" class="cls-1" data-name="Rectangle 1680"/>
+    <path id="graph" d="M25.9 0l3.574 3.684-14.737 14.737-3.684-3.684-7.369 7.479L0 18.532 11.053 7.368l3.684 3.684zM0 24.316h29.474V28H0zM29.474 28" class="cls-2" transform="translate(2 3)"/>
+</svg>

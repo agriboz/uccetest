@@ -1,37 +1,18 @@
 <template>
-  <div class="wrapper">
-    <sidebar />
-
-    <!-- ============================================================== -->
-    <!-- Start Page Content here -->
-    <!-- ============================================================== -->
-
-    <div class="content-page">
-      <div class="content">
-        <topbar />
-        <nuxt />
-        <!-- Start Content-->
-      </div>
-      <!-- content -->
-
-      <bottombar />
-    </div>
-
-    <!-- ============================================================== -->
-    <!-- End Page content -->
-    <!-- ============================================================== -->
-  </div>
+  <section>
+    <login />
+  </section>
 </template>
 
 <script>
-import Topbar from '@/components/Topbar'
-import Sidebar from '@/components/Sidebar'
-import Bottombar from '@/components/Footer'
+import Login from '@/components/Login'
 export default {
   components: {
-    Sidebar,
-    Topbar,
-    Bottombar
+    Login
+  },
+  beforeMount() {
+    const body = document.getElementsByTagName('body')[0]
+    body.classList.add('authentication-bg')
   }
 }
 </script>

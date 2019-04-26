@@ -50,8 +50,12 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   methods: {
+    ...mapMutations({
+      toggleDarkTheme: 'toggleDarkTheme'
+    }),
     initMenu() {
       const body = document.getElementsByTagName('body')[0]
       const width = document.documentElement.clientWidth

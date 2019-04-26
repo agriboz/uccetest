@@ -1,0 +1,15 @@
+$backgrounds: icon-sign-out icon-home icon-heatmaps icon-stock-reports icon-monthly icon-year-on-year;
+
+%icon-side-bar {
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+@each $bgs in $backgrounds {
+  .#{$bgs} {
+    @extend %icon-side-bar;
+    background-image: url('../icons/#{$bgs}.svg');
+  }
+}

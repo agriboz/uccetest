@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="sign-out" width="35" height="35" viewBox="0 0 35 35">
+    <defs>
+        <style>
+            .cls-1{fill:none}.cls-2{fill:#fff}
+        </style>
+    </defs>
+    <path id="Rectangle_1680" d="M0 0h35v35H0z" class="cls-1" data-name="Rectangle 1680"/>
+    <path id="sign_out" d="M17.5 21h-7V5.25l-7-3.5h14V7h1.75V0H0v22.75L10.5 28v-5.25h8.75V14H17.5zM28 10.5l-7-5.25v3.5h-7v3.5h7v3.5zm0 15.75" class="cls-2" data-name="sign out" transform="translate(7 3)"/>
+</svg>

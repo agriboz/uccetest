@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="monthly" width="35" height="35" viewBox="0 0 35 35">
+    <defs>
+        <style>
+            .cls-1{fill:none}.cls-2{fill:#f7f7f7}
+        </style>
+    </defs>
+    <path id="Rectangle_1680" d="M0 0h35v35H0z" class="cls-1" data-name="Rectangle 1680"/>
+    <path id="calendar" d="M0 0h25.375v7.25H0zm0 10.875h25.375v17.8a.288.288 0 0 1-.326.326H.326A.288.288 0 0 1 0 28.674zM3.625 14.5v3.625H7.25V14.5zm7.25 0v3.625H14.5V14.5zm7.25 0v3.625h3.625V14.5zm-14.5 7.25v3.625H7.25V21.75zm7.25 0v3.625H14.5V21.75zM29 29" class="cls-2" transform="translate(5 3)"/>
+</svg>

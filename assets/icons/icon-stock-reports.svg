@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="cisco-stock-reports" width="35" height="35" viewBox="0 0 35 35">
+    <defs>
+        <style>
+            .cls-1{fill:none}.cls-2{fill:#f7f7f7}
+        </style>
+    </defs>
+    <path id="Rectangle_1680" d="M0 0h35v35H0z" class="cls-1" data-name="Rectangle 1680"/>
+    <path id="document" d="M0 0h10.875v14.5h14.5V29H0zm14.5 0l10.875 10.875H14.5zM3.625 7.25v3.625H7.25V7.25zm0 7.25v3.625H7.25V14.5zm0 7.25v3.625h14.5V21.75zM29 29" class="cls-2" transform="translate(5 3)"/>
+</svg>

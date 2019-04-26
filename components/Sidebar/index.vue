@@ -16,388 +16,122 @@
       <!--- Sidemenu -->
       <ul class="metismenu side-nav">
         <li class="side-nav-item">
+          <n-link :to="'/'" class="side-nav-link">
+            <i class="icon-home"></i>
+            <span> Home </span>
+          </n-link>
+        </li>
+
+        <li class="side-nav-item">
           <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-meter"></i>
-            <span class="badge badge-success float-right">3</span>
-            <span> Dashboards </span>
+            <i class="icon-stock-reports"></i>
+            <span> Cisco Reports </span>
+            <span class="menu-arrow"></span>
           </a>
           <ul class="side-nav-second-level" aria-expanded="false">
             <li>
-              <a href="index.html">Ecommerce</a>
+              <a href="#">All Field Historical Reports</a>
             </li>
-            <li>
-              <a href="dashboard-crm.html">CRM</a>
+            <li class="side-nav-item">
+              <a href="#" aria-expanded="false">Agent Historical All Fields </a>
             </li>
-            <li>
-              <a href="dashboard-projects.html">Projects</a>
+            <li class="side-nav-item">
+              <a href="#" aria-expanded="false">Agent Not Ready Detail </a>
             </li>
           </ul>
         </li>
 
         <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-view-apps"></i>
-            <span> Apps </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="apps-calendar.html">Calendar</a>
-            </li>
-            <li class="side-nav-item">
-              <a href="javascript: void(0);" aria-expanded="false"
-                >Projects
-                <span class="menu-arrow"></span>
-              </a>
-              <ul class="side-nav-third-level" aria-expanded="false">
-                <li>
-                  <a href="apps-projects-list.html">List</a>
-                </li>
-                <li>
-                  <a href="apps-projects-details.html">Details</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="apps-tasks.html">Tasks</a>
-            </li>
-            <li class="side-nav-item">
-              <a href="javascript: void(0);" aria-expanded="false"
-                >eCommerce
-                <span class="menu-arrow"></span>
-              </a>
-              <ul class="side-nav-third-level" aria-expanded="false">
-                <li>
-                  <a href="apps-ecommerce-products.html">Products</a>
-                </li>
-                <li>
-                  <a href="apps-ecommerce-products-details.html"
-                    >Products Details</a
-                  >
-                </li>
-                <li>
-                  <a href="apps-ecommerce-orders.html">Orders</a>
-                </li>
-                <li>
-                  <a href="apps-ecommerce-orders-details.html">Order Details</a>
-                </li>
-                <li>
-                  <a href="apps-ecommerce-customers.html">Customers</a>
-                </li>
-                <li>
-                  <a href="apps-ecommerce-shopping-cart.html">Shopping Cart</a>
-                </li>
-                <li>
-                  <a href="apps-ecommerce-checkout.html">Checkout</a>
-                </li>
-                <li>
-                  <a href="apps-ecommerce-sellers.html">Sellers</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <n-link :to="'heatmaps'" class="side-nav-link">
+            <i class="icon-heatmaps"></i>
+            <span> Heatmaps </span>
+          </n-link>
         </li>
 
         <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-copy"></i>
-            <span> Pages </span>
+          <a href="#" class="side-nav-link">
+            <i class="icon-stock-reports"></i>
+            <span> Monthly Dashboard </span>
             <span class="menu-arrow"></span>
           </a>
           <ul class="side-nav-second-level" aria-expanded="false">
             <li>
-              <a href="pages-starter.html">Starter Page</a>
-            </li>
-            <li>
-              <a href="pages-profile.html">Profile</a>
-            </li>
-            <li>
-              <a href="pages-invoice.html">Invoice</a>
-            </li>
-            <li>
-              <a href="pages-faq.html">FAQ</a>
-            </li>
-            <li>
-              <a href="pages-pricing.html">Pricing</a>
-            </li>
-            <li>
-              <a href="pages-maintenance.html">Maintenance</a>
-            </li>
-            <li class="side-nav-item">
-              <a href="javascript: void(0);" aria-expanded="false"
-                >Authentication
-                <span class="menu-arrow"></span>
-              </a>
-              <ul class="side-nav-third-level" aria-expanded="false">
-                <li>
-                  <a href="pages-login.html">Login</a>
-                </li>
-                <li>
-                  <a href="pages-login-2.html">Login 2</a>
-                </li>
-                <li>
-                  <a href="pages-register.html">Register</a>
-                </li>
-                <li>
-                  <a href="pages-register-2.html">Register 2</a>
-                </li>
-                <li>
-                  <a href="pages-logout.html">Logout</a>
-                </li>
-                <li>
-                  <a href="pages-logout-2.html">Logout 2</a>
-                </li>
-                <li>
-                  <a href="pages-recoverpw.html">Recover Password</a>
-                </li>
-                <li>
-                  <a href="pages-recoverpw-2.html">Recover Password 2</a>
-                </li>
-                <li>
-                  <a href="pages-lock-screen.html">Lock Screen</a>
-                </li>
-                <li>
-                  <a href="pages-lock-screen-2.html">Lock Screen 2</a>
-                </li>
-                <li>
-                  <a href="pages-confirm-mail.html">Confirm Mail</a>
-                </li>
-                <li>
-                  <a href="pages-confirm-mail-2.html">Confirm Mail 2</a>
-                </li>
-              </ul>
-            </li>
-            <li class="side-nav-item">
-              <a href="javascript: void(0);" aria-expanded="false"
-                >Error
-                <span class="menu-arrow"></span>
-              </a>
-              <ul class="side-nav-third-level" aria-expanded="false">
-                <li>
-                  <a href="pages-404.html">Error 404</a>
-                </li>
-                <li>
-                  <a href="pages-404-alt.html">Error 404-alt</a>
-                </li>
-                <li>
-                  <a href="pages-500.html">Error 500</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-
-        <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-browser"></i>
-            <span> Layouts </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="layouts-horizontal.html">Horizontal</a>
-            </li>
-            <li>
-              <a href="layouts-light-sidenav.html">Light Sidenav</a>
-            </li>
-            <li>
-              <a href="layouts-collapsed.html">Collapsed Sidenav</a>
-            </li>
-            <li>
-              <a href="javascript: void(0);" class="right-bar-toggle"
-                >Right Sidebar</a
+              <n-link :to="'/monthly-dashboard/call-answer-rate'"
+                >Call Answer Rate</n-link
               >
             </li>
             <li>
-              <a href="layouts-boxed-vertical.html">Boxed Vertical</a>
+              <n-link :to="'/monthly-dashboard/call-abandon-rate'"
+                >Call Abandon Rate</n-link
+              >
             </li>
             <li>
-              <a href="layouts-boxed-horizontal.html">Boxed Horizontal</a>
+              <n-link :to="'/monthly-dashboard/service-level'"
+                >Service Level</n-link
+              >
             </li>
             <li>
-              <a href="layouts-scrollable-sidenav.html">Scrollable Sidenav</a>
-            </li>
-            <li>
-              <a href="layouts-detached.html">Detached Sidenav</a>
+              <n-link
+                :to="'/monthly-dashboard/call-received-answered-abandoned'"
+                >Call Received Answered Abandoned</n-link
+              >
             </li>
           </ul>
         </li>
-
-        <li class="side-nav-title side-nav-item mt-1">Components</li>
-
         <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-briefcase"></i>
-            <span> UI Kit </span>
+          <a href="#" class="side-nav-link">
+            <i class="icon-year-on-year"></i>
+            <span> Year on Year </span>
             <span class="menu-arrow"></span>
           </a>
           <ul class="side-nav-second-level" aria-expanded="false">
             <li>
-              <a href="ui-cards.html">Cards</a>
+              <n-link :to="'/year-on-year/calls-received'"
+                >Calls Received</n-link
+              >
             </li>
             <li>
-              <a href="ui-buttons.html">Buttons</a>
+              <n-link :to="'/year-on-year/calls-answered'"
+                >Calls Answered</n-link
+              >
             </li>
             <li>
-              <a href="ui-modals.html">Modals</a>
+              <n-link :to="'/year-on-year/calls-abandoned'"
+                >Calls Abandoned</n-link
+              >
             </li>
             <li>
-              <a href="ui-tabs.html">Tabs</a>
+              <n-link :to="'/year-on-year/avg-handle-time'"
+                >Avg Handle Time</n-link
+              >
             </li>
             <li>
-              <a href="ui-notifications.html">Notifications</a>
+              <n-link :to="'/year-on-year/avg-wait-time'">Avg Wait Time</n-link>
             </li>
             <li>
-              <a href="ui-grid.html">Grid</a>
+              <n-link :to="'/year-on-year/sla-answer-percentage'"
+                >SLA Answer Percentage</n-link
+              >
             </li>
             <li>
-              <a href="ui-general.html">General</a>
+              <n-link :to="'/year-on-year/csq-answer-rate'"
+                >CSQ Answer Rate</n-link
+              >
             </li>
             <li>
-              <a href="ui-typography.html">Typography</a>
+              <n-link :to="'/year-on-year/csq-abandon-rate'"
+                >CSQ Abandon Rate</n-link
+              >
             </li>
             <li>
-              <a href="ui-icons.html">Icons</a>
+              <n-link :to="'/year-on-year/agent-occupancy'"
+                >Agent Occupancy</n-link
+              >
             </li>
             <li>
-              <a href="ui-spinners.html">Spinners</a>
-            </li>
-            <li>
-              <a href="ui-dragula.html">Dragula</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="side-nav-item">
-          <a href="widgets.html" class="side-nav-link">
-            <i class="dripicons-heart"></i>
-            <span class="badge badge-light float-right">New</span>
-            <span> Widgets </span>
-          </a>
-        </li>
-
-        <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-document"></i>
-            <span> Forms </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="form-elements.html">Basic Elements</a>
-            </li>
-            <li>
-              <a href="form-advanced.html">Form Advanced</a>
-            </li>
-            <li>
-              <a href="form-validation.html">Validation</a>
-            </li>
-            <li>
-              <a href="form-wizard.html">Wizard</a>
-            </li>
-            <li>
-              <a href="form-fileuploads.html">File Uploads</a>
-            </li>
-            <li>
-              <a href="form-editors.html">Editors</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-graph-pie"></i>
-            <span> Charts </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="charts-chartjs.html">Chartjs</a>
-            </li>
-            <li>
-              <a href="charts-brite.html">Britecharts</a>
-            </li>
-            <li class="side-nav-item">
-              <a href="javascript: void(0);" aria-expanded="false"
-                >Apex Charts
-                <span class="menu-arrow"></span>
-              </a>
-              <ul class="side-nav-third-level" aria-expanded="false">
-                <li>
-                  <a href="charts-apex-line.html">Line</a>
-                </li>
-                <li>
-                  <a href="charts-apex-area.html">Area</a>
-                </li>
-                <li>
-                  <a href="charts-apex-column.html">Column</a>
-                </li>
-                <li>
-                  <a href="charts-apex-bar.html">Bar</a>
-                </li>
-                <li>
-                  <a href="charts-apex-mixed.html">Mixed</a>
-                </li>
-                <li>
-                  <a href="charts-apex-bubble.html">Bubble</a>
-                </li>
-                <li>
-                  <a href="charts-apex-scatter.html">Scatter</a>
-                </li>
-                <li>
-                  <a href="charts-apex-pie.html">Pie</a>
-                </li>
-                <li>
-                  <a href="charts-apex-radialbar.html">RadialBar</a>
-                </li>
-                <li>
-                  <a href="charts-apex-heatmap.html">Heatmap</a>
-                </li>
-                <li>
-                  <a href="charts-apex-sparklines.html">Sparklines</a>
-                </li>
-                <li>
-                  <a href="charts-apex-candlestick.html">Candlestick</a>
-                </li>
-                <li>
-                  <a href="charts-apex-radar.html">Radar</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="charts-sparkline.html">Sparklines</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-list"></i>
-            <span> Tables </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="tables-basic.html">Basic Tables</a>
-            </li>
-            <li>
-              <a href="tables-datatable.html">Data Tables</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="dripicons-location"></i>
-            <span> Maps </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="maps-google.html">Google Maps</a>
-            </li>
-            <li>
-              <a href="maps-vector.html">Vector Maps</a>
+              <n-link :to="'/year-on-year/agent-efficiency'"
+                >Agent Efficiency</n-link
+              >
             </li>
           </ul>
         </li>
