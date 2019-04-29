@@ -1,0 +1,77 @@
+.heatmap-wrapper {
+  overflow-x: auto;
+  item-perc-wrapper {
+  color: #1b2942;
+  display: flex;
+  flex-direction: row;
+  }
+
+  .item-inner {
+    display: flex;
+    margin: 0 10px;
+  }
+
+  .heatmap-wrapper {
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .heatmap {
+    display: flex;
+    margin-bottom: 2px;
+  }
+
+  .heatmap:hover {
+    opacity: 0.8;
+  }
+
+  .item {
+    display: flex;
+    color: #1b2942;
+    height: 50px;
+    align-items: center;
+  }
+
+  .item-border {
+    border-top: 1px solid #1b2942;
+    display: inline-flex;
+  }
+
+  .item-numbers {
+    transition: opacity 0.3s linear;
+    color: #ffff;
+    font-weight: bold;
+    width: 65px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1px;
+  }
+
+  .item-numbers:hover {
+    opacity: 0.8;
+  }
+
+  .item-border .item-numbers {
+    color: #1b2942;
+  }
+
+  .item-days {
+    width: 90px;
+    height: 50px;
+    line-height: 50px;
+    padding-right: 10px;
+    text-align: right;
+    border-right: 1px solid #1a2942;
+  }
+  .perc-block {
+    width: 20px; height: 20px; margin-right: 5px;
+    &.orange {
+      background-color: #ff7e30
+    }
+    &.red {
+      background-color: #fa4a4a;
+    }
+  }
+}

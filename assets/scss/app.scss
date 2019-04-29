@@ -67,17 +67,18 @@ File: Main Css File
 
 
 // Vendors
-@import "vendor/daterangepicker";
+/* @import "vendor/daterangepicker";
 @import "vendor/bootstrap-datepicker.min";
 @import "vendor/jquery.toast.min";
 @import "vendor/select2.min";
 @import "vendor/jquery.toast.min";
 @import "vendor/bootstrap-timepicker.min";
-@import "vendor/jquery.bootstrap-touchspin.min";
+@import "vendor/jquery.bootstrap-touchspin.min"; */
 
 
 // Plugins
-@import "custom/plugins/apexcharts";
+@import "custom/plugins/metis-menu";
+/* @import "custom/plugins/apexcharts";
 @import "custom/plugins/britechart";
 @import "custom/plugins/calendar";
 @import "custom/plugins/chartjs";
@@ -97,4 +98,13 @@ File: Main Css File
 @import "custom/plugins/summernote";
 @import "custom/plugins/simplemde";
 @import "custom/plugins/typehead";
-@import "custom/plugins/sparklines";
+@import "custom/plugins/sparklines"; */
+
+// Duallistbox Icons
+@import "quartz/duallistbox.scss";
+
+// Sidebar Icons
+@import "quartz/icons.scss";
+
+// Heatmaps
+@import "quartz/heatmaps.scss";

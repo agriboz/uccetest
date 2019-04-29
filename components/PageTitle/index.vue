@@ -7,10 +7,9 @@
             <li class="breadcrumb-item">
               <nuxt-link :to="'/'">Home</nuxt-link>
             </li>
-            <li class="breadcrumb-item">
-              <a href="javascript: void(0);">Pages</a>
+            <li class="breadcrumb-item active">
+              <a>{{ title }}</a>
             </li>
-            <li class="breadcrumb-item active">Starter</li>
           </ol>
         </div>
         <h4 class="page-title">{{ title }}</h4>

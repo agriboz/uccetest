@@ -14,16 +14,20 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.4.1",
+    "@nuxtjs/moment": "^1.2.0",
     "@nuxtjs/pwa": "^2.6.0",
     "@nuxtjs/toast": "^3.1.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "cross-env": "^5.2.0",
+    "html2canvas": "^1.0.0-rc.1",
     "jquery": "^3.4.0",
     "jwt-decode": "^2.2.0",
     "metismenujs": "^1.0.3",
+    "moment-duration-format": "^2.2.2",
     "nuxt": "^2.6.2",
-    "vee-validate": "^2.2.4"
+    "vee-validate": "^2.2.4",
+    "vue-ctk-date-time-picker": "^2.1.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",

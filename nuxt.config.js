@@ -39,7 +39,12 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '~/plugins/veeValidate.js' }, { src: '~/plugins/axios.js' }],
+  plugins: [
+    { src: '~/plugins/veeValidate.js' },
+    { src: '~/plugins/axios.js' },
+    { src: '~/plugins/momentDuration.js' },
+    { src: '~/plugins/datepicker.js' }
+  ],
 
   /*
    ** Nuxt.js modules
@@ -48,6 +53,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/toast',
+    '@nuxtjs/moment',
     // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa'
@@ -57,7 +63,7 @@ export default {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: '//172.16.8.20:3100/'
+    baseURL: '//172.16.8.7:3100/'
   },
 
   /*

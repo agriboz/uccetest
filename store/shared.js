@@ -1,7 +1,8 @@
 export const state = () => ({
   callTypes: [],
   skills: [],
-  queues: []
+  queues: [],
+  csqs: []
 })
 
 export const mutations = {
@@ -11,8 +12,8 @@ export const mutations = {
 }
 
 export const actions = {
-  async getShared({ commit }, { key }) {
-    const { data } = await this.$axios.get(`${key}`)
+  async getShared({ commit }, { endpoint, key }) {
+    const { data } = await this.$axios.get(`${endpoint}`)
     return data.length ? commit('setShared', { key, data }) : []
   }
 }

@@ -16,12 +16,12 @@
             />
           </span>
           <span>
-            <span class="account-user-name">Domddinic Keller</span>
-            <span class="account-position">Founder</span>
+            <span class="account-user-name"
+              >{{ user.firstname }} {{ user.lastname }}</span
+            >
+            <span class="account-position">{{ user.teamname }}</span>
           </span>
         </template>
-        <b-dropdown-item>one</b-dropdown-item>
-        <b-dropdown-item>two</b-dropdown-item>
         <b-dropdown-item>
           <i class="mdi mdi-logout mr-1"></i>
           <span>Logout</span>
@@ -34,28 +34,18 @@
     >
       <i class="mdi mdi-menu"></i>
     </button>
-    <div class="app-search">
-      <form>
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search..." />
-          <span class="mdi mdi-magnify"></span>
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">Search</button>
-          </div>
-        </div>
-      </form>
-    </div>
   </div>
   <!-- end Topbar -->
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapState(['user'])
+  },
+
   methods: {
-    ...mapMutations({
-      toggleDarkTheme: 'toggleDarkTheme'
-    }),
     initMenu() {
       const body = document.getElementsByTagName('body')[0]
       const width = document.documentElement.clientWidth

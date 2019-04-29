@@ -22,9 +22,6 @@ export default {
   layout: 'authenticated',
   components: {
     PageTitle
-  },
-  beforeMount() {
-    this.$store.dispatch('shared/getShared', { key: 'shared/calltypes' })
   }
 }
 </script>
