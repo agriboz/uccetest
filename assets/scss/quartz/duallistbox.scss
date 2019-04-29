@@ -1,0 +1,117 @@
+.duallist {
+  display: flex;
+  flex-flow: row wrap;
+}
+.duallist-title {
+  border-top-left-radius: 0.50rem;
+  border-top-right-radius: 0.50rem;
+  height: 31px;
+  line-height: 31px;
+  background-color: #727df5;
+  padding-left: 16px;
+  font-weight: bold;
+  flex: 1 100%;
+}
+
+.duallist-box {
+  flex: 1;
+}
+
+.duallist-box-border {
+  border: solid 1px #707070;
+  height: 245px;
+  overflow: auto;
+}
+
+.duallist-box-border-first {
+  background-color: #f7f7f7;
+  border-right: transparent;
+}
+
+.duallist-box .form-control {
+  margin: 7px 15px;
+  height: 32px;
+}
+
+.duallist-box-search {
+  display: flex;
+  border-bottom: solid 1px #707070;
+}
+
+.duallist-box .list-group-item {
+  cursor: pointer;
+  background-color: #f7f7f7;
+  padding: 0 12px;
+  height: 39px;
+  line-height: 39px;
+  border-radius: 0;
+}
+
+.duallist-box .list-group-item.selected {
+  background-color: #4a8ef1;
+  color: #fff;
+}
+
+.duallist-box .list-group-item.selected:nth-child(even),
+.duallist-box .list-group-item.selected:hover {
+  background-color: #4a8ef1;
+}
+
+.duallist .btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.duallist .btn-move,
+.duallist .btn-empty {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 15px 18px;
+  width: 135px;
+  height: 46px;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: #707070;
+  border-bottom-left-radius: 0.50rem;
+  border-bottom-right-radius: 0.50rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.duallist .btn-move {
+  background-image: url('../images/moveAll.svg');
+}
+
+.duallist .btn-empty {
+  background-image: url('../images/emptyList.svg');
+}
+
+.duallist-box .list-group-item:nth-child(even),
+.duallist-box .list-group-item:hover {
+  background-color: #fcfcfc;
+}
+
+.list-item-enter-active,
+.list-item-leave-active {
+  transition: opacity 0.3s, transform 0.3s;
+  transform-origin: left center;
+}
+.list-item-enter, .list-item-leave-to /* .list-leave-active for <2.1.8 */ {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.list-item-leave-active {
+  position: absolute;
+}
+
+.list-item-move {
+  transition: transform .4s linear .3;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
