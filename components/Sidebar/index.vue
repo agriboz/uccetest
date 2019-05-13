@@ -42,98 +42,47 @@
         </li>
 
         <li class="side-nav-item">
-          <n-link :to="'heatmaps'" class="side-nav-link">
+          <a href="#" class="side-nav-link">
+            <i class="icon-stock-reports"></i>
+            <span> Comstice Reports </span>
+            <span class="menu-arrow"></span>
+          </a>
+          <ul class="side-nav-second-level" aria-expanded="false">
+            <li>
+              <n-link :to="'/comstice-reports/averege-speed-answer'"
+                >Averege Speed Answer</n-link
+              >
+            </li>
+            <li>
+              <n-link :to="'/comstice-reports/am-Water'">AMWater</n-link>
+            </li>
+          </ul>
+        </li>
+
+        <li class="side-nav-item">
+          <n-link :to="'/heatmaps'" class="side-nav-link">
             <i class="icon-heatmaps"></i>
             <span> Heatmaps </span>
           </n-link>
         </li>
 
         <li class="side-nav-item">
-          <a href="#" class="side-nav-link">
-            <i class="icon-stock-reports"></i>
+          <n-link :to="'/monthly-dashboard'" class="side-nav-link">
+            <i class="icon-monthly"></i>
             <span> Monthly Dashboard </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <n-link :to="'/monthly-dashboard/call-answer-rate'"
-                >Call Answer Rate</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/monthly-dashboard/call-abandon-rate'"
-                >Call Abandon Rate</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/monthly-dashboard/service-level'"
-                >Service Level</n-link
-              >
-            </li>
-            <li>
-              <n-link
-                :to="'/monthly-dashboard/call-received-answered-abandoned'"
-                >Call Received Answered Abandoned</n-link
-              >
-            </li>
-          </ul>
+          </n-link>
         </li>
         <li class="side-nav-item">
-          <a href="#" class="side-nav-link">
+          <n-link :to="'year-on-year'" class="side-nav-link">
             <i class="icon-year-on-year"></i>
             <span> Year on Year </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <n-link :to="'/year-on-year/calls-received'"
-                >Calls Received</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/calls-answered'"
-                >Calls Answered</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/calls-abandoned'"
-                >Calls Abandoned</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/avg-handle-time'"
-                >Avg Handle Time</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/avg-wait-time'">Avg Wait Time</n-link>
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/sla-answer-percentage'"
-                >SLA Answer Percentage</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/csq-answer-rate'"
-                >CSQ Answer Rate</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/csq-abandon-rate'"
-                >CSQ Abandon Rate</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/agent-occupancy'"
-                >Agent Occupancy</n-link
-              >
-            </li>
-            <li>
-              <n-link :to="'/year-on-year/agent-efficiency'"
-                >Agent Efficiency</n-link
-              >
-            </li>
-          </ul>
+          </n-link>
+        </li>
+        <li class="side-nav-item">
+          <n-link :to="'/logout'" class="side-nav-link">
+            <i class="icon-sign-out" />
+            <span> Sign Out </span>
+          </n-link>
         </li>
       </ul>
       <!-- End Sidebar -->

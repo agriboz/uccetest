@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="form-group">
+    <div v-if="item.startTime" class="form-group">
       <fieldset class="radio">
         <label class="mr-1">
           <input
@@ -23,7 +23,7 @@
       </fieldset>
     </div>
 
-    <div v-if="relativeDate" class="form-group">
+    <div v-if="relativeDate && item.startTime" class="form-group">
       <select
         v-model="selectedDate"
         class="form-control col-xl-6 col-lg-3 col-md-6"
@@ -39,12 +39,11 @@
         <div class="col-md-6">
           <label>Start Date</label>
           <vue-ctk-date-time-picker
-            v-model="item.startDate"
+            v-model="item.startTime"
             :minute-interval="10"
-            :max-date="item.endDate"
+            :max-date="item.endTime"
             auto-close
             no-header
-            dark
             format="YYYY-MM-DD HH:mm:ss"
             color="#727cf5"
             enable-button-validate
@@ -53,16 +52,37 @@
         <div class="col-md-6">
           <label>End Date</label>
           <vue-ctk-date-time-picker
-            v-model="item.endDate"
+            v-model="item.endTime"
             :minute-interval="10"
-            :min-date="item.startDate"
+            :min-date="item.startTime"
             auto-close
             no-header
-            dark
             format="YYYY-MM-DD HH:mm:ss"
             color="#727cf5"
             enable-button-validate
           />
+        </div>
+      </div>
+    </div>
+    <div v-if="item.startYear" class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Start Date</label>
+          <select v-model="item.startYear" class="form-control">
+            <option v-for="y in yearRange" :key="y" :value="y">
+              {{ y }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>End Date</label>
+          <select v-model="item.endYear" class="form-control">
+            <option v-for="y in yearRange" :key="y" :value="y">
+              {{ y }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
@@ -87,19 +107,19 @@
     />
 
     <duallist-box
-      v-if="item.csqs"
+      v-if="item.queues"
       class="mb-2"
-      :base-list="optionsCsqList.baseList"
-      :selected-list="item.csqs"
-      :title="optionsCsqList.title"
-      @updateSelected="item.csqs = $event"
-      @updateBase="optionsCsqList.baseList = $event"
+      :base-list="optionsQueues.baseList"
+      :selected-list="item.queues"
+      :title="optionsQueues.title"
+      @updateSelected="item.queues = $event"
+      @updateBase="optionsQueues.baseList = $event"
     />
 
     <div v-if="isSearchable" class="row modal-footer">
       <button class="btn btn-primary" @click="search">Search</button>
     </div>
-    <div v-if="showFooter" class="row modal-footer">
+    <div v-if="showFooter" class="row flex">
       <button
         class="btn btn-light"
         @click="$store.commit('shared/setReportFilterModal', false)"
@@ -139,7 +159,8 @@ export default {
       type: Boolean
     },
     url: {
-      required: true,
+      required: false,
+      default: null,
       type: String
     }
   },
@@ -184,6 +205,15 @@ export default {
   computed: {
     ...mapState('shared', ['callTypes', 'skills', 'csqs', 'queues']),
 
+    yearRange() {
+      const subtractYear = this.$moment().subtract(5, 'years')
+      const range = this.$moment.range(subtractYear, new Date())
+
+      const years = Array.from(range.by('year'))
+
+      return years.map(m => m.format('YYYY'))
+    },
+
     optionsCallTypes() {
       return {
         baseList: this.callTypes,
@@ -198,16 +228,29 @@ export default {
         title: 'Skills'
       }
     },
-    optionsCsqList() {
+    optionsQueues() {
       return {
-        baseList: this.csqs,
+        baseList: this.queues,
         selectedList: [],
-        title: 'CSQ List'
+        title: 'Precision Queue'
+      }
+    }
+  },
+
+  watch: {
+    item: function() {
+      if (this.item.queues) {
+        this.getShared({
+          endpoint: 'shared/queues',
+          key: 'queues'
+        })
       }
     }
   },
 
   beforeMount() {
+    this.selectedDate = this.dateRanges[0]
+
     if (this.item.callTypes) {
       this.getShared({
         endpoint: 'shared/calltypes',
@@ -222,17 +265,19 @@ export default {
       })
     }
 
-    if (this.item.csqs) {
-      this.getShared({
-        endpoint: 'csqs',
-        key: 'csqList'
-      })
-    }
-
     if (this.item.skills) {
       this.getShared({
         endpoint: 'shared/skills',
         key: 'skills'
+      })
+    }
+  },
+
+  created() {
+    if (this.item.queues) {
+      this.getShared({
+        endpoint: 'shared/queues',
+        key: 'queues'
       })
     }
   },
@@ -276,9 +321,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.modal-footer {
-  align-items: flex-end;
-}
-</style>

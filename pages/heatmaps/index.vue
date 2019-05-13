@@ -138,7 +138,6 @@ import ReportFilter from '@/components/StockReportFilter'
 
 import html2canvas from 'html2canvas'
 import dateRanges from '@/utils/dateRanges'
-import { mapActions } from 'vuex'
 
 export default {
   layout: 'authenticated',
@@ -239,10 +238,6 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      getHeatMapDetail: 'heatmaps/getHeatMapDetail'
-    }),
-
     ignoreWeekends(selectedDay) {
       if (selectedDay === 'saturday') {
         this.ignoreDays[0].ignored

@@ -5,10 +5,7 @@
         <div class="col-lg-5">
           <div class="card">
             <!-- Logo -->
-            <div
-              v-if="company.logo"
-              class="card-header pt-4 pb-4 text-center bg-primary"
-            >
+            <div v-if="company.logo" class="card-header pt-4 pb-4 text-center">
               <img
                 class="img-fluid"
                 :src="company.logo"

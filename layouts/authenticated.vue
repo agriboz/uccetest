@@ -31,6 +31,7 @@ import Sidebar from '@/components/Sidebar'
 import Bottombar from '@/components/Footer'
 import Loading from '@/components/Loading'
 export default {
+  middleware: ['auth'],
   components: {
     Sidebar,
     Topbar,

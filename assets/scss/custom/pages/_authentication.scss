@@ -1,4 +1,4 @@
-// 
+//
 // authentication.scss
 //
 
@@ -18,7 +18,7 @@ body.authentication-bg {
     width: 140px;
 }
 
-// Authentication fluid 
+// Authentication fluid
 .auth-fluid {
     position: relative;
     display: flex;
@@ -26,7 +26,7 @@ body.authentication-bg {
     min-height: 100vh;
     flex-direction: row;
     align-items: stretch;
-    background: url("../images/bg-auth.jpg") center;
+    // background: url("../images/bg-auth.jpg") center;
     background-size: cover;
 
     .auth-fluid-form-box {
@@ -82,7 +82,7 @@ body.authentication-bg {
             max-width: 100%;
             min-height: 100vh
         }
-    
+
         .auth-fluid-right {
             display: none;
         }

@@ -38,9 +38,12 @@ export const actions = {
         root: true
       })
       await setTimeout(() => {
-        this.$router.push('home')
+        this.$router.push({
+          path: '/home'
+        })
       }, 1000)
     } catch ({ response }) {
+      console.log(response)
       commit('loginFailure')
       dispatch('alert/error', response.data, { root: true })
     }
