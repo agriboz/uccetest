@@ -23,25 +23,6 @@
         </li>
 
         <li class="side-nav-item">
-          <a href="javascript: void(0);" class="side-nav-link">
-            <i class="icon-stock-reports"></i>
-            <span> Cisco Reports </span>
-            <span class="menu-arrow"></span>
-          </a>
-          <ul class="side-nav-second-level" aria-expanded="false">
-            <li>
-              <a href="#">All Field Historical Reports</a>
-            </li>
-            <li class="side-nav-item">
-              <a href="#" aria-expanded="false">Agent Historical All Fields </a>
-            </li>
-            <li class="side-nav-item">
-              <a href="#" aria-expanded="false">Agent Not Ready Detail </a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="side-nav-item">
           <a href="#" class="side-nav-link">
             <i class="icon-stock-reports"></i>
             <span> Comstice Reports </span>
