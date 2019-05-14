@@ -363,7 +363,6 @@ export default {
     },
 
     async search() {
-      this.heatmapComponent = await null
       this.hasResponse = await false
       const payload = {
         url: this.selectedYoy.key,

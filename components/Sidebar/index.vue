@@ -79,6 +79,12 @@
           </n-link>
         </li>
         <li class="side-nav-item">
+          <n-link :to="'/forecasting'" class="side-nav-link">
+            <i class="icon-forecasting"></i>
+            <span> Forecasting </span>
+          </n-link>
+        </li>
+        <li class="side-nav-item">
           <n-link :to="'/logout'" class="side-nav-link">
             <i class="icon-sign-out" />
             <span> Sign Out </span>

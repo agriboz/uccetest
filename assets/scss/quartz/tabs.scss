@@ -1,0 +1,51 @@
+.nav-variant .tab-content {
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  background: #fff;
+  min-height: 30vh;
+  border-radius: 0.225rem;
+  position: relative;
+  z-index: 666;
+}
+
+.nav-variant .nav-tabs {
+  border-bottom: 0;
+  margin-left: 10px;
+}
+
+.nav-variant .nav-item {
+  color: #4E5154;
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+.nav-variant .nav-item a {
+  color: #4E5154;
+}
+
+.nav-variant .nav-tabs .nav-link.active,
+.nav-variant .nav-tabs .nav-item.show .nav-link {
+  background: #fff;
+  color: #4E5154;
+}
+
+.nav-variant .nav-tabs .nav-link.active,
+.nav-variant .nav-tabs .nav-item.show .nav-link {
+  border-bottom: 5px solid #727cf5;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  color: #727cf5;
+  font-weight: bold;
+}
+.nav-variant .nav-tabs .nav-link {
+    border: none;
+    margin: 0 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    line-height: 1.22;
+    border-bottom: 5px solid #d8d8d8;
+}
+
+.nav-variant .icon-close {
+  margin-left: 5px;
+}

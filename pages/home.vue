@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <!-- start page title -->
-    <page-title title="Sssss" />
+    <page-title title="" />
     <!-- end page title -->
     <div class="row">
       <div class="col-12">
