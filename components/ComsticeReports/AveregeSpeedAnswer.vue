@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import BubleChart from '@/components/Charts/BubleChart'
+import BubleChart from '@/components/Charts/bubleChart'
 import ReportFilter from '@/components/StockReportFilter'
 
 import dateRanges from '@/utils/dateRanges'
