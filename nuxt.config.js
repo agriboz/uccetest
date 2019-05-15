@@ -66,8 +66,8 @@ export default {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: '//172.16.8.7:3100/'
-    // baseURL: '//10.1.72.36:3100/'
+    // baseURL: '//172.16.8.7:3100/'
+    baseURL: '//10.1.72.36:3100/'
   },
 
   /*
