@@ -7,7 +7,6 @@
           <label>Select Date</label>
           <vue-ctk-date-time-picker
             v-model="item.startTime"
-            :minute-interval="10"
             label="Select Date"
             auto-close
             no-header
@@ -22,8 +21,6 @@
           <label>End Date</label>
           <vue-ctk-date-time-picker
             v-model="item.endTime"
-            :minute-interval="10"
-            :min-date="item.startTime"
             auto-close
             no-header
             only-date
@@ -242,6 +239,7 @@ export default {
   data: () => ({
     hasResponse: false,
     item: {},
+    data: {},
     testItem: {
       staffing: {
         forecasted: {
@@ -308,6 +306,11 @@ export default {
   }),
 
   computed: {
+    maxDate() {
+      return this.$moment(this.item.startTime)
+        .add(1, 'day')
+        .format()
+    },
     totalBreakdown() {
       return this.testItem.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
@@ -318,6 +321,14 @@ export default {
       const title = route.replace(/-/g, ' ')
       return title
     }
+  },
+
+  beforeMount() {
+    /* this.item.startTime = new Date(
+      this.$moment(this.item.startTime)
+        .subtract(1, 'day')
+        .format('YYYY-MM-DD')
+    ) */
   },
 
   methods: {
@@ -387,24 +398,46 @@ export default {
       }
     },
     async search() {
-      const format = {
-        start: 'YYYY-MM-DD 00:00:00',
-        end: 'YYYY-MM-DD 23:59:59'
-      }
+      const format = 'YYYY-MM-DD'
 
-      // const filterDate = this.$moment(this.item.startTime).format('YYYY-MM-DD')
-
-      this.item.startTime = await this.$moment(this.item.startTime).format(
-        format.start
-      )
-      this.item.endTime = await this.$moment(this.item.startTime).format(
-        format.end
-      )
+      this.item.endTime = await this.$moment(this.item.startTime)
+        .add(1, 'day')
+        .format(format)
 
       try {
-        await this.$axios.post('cscdailydigest/daily', this.item)
-        await this.$axios.post('callshistorical/daily', this.item)
-        await this.$axios.post('cscdailylvrdigest/daily', this.item)
+        const cscdailydigest = this.$axios.post(
+          'cscdailydigest/daily',
+          this.item
+        )
+        const callshistorical = this.$axios.post(
+          'callshistorical/daily',
+          this.item
+        )
+        const cscdailylvrdigest = this.$axios.post(
+          'cscdailylvrdigest/daily',
+          this.item
+        )
+
+        const [
+          { data: result1 },
+          { data: result2 },
+          { data: result3 }
+        ] = await Promise.all([
+          cscdailydigest,
+          callshistorical,
+          cscdailylvrdigest
+        ])
+
+        console.log(result1)
+
+        this.data = {
+          cscdailydigest: result1,
+          callshistorical: result2,
+          cscdailylvrdigest: result3
+        }
+        // await this.$axios.post('cscdailydigest/daily', this.item)
+        // await this.$axios.post('callshistorical/daily', this.item)
+        // await this.$axios.post('cscdailylvrdigest/daily', this.item)
       } catch (error) {
         console.log(error)
       }
