@@ -61,22 +61,49 @@
         <th colspan="4">AHT</th>
       </tr>
       <tr>
-        <td colspan="2">1094</td>
-        <td class="font-weight-bold" colspan="2" rowspan="3">03:15</td>
-        <td class="font-weight-bold" rowspan="4">05</td>
-        <td class="font-weight-bold" colspan="4" rowspan="4">7:15</td>
+        <td colspan="2">{{ testItem.cscdailyivrdigest.overflowout }}</td>
+        <td class="font-weight-bold align-middle h1" colspan="2" rowspan="3">
+          {{
+            $moment
+              .duration(testItem.callshistorical.maxwaittime, 'second')
+              .format('mm:ss', {
+                trim: false
+              })
+          }}
+        </td>
+        <td class="font-weight-bold align-middle h1" rowspan="4">
+          {{
+            $moment
+              .duration(testItem.callshistorical.asa, 'second')
+              .format('mm:ss', {
+                trim: false
+              })
+          }}
+        </td>
+        <td class="font-weight-bold align-middle h1" colspan="4" rowspan="4">
+          {{
+            $moment
+              .duration(testItem.callshistorical.aht, 'second')
+              .format('mm:ss', {
+                trim: false
+              })
+          }}
+        </td>
       </tr>
       <tr>
         <td>Forecasted</td>
-        <td>12301</td>
+        <td>
+          <input
+            v-model="testItem.forecasted"
+            type="text"
+            class="form-control"
+          />
+        </td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
+        <td colspan="2" rowspan="2"></td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
         <td class="font-weight-bold">PA Emergency</td>
         <td>15:30 Interval</td>
       </tr>
@@ -86,60 +113,122 @@
       <tr class="font-weight-bold">
         <td colspan="2">IVR Performance</td>
         <td colspan="4">Staffing</td>
-        <td colspan="3">Break Down of Call Type</td>
+        <td colspan="3">Breakdown of Call Type</td>
       </tr>
       <tr>
         <td>Volume In</td>
-        <td>19666</td>
+        <td>{{ testItem.cscdailyivrdigest.offered }}</td>
         <td></td>
         <td class="font-weight-bold">Forecasted</td>
         <td class="font-weight-bold">Actual</td>
         <td class="font-weight-bold">Shrinkage</td>
         <td class="text-uppercase">Billing</td>
-        <td></td>
-        <td></td>
+        <td>
+          {{
+            testItem.cscdailydigest.filter(
+              item => item.identifier === 'BILLING_PQ'
+            )[0].offered
+          }}
+        </td>
+        <td>%{{ breakdownPercentage('BILLING_PQ') }}</td>
       </tr>
       <tr>
         <td>Contained</td>
-        <td>9115</td>
+        <td>{{ testItem.cscdailyivrdigest.contained }}</td>
         <td>AW FTE</td>
-        <td>1</td>
-        <td>82</td>
-        <td rowspan="2">42,66%</td>
+        <td>
+          <input
+            v-model="testItem.staffing.forecasted.awfte"
+            type="text"
+            class="form-control"
+          />
+        </td>
+        <td>{{ testItem.staffing.actual.awfte }}</td>
+        <td class="align-middle" rowspan="2">%{{ shrinkAgePerc('aw') }}</td>
         <td class="text-uppercase">Emergency</td>
-        <td></td>
-        <td></td>
+        <td>
+          {{
+            testItem.cscdailydigest.filter(
+              item => item.identifier === 'EMERGENCY_PQ'
+            )[0].offered
+          }}
+        </td>
+        <td>%{{ breakdownPercentage('EMERGENCY_PQ') }}</td>
       </tr>
       <tr>
         <td>Containment Rate</td>
-        <td>50,545</td>
-        <td>Agency Hours</td>
-        <td>2</td>
-        <td>234</td>
+        <td>
+          %{{
+            (
+              100 *
+              (+testItem.cscdailyivrdigest.contained /
+                +testItem.cscdailyivrdigest.offered)
+            ).toFixed(2)
+          }}
+        </td>
+        <td>AW Hours</td>
+        <td>
+          <input
+            v-model="testItem.staffing.forecasted.awhours"
+            type="text"
+            class="form-control"
+          />
+        </td>
+        <td>{{ testItem.staffing.actual.awhours }}</td>
         <td class="text-uppercase">Make Payment</td>
-        <td></td>
-        <td></td>
+        <td>
+          {{
+            testItem.cscdailydigest.filter(
+              item => item.identifier === 'MAKEPAYMENT_PQ'
+            )[0].offered
+          }}
+        </td>
+        <td>%{{ breakdownPercentage('MAKEPAYMENT_PQ') }}</td>
       </tr>
       <tr>
         <td>Outflow to Queue</td>
-        <td>10,633</td>
+        <td>{{ testItem.cscdailyivrdigest.overflowout }}</td>
         <td>Agency FTE</td>
-        <td>3</td>
-        <td>2334</td>
-        <td rowspan="2">18,12%</td>
+        <td>
+          <input
+            v-model="testItem.staffing.forecasted.agencyfte"
+            type="text"
+            class="form-control"
+          />
+        </td>
+        <td>{{ testItem.staffing.actual.agencyfte }}</td>
+        <td class="align-middle" rowspan="2">%{{ shrinkAgePerc('agency') }}</td>
         <td class="text-uppercase">Other</td>
-        <td></td>
-        <td></td>
+        <td>
+          {{
+            testItem.cscdailydigest.filter(
+              item => item.identifier === 'OTHER_PQ'
+            )[0].offered
+          }}
+        </td>
+        <td>%{{ breakdownPercentage('OTHER_PQ') }}</td>
       </tr>
       <tr>
         <td></td>
         <td></td>
         <td>Agency Hours</td>
-        <td>4</td>
-        <td>24</td>
+        <td>
+          <input
+            v-model="testItem.staffing.forecasted.agencyhours"
+            type="text"
+            class="form-control"
+          />
+        </td>
+        <td>{{ testItem.staffing.actual.awhours }}</td>
         <td class="text-uppercase">Service</td>
-        <td></td>
-        <td></td>
+        <td>
+          {{
+            testItem.cscdailydigest.filter(
+              item => item.identifier === 'SERVICE_PQ'
+            )[0].offered
+          }}
+        </td>
+        <td>%{{ breakdownPercentage('SERVICE_PQ') }}</td>
       </tr>
       <tr>
         <td colspan="9">hi</td>
@@ -152,10 +241,78 @@
 export default {
   data: () => ({
     hasResponse: false,
-    item: {}
+    item: {},
+    testItem: {
+      staffing: {
+        forecasted: {
+          awfte: 143,
+          awhours: 1144,
+          agencyfte: 140,
+          agencyhours: 1120
+        },
+        actual: {
+          awfte: 82,
+          awhours: 656,
+          agencyfte: 115,
+          agencyhours: 917
+        }
+      },
+      forecasted: 1010,
+      callshistorical: {
+        offered: 356,
+        handled: 346,
+        id: 6084,
+        answered: 350,
+        slanswered: 283,
+        abandoned: 10,
+        maxwaittime: 317,
+        asa: 36,
+        aht: 529
+      },
+      cscdailyivrdigest: {
+        name: 'CSC_MAIN_N_CT',
+        date: '2019-04-19',
+        offered: '13510',
+        calltypeid: '6096',
+        contained: '6468',
+        overflowout: '7042'
+      },
+      cscdailydigest: [
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'EMERGENCY_PQ',
+          date: '2019-04-19',
+          offered: '947'
+        },
+        {
+          identifier: 'MAKEPAYMENT_PQ',
+          date: '2019-04-19',
+          offered: '386'
+        },
+        {
+          identifier: 'OTHER_PQ',
+          date: '2019-04-19',
+          offered: '1916'
+        },
+        {
+          identifier: 'SERVICE_PQ',
+          date: '2019-04-19',
+          offered: '1974'
+        }
+      ]
+    }
   }),
 
   computed: {
+    totalBreakdown() {
+      return this.testItem.cscdailydigest.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
+    },
     title() {
       const route = this.$route.params.name
       const title = route.replace(/-/g, ' ')
@@ -164,6 +321,49 @@ export default {
   },
 
   methods: {
+    shrinkAgePerc(item) {
+      console.log(item)
+      // (forecast - actual) / forecast
+      const {
+        awfte: forecastedAwfte,
+        awhours: forecastedAwhours,
+        agencyfte: forecastedAgencyfte,
+        agencyhours: forecastedAgencyhours
+      } = this.testItem.staffing.forecasted
+
+      const {
+        awfte: actualAwfte,
+        awhours: actualAwhours,
+        agencyfte: actualAgencyfte,
+        agencyhours: actualAgencyhours
+      } = this.testItem.staffing.actual
+
+      if (item === 'aw') {
+        const totalForecast = forecastedAwfte + forecastedAwhours
+        const totalActual = actualAwfte + actualAwhours
+        const minusTotals = totalForecast - totalActual
+        const result = minusTotals / totalForecast
+        const toFixed = (result * 100).toFixed(2)
+        return toFixed
+      }
+
+      if (item === 'agency') {
+        const totalForecast = forecastedAgencyfte + forecastedAgencyhours
+        const totalActual = actualAgencyfte + actualAgencyhours
+        const minusTotals = totalForecast - totalActual
+        const result = minusTotals / totalForecast
+        const toFixed = (result * 100).toFixed(2)
+        return toFixed
+      }
+    },
+    breakdownPercentage(key) {
+      const offered = this.testItem.cscdailydigest.filter(
+        item => item.identifier === key
+      )[0].offered
+
+      return ((offered * 100) / this.totalBreakdown).toFixed(2)
+    },
+
     exportTableToExcel() {
       var uri = 'data:application/vnd.ms-excel;base64,',
         template =
@@ -187,14 +387,27 @@ export default {
       }
     },
     async search() {
-      this.item.endTime = await this.item.startTime
-      // await this.$axios.post('cscdailydigest/daily', this.item)
-      await this.$axios.post('callshistorical/daily', {
-        callTypes: [],
-        ...this.item
-      })
-      // await this.$axios.post('cscdailyivrdigest/daily', this.item)
-      // await this.$axios.post('cscdailydigest/daily', this.item)
+      const format = {
+        start: 'YYYY-MM-DD 00:00:00',
+        end: 'YYYY-MM-DD 23:59:59'
+      }
+
+      // const filterDate = this.$moment(this.item.startTime).format('YYYY-MM-DD')
+
+      this.item.startTime = await this.$moment(this.item.startTime).format(
+        format.start
+      )
+      this.item.endTime = await this.$moment(this.item.startTime).format(
+        format.end
+      )
+
+      try {
+        await this.$axios.post('cscdailydigest/daily', this.item)
+        await this.$axios.post('callshistorical/daily', this.item)
+        await this.$axios.post('cscdailylvrdigest/daily', this.item)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

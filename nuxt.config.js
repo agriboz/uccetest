@@ -22,7 +22,9 @@ export default {
    ** Customize the progress-bar color
    */
   loading: { color: '#fff' },
-
+  toast: {
+    duration: 2000
+  },
   env: {
     name: 'Can',
     companyLogo,

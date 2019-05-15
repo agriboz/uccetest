@@ -230,7 +230,6 @@ export default {
     async search() {
       this.monthlyDashboardComponent = await null
       this.hasResponse = await false
-
       this.monthlyDashboardComponent = async () =>
         await import(`@/components/MonthlyDashboard`)
       this.hasResponse = await true

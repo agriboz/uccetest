@@ -196,6 +196,19 @@ export default {
   },
 
   async beforeMount() {
+    const format = {
+      start: 'YYYY-MM-DD 00:00:00',
+      end: 'YYYY-MM-DD 23:59:59'
+    }
+
+    this.item.payload.startTime = this.$moment(
+      this.item.payload.startTime
+    ).format(format.start)
+
+    this.item.payload.endTime = this.$moment(this.item.payload.endTime).format(
+      format.end
+    )
+
     await this.search(
       { url: 'monthlydashboard', payload: this.item.payload },
       'month',

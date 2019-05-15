@@ -122,12 +122,17 @@ export default {
   },
 
   methods: {
-    addAll() {
-      this.selectedListLocal = [
+    async addAll() {
+      this.selectedListLocal = await [
         ...this.selectedListLocal,
-        ...this.baseListLocal
+        ...this.filteredBase
       ]
-      this.baseListLocal = []
+      this.baseListLocal = this.baseListLocal.filter(
+        item => !this.filteredBase.includes(item)
+      )
+
+      this.baseValue = ''
+      console.log(this.baseListLocal)
     },
 
     transferToRight(item) {
