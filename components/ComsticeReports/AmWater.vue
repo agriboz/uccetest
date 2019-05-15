@@ -413,8 +413,8 @@ export default {
           'callshistorical/daily',
           this.item
         )
-        const cscdailylvrdigest = this.$axios.post(
-          'cscdailylvrdigest/daily',
+        const cscdailyivrdigest = this.$axios.post(
+          'cscdailyivrdigest/daily',
           this.item
         )
 
@@ -425,7 +425,7 @@ export default {
         ] = await Promise.all([
           cscdailydigest,
           callshistorical,
-          cscdailylvrdigest
+          cscdailyivrdigest
         ])
 
         console.log(result1)
@@ -433,7 +433,7 @@ export default {
         this.data = {
           cscdailydigest: result1,
           callshistorical: result2,
-          cscdailylvrdigest: result3
+          cscdailyivrdigest: result3
         }
         // await this.$axios.post('cscdailydigest/daily', this.item)
         // await this.$axios.post('callshistorical/daily', this.item)
