@@ -208,7 +208,7 @@
           Save Report
         </button>
       </b-tab>
-      <b-tab class="p-3" title="My Saved Reports">
+      <b-tab class="p-3" title="My Saved Reports" @click="getReports">
         <b-table
           :items="reports"
           :fields="tableFields"
@@ -675,10 +675,6 @@ export default {
     }
   },
 
-  beforeMount() {
-    this.getReports()
-  },
-
   methods: {
     shrinkAgePerc(item) {
       const {
@@ -726,8 +722,13 @@ export default {
     },
 
     breakdownCount(key) {
-      return this.data.cscdailydigest.filter(item => item.identifier === key)[0]
-        .offered
+      const offered = this.data.cscdailydigest.filter(
+        item => item.identifier === key
+      )
+      const result = offered.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
+      return result
     },
 
     exportTableToExcel() {
