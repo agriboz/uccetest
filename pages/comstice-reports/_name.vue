@@ -1,17 +1,9 @@
 <template>
   <div class="container-fluid">
     <!-- start page title -->
-    <page-title title="Comstice Reports" />
+    <page-title :title="`Comstice Reports - ${title}`" />
     <!-- end page title -->
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <component :is="component" />
-          </div>
-        </div>
-      </div>
-    </div>
+    <component :is="component" />
   </div>
   <!-- container -->
 </template>
@@ -24,8 +16,17 @@ export default {
     PageTitle
   },
   data: () => ({
+    name: null,
     component: null
   }),
+
+  computed: {
+    title() {
+      const route = this.$route.params.name
+      const title = route.replace(/-/g, ' ')
+      return title.toUpperCase()
+    }
+  },
 
   mounted() {
     const name = this.convertToCamelCase(this.$route.params.name)

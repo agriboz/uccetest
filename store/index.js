@@ -43,9 +43,8 @@ export const actions = {
         })
       }, 1000)
     } catch ({ response }) {
-      console.log(response)
-      commit('loginFailure')
-      dispatch('alert/error', response.data, { root: true })
+      await commit('loginFailure')
+      await dispatch('alert/error', response.statusText, { root: true })
     }
   },
   logout({ commit }) {

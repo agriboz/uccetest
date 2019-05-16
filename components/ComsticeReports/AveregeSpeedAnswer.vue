@@ -1,14 +1,21 @@
 <template>
   <section>
-    <h4 class="header-title mt-0 mb-3">{{ title }}</h4>
-    <report-filter
-      v-if="!hasResponse"
-      :show-footer="false"
-      :is-searchable="false"
-      :url="'/teamnotreadypercentage'"
-      :item="item"
-    />
-    <buble-chart :chart-data="chartData" :options="chartOptions" />
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <report-filter
+              v-if="!hasResponse"
+              :show-footer="false"
+              :is-searchable="false"
+              :url="'/teamnotreadypercentage'"
+              :item="item"
+            />
+            <buble-chart :chart-data="chartData" :options="chartOptions" />
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 

@@ -13,10 +13,11 @@ export default function({ app, $axios, store, redirect }) {
     config => {
       store.commit('setLoading', true)
 
-      const token = app.store.state.user.token
+      const user = localStorage.getItem('user') || null
+      const token = JSON.parse(user)
 
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${token.token}`
       }
 
       return config

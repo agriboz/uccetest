@@ -1,236 +1,406 @@
 <template>
   <section>
-    <h4 class="header-title mt-0 mb-3">{{ title }}</h4>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-md-6">
-          <label>Select Date</label>
-          <vue-ctk-date-time-picker
-            v-model="item.startTime"
-            label="Select Date"
-            auto-close
-            no-header
-            only-date
-            formatted="YYYY-MM-DD"
-            format="YYYY-MM-DD"
-            color="#727cf5"
-            enable-button-validate
-          />
+    <b-tabs class="nav-variant" lazy>
+      <b-tab class="p-3" title="Create Report">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Select Date</label>
+              <vue-ctk-date-time-picker
+                v-model="item.startTime"
+                label="Select Date"
+                auto-close
+                no-header
+                only-date
+                formatted="YYYY-MM-DD"
+                format="YYYY-MM-DD"
+                color="#727cf5"
+                enable-button-validate
+              />
+            </div>
+            <div v-show="false" class="col-md-6">
+              <label>End Date</label>
+              <vue-ctk-date-time-picker
+                v-model="item.endTime"
+                auto-close
+                no-header
+                only-date
+                formatted="YYYY-MM-DD"
+                format="YYYY-MM-DD"
+                color="#727cf5"
+                enable-button-validate
+              />
+            </div>
+          </div>
+          <button class="btn btn-primary mt-2" @click="search">
+            Search
+          </button>
         </div>
-        <div v-show="false" class="col-md-6">
-          <label>End Date</label>
-          <vue-ctk-date-time-picker
-            v-model="item.endTime"
-            auto-close
-            no-header
-            only-date
-            formatted="YYYY-MM-DD"
-            format="YYYY-MM-DD"
-            color="#727cf5"
-            enable-button-validate
+        <table class="table table-bordered text-center table-sm">
+          <colgroup>
+            <col style="width: 130px" />
+            <col style="width: 122px" />
+            <col style="width: 253px" />
+            <col style="width: 131px" />
+            <col style="width: 152px" />
+            <col style="width: 146px" />
+            <col style="width: 109px" />
+            <col style="width: 119px" />
+            <col style="width: 138px" />
+          </colgroup>
+          <tr>
+            <th colspan="2">Volume to Queue</th>
+            <th colspan="2">Oldest Call</th>
+            <th>ASA</th>
+            <th colspan="4">AHT</th>
+          </tr>
+          <tr>
+            <td colspan="2">
+              {{ totalOverflowOut }}
+            </td>
+            <td class="font-weight-bold h1" colspan="2" rowspan="3">
+              {{
+                $moment.duration(totalOldestCall, 'second').format('mm:ss', {
+                  trim: false
+                })
+              }}
+            </td>
+            <td class="font-weight-bold h1" rowspan="4">
+              {{
+                $moment.duration(totalAsa, 'second').format('mm:ss', {
+                  trim: false
+                })
+              }}
+            </td>
+            <td class="font-weight-bold h1" colspan="4" rowspan="4">
+              {{
+                $moment.duration(totalAht, 'second').format('mm:ss', {
+                  trim: false
+                })
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td>Forecasted</td>
+            <td>
+              <input
+                v-model="sendData.forecasted"
+                type="text"
+                class="form-control"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" rowspan="2"></td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold">PA Emergency</td>
+            <td>15:30 Interval</td>
+          </tr>
+          <tr>
+            <td colspan="9"></td>
+          </tr>
+          <tr class="font-weight-bold">
+            <td colspan="2">IVR Performance</td>
+            <td colspan="4">Staffing</td>
+            <td colspan="3">Breakdown of Call Type</td>
+          </tr>
+          <tr>
+            <td>Volume In</td>
+            <td>{{ totalOffered }}</td>
+            <td></td>
+            <td class="font-weight-bold">Forecasted</td>
+            <td class="font-weight-bold">Actual</td>
+            <td class="font-weight-bold">Shrinkage</td>
+            <td class="text-uppercase">Billing</td>
+            <td>
+              {{ breakdownCount('BILLING_PQ') }}
+            </td>
+            <td>%{{ breakdownPercentage('BILLING_PQ') }}</td>
+          </tr>
+          <tr>
+            <td>Contained</td>
+            <td>{{ totalContained }}</td>
+            <td>AW FTE</td>
+            <td>
+              <input
+                v-model="sendData.forecastedAwFte"
+                type="text"
+                class="form-control"
+              />
+            </td>
+            <td>{{ data.amwaterteams.actual.awfte }}</td>
+            <td rowspan="2">%{{ shrinkAgePerc('aw') }}</td>
+            <td class="text-uppercase">Emergency</td>
+            <td>
+              {{ breakdownCount('EMERGENCY_PQ') }}
+            </td>
+            <td>%{{ breakdownPercentage('EMERGENCY_PQ') }}</td>
+          </tr>
+          <tr>
+            <td>Containment Rate</td>
+            <td>%{{ containmentRate }}</td>
+            <td>AW Hours</td>
+            <td>
+              <input
+                v-model="sendData.forecastedAwHours"
+                type="text"
+                class="form-control"
+              />
+            </td>
+            <td>{{ data.amwaterteams.actual.awhours }}</td>
+            <td class="text-uppercase">Make Payment</td>
+            <td>
+              {{ breakdownCount('MAKEPAYMENT_PQ') }}
+            </td>
+            <td>%{{ breakdownPercentage('MAKEPAYMENT_PQ') }}</td>
+          </tr>
+          <tr>
+            <td>Outflow to Queue</td>
+            <td>{{ totalOverflowOut }}</td>
+            <td>Agency FTE</td>
+            <td>
+              <input
+                v-model="sendData.forecastedAgencyFte"
+                type="text"
+                class="form-control"
+              />
+            </td>
+            <td>{{ data.amwaterteams.actual.agencyfte }}</td>
+            <td rowspan="2">%{{ shrinkAgePerc('agency') }}</td>
+            <td class="text-uppercase">Other</td>
+            <td>
+              {{ breakdownCount('OTHER_PQ') }}
+            </td>
+            <td>%{{ breakdownPercentage('OTHER_PQ') }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Agency Hours</td>
+            <td>
+              <input
+                v-model="sendData.forecastedAgencyHours"
+                type="text"
+                class="form-control"
+              />
+            </td>
+            <td>{{ data.amwaterteams.actual.agencyhours }}</td>
+            <td class="text-uppercase">Service</td>
+            <td>
+              {{ breakdownCount('SERVICE_PQ') }}
+            </td>
+            <td>%{{ breakdownPercentage('SERVICE_PQ') }}</td>
+          </tr>
+          <tr>
+            <td colspan="9">
+              <input
+                v-model="sendData.note"
+                placeholder="Your note here"
+                type="text"
+                class="form-control text-center"
+              />
+            </td>
+          </tr>
+        </table>
+
+        <button class="btn btn-primary" @click="saveReport">
+          Save Report
+        </button>
+      </b-tab>
+      <b-tab class="p-3" title="My Saved Reports">
+        <b-table
+          :items="reports"
+          :fields="tableFields"
+          :current-page="currentPage"
+          :per-page="perPage"
+          :sort-by="'date'"
+          striped
+          hover
+          show-empty
+        >
+          <template slot="actions" slot-scope="row">
+            <button class="btn btn-primary" @click="getReportById(row.item.id)">
+              <i class="mdi mdi-eye" /> View
+            </button>
+            <button class="btn btn-danger" @click="deleteReport(row.item.id)">
+              <i class="mdi mdi-trash-can-outline" /> Delete
+            </button>
+          </template>
+        </b-table>
+        <b-col v-if="reports.length" md="6" class="my-1 pl-0">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="reports.length"
+            :per-page="perPage"
+            class="my-0"
           />
-        </div>
-      </div>
-      <button class="btn btn-primary mt-2" @click="search">Search</button>
+        </b-col>
+      </b-tab>
+    </b-tabs>
+    <b-modal
+      v-if="report"
+      v-model="modal"
+      size="xl"
+      title="Report Detail"
+      ok-only
+    >
+      <table id="table" class="table table-bordered  text-center table-sm">
+        <colgroup>
+          <col style="width: 130px" />
+          <col style="width: 122px" />
+          <col style="width: 253px" />
+          <col style="width: 131px" />
+          <col style="width: 152px" />
+          <col style="width: 146px" />
+          <col style="width: 109px" />
+          <col style="width: 119px" />
+          <col style="width: 138px" />
+        </colgroup>
+        <tr>
+          <th colspan="2">Volume to Queue</th>
+          <th colspan="2">Oldest Call</th>
+          <th>ASA</th>
+          <th colspan="4">AHT</th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            {{ report.data.cscdailyivrdigest.outflowToQueue }}
+          </td>
+          <td class="font-weight-bold h1" colspan="2" rowspan="3">
+            {{
+              $moment
+                .duration(report.data.callshistorical.oldestCall, 'second')
+                .format('mm:ss', {
+                  trim: false
+                })
+            }}
+          </td>
+          <td class="font-weight-bold h1" rowspan="4">
+            {{
+              $moment
+                .duration(report.data.callshistorical.asa, 'second')
+                .format('mm:ss', {
+                  trim: false
+                })
+            }}
+          </td>
+          <td class="font-weight-bold h1" colspan="4" rowspan="4">
+            {{
+              $moment
+                .duration(report.data.callshistorical.aht, 'second')
+                .format('mm:ss', {
+                  trim: false
+                })
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>Forecasted</td>
+          <td>
+            {{ report.data.forecasted }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" rowspan="2"></td>
+        </tr>
+        <tr>
+          <td class="font-weight-bold">PA Emergency</td>
+          <td>15:30 Interval</td>
+        </tr>
+        <tr>
+          <td colspan="9"></td>
+        </tr>
+        <tr class="font-weight-bold">
+          <td colspan="2">IVR Performance</td>
+          <td colspan="4">Staffing</td>
+          <td colspan="3">Breakdown of Call Type</td>
+        </tr>
+        <tr>
+          <td>Volume In</td>
+          <td>{{ report.data.cscdailyivrdigest.volumeIn }}</td>
+          <td></td>
+          <td class="font-weight-bold">Forecasted</td>
+          <td class="font-weight-bold">Actual</td>
+          <td class="font-weight-bold">Shrinkage</td>
+          <td class="text-uppercase">Billing</td>
+          <td>
+            {{ report.data.cscdailydigest.billing.count }}
+          </td>
+          <td>%{{ report.data.cscdailydigest.billing.percentage }}</td>
+        </tr>
+        <tr>
+          <td>Contained</td>
+          <td>{{ report.data.cscdailyivrdigest.contained }}</td>
+          <td>AW FTE</td>
+          <td>
+            {{ report.data.amwaterteams.awfte.forecasted }}
+          </td>
+          <td>{{ report.data.amwaterteams.awfte.actual }}</td>
+          <td rowspan="2">%{{ report.data.amwaterteams.shrinkage.aw }}</td>
+          <td class="text-uppercase">Emergency</td>
+          <td>
+            {{ report.data.cscdailydigest.emergency.count }}
+          </td>
+          <td>%{{ report.data.cscdailydigest.emergency.percentage }}</td>
+        </tr>
+        <tr>
+          <td>Containment Rate</td>
+          <td>%{{ report.data.cscdailyivrdigest.containmentRate }}</td>
+          <td>AW Hours</td>
+          <td>
+            {{ report.data.amwaterteams.awhours.forecasted }}
+          </td>
+          <td>{{ report.data.amwaterteams.awhours.actual }}</td>
+          <td class="text-uppercase">Make Payment</td>
+          <td>
+            {{ report.data.cscdailydigest.makePayment.count }}
+          </td>
+          <td>%{{ report.data.cscdailydigest.makePayment.percentage }}</td>
+        </tr>
+        <tr>
+          <td>Outflow to Queue</td>
+          <td>{{ report.data.cscdailyivrdigest.outflowToQueue }}</td>
+          <td>Agency FTE</td>
+          <td>
+            {{ report.data.amwaterteams.agencyfte.forecasted }}
+          </td>
+          <td>{{ report.data.amwaterteams.agencyfte.actual }}</td>
+          <td rowspan="2">%{{ report.data.amwaterteams.shrinkage.agency }}</td>
+          <td class="text-uppercase">Other</td>
+          <td>
+            {{ report.data.cscdailydigest.other.count }}
+          </td>
+          <td>%{{ report.data.cscdailydigest.other.percentage }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Agency Hours</td>
+          <td>
+            {{ report.data.amwaterteams.agencyhours.forecasted }}
+          </td>
+          <td>{{ report.data.amwaterteams.agencyhours.actual }}</td>
+          <td class="text-uppercase">Service</td>
+          <td>
+            {{ breakdownCount('SERVICE_PQ') }}
+          </td>
+          <td>%{{ breakdownPercentage('SERVICE_PQ') }}</td>
+        </tr>
+        <tr>
+          <td colspan="9">
+            {{ report.data.note }}
+          </td>
+        </tr>
+      </table>
+
       <button
         class="btn btn-primary mt-2"
         @click="exportTableToExcel('amwater')('table')"
       >
         Export to Excel
       </button>
-    </div>
-    <table id="table" class="table table-bordered  text-center table-sm">
-      <colgroup>
-        <col style="width: 130px" />
-        <col style="width: 122px" />
-        <col style="width: 253px" />
-        <col style="width: 131px" />
-        <col style="width: 152px" />
-        <col style="width: 146px" />
-        <col style="width: 109px" />
-        <col style="width: 119px" />
-        <col style="width: 138px" />
-      </colgroup>
-      <tr>
-        <th colspan="2">Volume to Queue</th>
-        <th colspan="2">Oldest Call</th>
-        <th>ASA</th>
-        <th colspan="4">AHT</th>
-      </tr>
-      <tr>
-        <td colspan="2">{{ testItem.cscdailyivrdigest.overflowout }}</td>
-        <td class="font-weight-bold align-middle h1" colspan="2" rowspan="3">
-          {{
-            $moment
-              .duration(testItem.callshistorical.maxwaittime, 'second')
-              .format('mm:ss', {
-                trim: false
-              })
-          }}
-        </td>
-        <td class="font-weight-bold align-middle h1" rowspan="4">
-          {{
-            $moment
-              .duration(testItem.callshistorical.asa, 'second')
-              .format('mm:ss', {
-                trim: false
-              })
-          }}
-        </td>
-        <td class="font-weight-bold align-middle h1" colspan="4" rowspan="4">
-          {{
-            $moment
-              .duration(testItem.callshistorical.aht, 'second')
-              .format('mm:ss', {
-                trim: false
-              })
-          }}
-        </td>
-      </tr>
-      <tr>
-        <td>Forecasted</td>
-        <td>
-          <input
-            v-model="testItem.forecasted"
-            type="text"
-            class="form-control"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" rowspan="2"></td>
-      </tr>
-      <tr>
-        <td class="font-weight-bold">PA Emergency</td>
-        <td>15:30 Interval</td>
-      </tr>
-      <tr>
-        <td colspan="9"></td>
-      </tr>
-      <tr class="font-weight-bold">
-        <td colspan="2">IVR Performance</td>
-        <td colspan="4">Staffing</td>
-        <td colspan="3">Breakdown of Call Type</td>
-      </tr>
-      <tr>
-        <td>Volume In</td>
-        <td>{{ testItem.cscdailyivrdigest.offered }}</td>
-        <td></td>
-        <td class="font-weight-bold">Forecasted</td>
-        <td class="font-weight-bold">Actual</td>
-        <td class="font-weight-bold">Shrinkage</td>
-        <td class="text-uppercase">Billing</td>
-        <td>
-          {{
-            testItem.cscdailydigest.filter(
-              item => item.identifier === 'BILLING_PQ'
-            )[0].offered
-          }}
-        </td>
-        <td>%{{ breakdownPercentage('BILLING_PQ') }}</td>
-      </tr>
-      <tr>
-        <td>Contained</td>
-        <td>{{ testItem.cscdailyivrdigest.contained }}</td>
-        <td>AW FTE</td>
-        <td>
-          <input
-            v-model="testItem.staffing.forecasted.awfte"
-            type="text"
-            class="form-control"
-          />
-        </td>
-        <td>{{ testItem.staffing.actual.awfte }}</td>
-        <td class="align-middle" rowspan="2">%{{ shrinkAgePerc('aw') }}</td>
-        <td class="text-uppercase">Emergency</td>
-        <td>
-          {{
-            testItem.cscdailydigest.filter(
-              item => item.identifier === 'EMERGENCY_PQ'
-            )[0].offered
-          }}
-        </td>
-        <td>%{{ breakdownPercentage('EMERGENCY_PQ') }}</td>
-      </tr>
-      <tr>
-        <td>Containment Rate</td>
-        <td>
-          %{{
-            (
-              100 *
-              (+testItem.cscdailyivrdigest.contained /
-                +testItem.cscdailyivrdigest.offered)
-            ).toFixed(2)
-          }}
-        </td>
-        <td>AW Hours</td>
-        <td>
-          <input
-            v-model="testItem.staffing.forecasted.awhours"
-            type="text"
-            class="form-control"
-          />
-        </td>
-        <td>{{ testItem.staffing.actual.awhours }}</td>
-        <td class="text-uppercase">Make Payment</td>
-        <td>
-          {{
-            testItem.cscdailydigest.filter(
-              item => item.identifier === 'MAKEPAYMENT_PQ'
-            )[0].offered
-          }}
-        </td>
-        <td>%{{ breakdownPercentage('MAKEPAYMENT_PQ') }}</td>
-      </tr>
-      <tr>
-        <td>Outflow to Queue</td>
-        <td>{{ testItem.cscdailyivrdigest.overflowout }}</td>
-        <td>Agency FTE</td>
-        <td>
-          <input
-            v-model="testItem.staffing.forecasted.agencyfte"
-            type="text"
-            class="form-control"
-          />
-        </td>
-        <td>{{ testItem.staffing.actual.agencyfte }}</td>
-        <td class="align-middle" rowspan="2">%{{ shrinkAgePerc('agency') }}</td>
-        <td class="text-uppercase">Other</td>
-        <td>
-          {{
-            testItem.cscdailydigest.filter(
-              item => item.identifier === 'OTHER_PQ'
-            )[0].offered
-          }}
-        </td>
-        <td>%{{ breakdownPercentage('OTHER_PQ') }}</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>Agency Hours</td>
-        <td>
-          <input
-            v-model="testItem.staffing.forecasted.agencyhours"
-            type="text"
-            class="form-control"
-          />
-        </td>
-        <td>{{ testItem.staffing.actual.awhours }}</td>
-        <td class="text-uppercase">Service</td>
-        <td>
-          {{
-            testItem.cscdailydigest.filter(
-              item => item.identifier === 'SERVICE_PQ'
-            )[0].offered
-          }}
-        </td>
-        <td>%{{ breakdownPercentage('SERVICE_PQ') }}</td>
-      </tr>
-      <tr>
-        <td colspan="9">hi</td>
-      </tr>
-    </table>
+    </b-modal>
   </section>
 </template>
 
@@ -238,16 +408,41 @@
 export default {
   data: () => ({
     hasResponse: false,
+    modal: false,
+    reports: [],
+    report: null,
+    currentPage: 1,
+    perPage: 10,
+    pageOptions: [5, 10, 15],
+    tableFields: [
+      { key: 'date', label: 'Date' },
+      { key: 'name', label: 'Report Name' },
+      { key: 'actions', label: 'Actions' }
+    ],
     item: {},
-    data: {},
+    data: {
+      cscdailydigest: [],
+      cscdailyivrdigest: [],
+      callshistorical: [],
+      amwaterteams: {
+        actual: {
+          awfte: 82,
+          awhours: 656,
+          agencyfte: 115,
+          agencyhours: 917
+        }
+      }
+    },
+    sendData: {
+      note: null,
+      forecasted: null,
+      forecastedAwFte: 0,
+      forecastedAwHours: 0,
+      forecastedAgencyFte: 0,
+      forecastedAgencyHours: 0
+    },
     testItem: {
-      staffing: {
-        forecasted: {
-          awfte: 143,
-          awhours: 1144,
-          agencyfte: 140,
-          agencyhours: 1120
-        },
+      amwaterteams: {
         actual: {
           awfte: 82,
           awhours: 656,
@@ -255,27 +450,89 @@ export default {
           agencyhours: 917
         }
       },
-      forecasted: 1010,
-      callshistorical: {
-        offered: 356,
-        handled: 346,
-        id: 6084,
-        answered: 350,
-        slanswered: 283,
-        abandoned: 10,
-        maxwaittime: 317,
-        asa: 36,
-        aht: 529
-      },
-      cscdailyivrdigest: {
-        name: 'CSC_MAIN_N_CT',
-        date: '2019-04-19',
-        offered: '13510',
-        calltypeid: '6096',
-        contained: '6468',
-        overflowout: '7042'
-      },
+      callshistorical: [
+        {
+          offered: 356,
+          handled: 346,
+          id: 6084,
+          answered: 350,
+          slanswered: 283,
+          abandoned: 10,
+          maxwaittime: 317,
+          asa: 36,
+          aht: 529
+        },
+        {
+          offered: 356,
+          handled: 346,
+          id: 6084,
+          answered: 350,
+          slanswered: 283,
+          abandoned: 10,
+          maxwaittime: 317,
+          asa: 36,
+          aht: 529
+        }
+      ],
+      cscdailyivrdigest: [
+        {
+          name: 'CSC_MAIN_N_CT',
+          date: '2019-04-19',
+          offered: '13510',
+          calltypeid: '6096',
+          contained: '6468',
+          overflowout: '7042'
+        },
+        {
+          name: 'CSC_MAIN_N_CT',
+          date: '2019-04-19',
+          offered: '13510',
+          calltypeid: '6096',
+          contained: '6468',
+          overflowout: '7042'
+        }
+      ],
       cscdailydigest: [
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'EMERGENCY_PQ',
+          date: '2019-04-19',
+          offered: '947'
+        },
+        {
+          identifier: 'MAKEPAYMENT_PQ',
+          date: '2019-04-19',
+          offered: '386'
+        },
+        {
+          identifier: 'OTHER_PQ',
+          date: '2019-04-19',
+          offered: '1916'
+        },
+        {
+          identifier: 'SERVICE_PQ',
+          date: '2019-04-19',
+          offered: '1974'
+        },
         {
           identifier: 'BILLING_PQ',
           date: '2019-04-19',
@@ -306,73 +563,172 @@ export default {
   }),
 
   computed: {
-    maxDate() {
-      return this.$moment(this.item.startTime)
-        .add(1, 'day')
-        .format()
+    saveData() {
+      return {
+        name: `AMWater-${this.item.startTime}`,
+        date: this.item.startTime,
+        data: {
+          note: this.sendData.note,
+          forecasted: this.sendData.forecasted,
+          amwaterteams: {
+            awfte: {
+              forecasted: this.sendData.forecastedAwFte,
+              actual: this.testItem.amwaterteams.actual.awfte
+            },
+            awhours: {
+              forecasted: this.sendData.forecastedAwHours,
+              actual: this.testItem.amwaterteams.actual.awhours
+            },
+            agencyfte: {
+              forecasted: this.sendData.forecastedAgencyFte,
+              actual: this.testItem.amwaterteams.actual.agencyfte
+            },
+            agencyhours: {
+              forecasted: this.sendData.forecastedAgencyHours,
+              actual: this.testItem.amwaterteams.actual.agencyhours
+            },
+            shrinkage: {
+              aw: this.shrinkAgePerc('aw'),
+              agency: this.shrinkAgePerc('agency')
+            }
+          },
+          callshistorical: {
+            oldestCall: this.totalOldestCall,
+            asa: this.totalAsa,
+            aht: this.totalAht
+          },
+          cscdailyivrdigest: {
+            volumeIn: this.totalOffered,
+            contained: this.totalContained,
+            outflowToQueue: this.totalOverflowOut,
+            containmentRate: this.containmentRate
+          },
+          cscdailydigest: {
+            billing: {
+              count: this.breakdownCount('BILLING_PQ'),
+              percentage: this.breakdownPercentage('BILLING_PQ')
+            },
+            emergency: {
+              count: this.breakdownCount('EMERGENCY_PQ'),
+              percentage: this.breakdownPercentage('EMERGENCY_PQ')
+            },
+            makePayment: {
+              count: this.breakdownCount('MAKEPAYMENT_PQ'),
+              percentage: this.breakdownPercentage('MAKEPAYMENT_PQ')
+            },
+            other: {
+              count: this.breakdownCount('OTHER_PQ'),
+              percentage: this.breakdownPercentage('OTHER_PQ')
+            },
+            service: {
+              count: this.breakdownCount('SERVICE_PQ'),
+              percentage: this.breakdownPercentage('SERVICE_PQ')
+            }
+          }
+        }
+      }
     },
+    containmentRate() {
+      return (100 * (+this.totalContained / +this.totalOffered)).toFixed(2)
+    },
+
+    totalContained() {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+        return acc + +item.contained
+      }, 0)
+    },
+
+    totalOffered() {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
+    },
+
+    totalOverflowOut() {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+        return acc + +item.overflowout
+      }, 0)
+    },
+
+    totalOldestCall() {
+      return this.testItem.callshistorical.reduce((acc, item) => {
+        return acc + item.maxwaittime
+      }, 0)
+    },
+
+    totalAsa() {
+      return this.testItem.callshistorical.reduce((acc, item) => {
+        return acc + item.asa
+      }, 0)
+    },
+
+    totalAht() {
+      return this.testItem.callshistorical.reduce((acc, item) => {
+        return acc + item.aht
+      }, 0)
+    },
+
     totalBreakdown() {
       return this.testItem.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
-    },
-    title() {
-      const route = this.$route.params.name
-      const title = route.replace(/-/g, ' ')
-      return title
     }
   },
 
   beforeMount() {
-    /* this.item.startTime = new Date(
-      this.$moment(this.item.startTime)
-        .subtract(1, 'day')
-        .format('YYYY-MM-DD')
-    ) */
+    this.getReports()
   },
 
   methods: {
     shrinkAgePerc(item) {
-      console.log(item)
-      // (forecast - actual) / forecast
       const {
-        awfte: forecastedAwfte,
-        awhours: forecastedAwhours,
-        agencyfte: forecastedAgencyfte,
-        agencyhours: forecastedAgencyhours
-      } = this.testItem.staffing.forecasted
+        forecastedAwFte,
+        forecastedAwHours,
+        forecastedAgencyFte,
+        forecastedAgencyHours
+      } = this.sendData
 
       const {
         awfte: actualAwfte,
         awhours: actualAwhours,
         agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
-      } = this.testItem.staffing.actual
-
+      } = this.testItem.amwaterteams.actual
+      console.log(this.testItem.amwaterteams.actual)
       if (item === 'aw') {
-        const totalForecast = forecastedAwfte + forecastedAwhours
+        const totalForecast = +forecastedAwFte + +forecastedAwHours
         const totalActual = actualAwfte + actualAwhours
-        const minusTotals = totalForecast - totalActual
+        const minusTotals = (totalForecast - totalActual) * 100
         const result = minusTotals / totalForecast
-        const toFixed = (result * 100).toFixed(2)
+        const toFixed = result.toFixed(2)
         return toFixed
       }
 
       if (item === 'agency') {
-        const totalForecast = forecastedAgencyfte + forecastedAgencyhours
+        const totalForecast = +forecastedAgencyFte + +forecastedAgencyHours
         const totalActual = actualAgencyfte + actualAgencyhours
-        const minusTotals = totalForecast - totalActual
+        const minusTotals = (totalForecast - totalActual) * 100
         const result = minusTotals / totalForecast
-        const toFixed = (result * 100).toFixed(2)
+        const toFixed = result.toFixed(2)
+        console.log(actualAgencyhours)
         return toFixed
       }
     },
+
     breakdownPercentage(key) {
       const offered = this.testItem.cscdailydigest.filter(
         item => item.identifier === key
-      )[0].offered
+      )
+      const result = offered.reduce((acc, item) => {
+        return ((item.offered * 100) / this.totalBreakdown).toFixed(2)
+      }, 0)
+      return result
+    },
 
-      return ((offered * 100) / this.totalBreakdown).toFixed(2)
+    breakdownCount(key) {
+      return this.testItem.cscdailydigest.filter(
+        item => item.identifier === key
+      )[0].offered
     },
 
     exportTableToExcel() {
@@ -391,13 +747,35 @@ export default {
         if (!table.nodeType) table = document.getElementById(table)
         var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
         var link = document.createElement('a')
-        link.download = `AMWater-${this.item.startTime}`
+        link.download = `AMWater-${this.report.date}`
         link.href = uri + base64(format(template, ctx))
         link.click()
         // window.location.href = uri + base64(format(template, ctx))
       }
     },
+
+    async getReports() {
+      const { data } = await this.$axios.get('daily-metrics')
+      this.reports = data
+    },
+
+    async getReportById(id) {
+      const { data } = await this.$axios.get(`daily-metrics/${id}`)
+      this.report = await data
+      this.modal = await true
+    },
+
+    async saveReport() {
+      try {
+        await this.$axios.post(`daily-metrics`, this.saveData)
+        await this.$toast.success('Report Created')
+      } catch (error) {
+        await this.$toast.error(error.response.statusText)
+      }
+    },
+
     async search() {
+      this.hasResponse = false
       const format = 'YYYY-MM-DD'
 
       this.item.endTime = await this.$moment(this.item.startTime)
@@ -406,38 +784,56 @@ export default {
 
       try {
         const cscdailydigest = this.$axios.post(
-          'cscdailydigest/daily',
+          `cscdailydigest/daily`,
           this.item
         )
         const callshistorical = this.$axios.post(
-          'callshistorical/daily',
+          `callshistorical/daily`,
           this.item
         )
+
         const cscdailyivrdigest = this.$axios.post(
-          'cscdailyivrdigest/daily',
+          `cscdailyivrdigest/daily`,
           this.item
         )
+
+        const amwaterteams = this.$axios.post(`amwaterteams/daily`, this.item)
 
         const [
           { data: result1 },
           { data: result2 },
-          { data: result3 }
+          { data: result3 },
+          { data: result4 }
         ] = await Promise.all([
+          cscdailyivrdigest,
           cscdailydigest,
           callshistorical,
-          cscdailyivrdigest
+          amwaterteams
         ])
 
-        console.log(result1)
+        this.hasResponse = true
 
-        this.data = {
+        console.log(result3)
+
+        this.data = await {
           cscdailydigest: result1,
           callshistorical: result2,
-          cscdailyivrdigest: result3
+          cscdailyivrdigest: result3,
+          amwaterteams: {
+            actual: {
+              awfte: result4.agents[0].handled,
+              awhours: result4.agents[0].hours,
+              agencyfte: result4.agents[1].handled,
+              agencyhours: result4.agents[1].hours
+            }
+          }
         }
-        // await this.$axios.post('cscdailydigest/daily', this.item)
-        // await this.$axios.post('callshistorical/daily', this.item)
-        // await this.$axios.post('cscdailylvrdigest/daily', this.item)
+        this.sendData = {
+          forecastedAwFte: result4.agents[0].handled,
+          forecastedAwHours: result4.agents[0].hours,
+          forecastedAgencyFte: result4.agents[1].handled,
+          forecastedAgencyHours: result4.agents[1].hours
+        }
       } catch (error) {
         console.log(error)
       }
@@ -445,3 +841,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.table > tr > td {
+  vertical-align: middle;
+}
+</style>
