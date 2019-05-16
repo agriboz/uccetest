@@ -573,19 +573,19 @@ export default {
           amwaterteams: {
             awfte: {
               forecasted: this.sendData.forecastedAwFte,
-              actual: this.testItem.amwaterteams.actual.awfte
+              actual: this.data.amwaterteams.actual.awfte
             },
             awhours: {
               forecasted: this.sendData.forecastedAwHours,
-              actual: this.testItem.amwaterteams.actual.awhours
+              actual: this.data.amwaterteams.actual.awhours
             },
             agencyfte: {
               forecasted: this.sendData.forecastedAgencyFte,
-              actual: this.testItem.amwaterteams.actual.agencyfte
+              actual: this.data.amwaterteams.actual.agencyfte
             },
             agencyhours: {
               forecasted: this.sendData.forecastedAgencyHours,
-              actual: this.testItem.amwaterteams.actual.agencyhours
+              actual: this.data.amwaterteams.actual.agencyhours
             },
             shrinkage: {
               aw: this.shrinkAgePerc('aw'),
@@ -633,43 +633,43 @@ export default {
     },
 
     totalContained() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.contained
       }, 0)
     },
 
     totalOffered() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     },
 
     totalOverflowOut() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.overflowout
       }, 0)
     },
 
     totalOldestCall() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
+      return this.data.callshistorical.reduce((acc, item) => {
         return acc + item.maxwaittime
       }, 0)
     },
 
     totalAsa() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
+      return this.data.callshistorical.reduce((acc, item) => {
         return acc + item.asa
       }, 0)
     },
 
     totalAht() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
+      return this.data.callshistorical.reduce((acc, item) => {
         return acc + item.aht
       }, 0)
     },
 
     totalBreakdown() {
-      return this.testItem.cscdailydigest.reduce((acc, item) => {
+      return this.data.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     }
@@ -693,8 +693,8 @@ export default {
         awhours: actualAwhours,
         agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
-      } = this.testItem.amwaterteams.actual
-      console.log(this.testItem.amwaterteams.actual)
+      } = this.data.amwaterteams.actual
+      console.log(this.data.amwaterteams.actual)
       if (item === 'aw') {
         const totalForecast = +forecastedAwFte + +forecastedAwHours
         const totalActual = actualAwfte + actualAwhours
@@ -716,7 +716,7 @@ export default {
     },
 
     breakdownPercentage(key) {
-      const offered = this.testItem.cscdailydigest.filter(
+      const offered = this.data.cscdailydigest.filter(
         item => item.identifier === key
       )
       const result = offered.reduce((acc, item) => {
@@ -726,9 +726,8 @@ export default {
     },
 
     breakdownCount(key) {
-      return this.testItem.cscdailydigest.filter(
-        item => item.identifier === key
-      )[0].offered
+      return this.data.cscdailydigest.filter(item => item.identifier === key)[0]
+        .offered
     },
 
     exportTableToExcel() {
