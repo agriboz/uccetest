@@ -32,11 +32,17 @@
               />
             </div>
           </div>
-          <button class="btn btn-primary mt-2" @click="search">
+          <button
+            class="btn btn-primary mt-2"
+            @click="hasResponse = !hasResponse"
+          >
             Search
           </button>
         </div>
-        <table class="table table-bordered text-center table-sm">
+        <table
+          v-if="hasResponse"
+          class="table table-bordered text-center table-sm"
+        >
           <colgroup>
             <col style="width: 130px" />
             <col style="width: 122px" />
@@ -204,7 +210,7 @@
           </tr>
         </table>
 
-        <button class="btn btn-primary" @click="saveReport">
+        <button v-if="hasResponse" class="btn btn-primary" @click="saveReport">
           Save Report
         </button>
       </b-tab>
@@ -435,11 +441,11 @@ export default {
     },
     sendData: {
       note: null,
-      forecasted: null,
-      forecastedAwFte: 0,
-      forecastedAwHours: 0,
-      forecastedAgencyFte: 0,
-      forecastedAgencyHours: 0
+      forecasted: 14084,
+      forecastedAwFte: 82,
+      forecastedAwHours: 1232,
+      forecastedAgencyFte: 115,
+      forecastedAgencyHours: 1142
     },
     testItem: {
       amwaterteams: {
@@ -573,19 +579,19 @@ export default {
           amwaterteams: {
             awfte: {
               forecasted: this.sendData.forecastedAwFte,
-              actual: this.data.amwaterteams.actual.awfte
+              actual: this.testItem.amwaterteams.actual.awfte
             },
             awhours: {
               forecasted: this.sendData.forecastedAwHours,
-              actual: this.data.amwaterteams.actual.awhours
+              actual: this.testItem.amwaterteams.actual.awhours
             },
             agencyfte: {
               forecasted: this.sendData.forecastedAgencyFte,
-              actual: this.data.amwaterteams.actual.agencyfte
+              actual: this.testItem.amwaterteams.actual.agencyfte
             },
             agencyhours: {
               forecasted: this.sendData.forecastedAgencyHours,
-              actual: this.data.amwaterteams.actual.agencyhours
+              actual: this.testItem.amwaterteams.actual.agencyhours
             },
             shrinkage: {
               aw: this.shrinkAgePerc('aw'),
@@ -633,43 +639,43 @@ export default {
     },
 
     totalContained() {
-      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.contained
       }, 0)
     },
 
     totalOffered() {
-      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     },
 
     totalOverflowOut() {
-      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.overflowout
       }, 0)
     },
 
     totalOldestCall() {
-      return this.data.callshistorical.reduce((acc, item) => {
+      return this.testItem.callshistorical.reduce((acc, item) => {
         return acc + item.maxwaittime
       }, 0)
     },
 
     totalAsa() {
-      return this.data.callshistorical.reduce((acc, item) => {
+      return this.testItem.callshistorical.reduce((acc, item) => {
         return acc + item.asa
       }, 0)
     },
 
     totalAht() {
-      return this.data.callshistorical.reduce((acc, item) => {
+      return this.testItem.callshistorical.reduce((acc, item) => {
         return acc + item.aht
       }, 0)
     },
 
     totalBreakdown() {
-      return this.data.cscdailydigest.reduce((acc, item) => {
+      return this.testItem.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     }
@@ -689,8 +695,8 @@ export default {
         awhours: actualAwhours,
         agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
-      } = this.data.amwaterteams.actual
-      console.log(this.data.amwaterteams.actual)
+      } = this.testItem.amwaterteams.actual
+
       if (item === 'aw') {
         const totalForecast = +forecastedAwFte + +forecastedAwHours
         const totalActual = actualAwfte + actualAwhours
@@ -712,7 +718,7 @@ export default {
     },
 
     breakdownPercentage(key) {
-      const offered = this.data.cscdailydigest.filter(
+      const offered = this.testItem.cscdailydigest.filter(
         item => item.identifier === key
       )
       const result = offered.reduce((acc, item) => {
@@ -722,7 +728,7 @@ export default {
     },
 
     breakdownCount(key) {
-      const offered = this.data.cscdailydigest.filter(
+      const offered = this.testItem.cscdailydigest.filter(
         item => item.identifier === key
       )
       const result = offered.reduce((acc, item) => {
