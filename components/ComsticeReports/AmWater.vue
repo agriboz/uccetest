@@ -2,6 +2,7 @@
   <section>
     <b-tabs class="nav-variant" lazy>
       <b-tab class="p-3" title="Create Report">
+        {{ data }}
         <div class="form-group">
           <div class="row">
             <div class="col-md-6">
