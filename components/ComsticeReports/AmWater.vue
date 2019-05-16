@@ -2,7 +2,6 @@
   <section>
     <b-tabs class="nav-variant" lazy>
       <b-tab class="p-3" title="Create Report">
-        {{ data }}
         <div class="form-group">
           <div class="row">
             <div class="col-md-6">
@@ -782,39 +781,40 @@ export default {
       this.item.endTime = await this.$moment(this.item.startTime)
         .add(1, 'day')
         .format(format)
-
+      console.log('dd')
       try {
-        const cscdailydigest = this.$axios.post(
+        const cscdailydigest = await this.$axios.post(
           `cscdailydigest/daily`,
           this.item
         )
-        const callshistorical = this.$axios.post(
+        const callshistorical = await this.$axios.post(
           `callshistorical/daily`,
           this.item
         )
 
-        const cscdailyivrdigest = this.$axios.post(
+        const cscdailyivrdigest = await this.$axios.post(
           `cscdailyivrdigest/daily`,
           this.item
         )
 
-        const amwaterteams = this.$axios.post(`amwaterteams/daily`, this.item)
+        /* const amwaterteams = await this.$axios.post(
+          `amwaterteams/daily`,
+          this.item
+        ) */
 
         const [
           { data: result1 },
           { data: result2 },
-          { data: result3 },
-          { data: result4 }
+          { data: result3 }
         ] = await Promise.all([
           cscdailyivrdigest,
           cscdailydigest,
-          callshistorical,
-          amwaterteams
+          callshistorical
         ])
 
         this.hasResponse = true
 
-        console.log(result3)
+        await console.log('lan', result2)
 
         this.data = await {
           cscdailydigest: result1,
@@ -822,18 +822,18 @@ export default {
           cscdailyivrdigest: result3,
           amwaterteams: {
             actual: {
-              awfte: result4.agents[0].handled,
-              awhours: result4.agents[0].hours,
-              agencyfte: result4.agents[1].handled,
-              agencyhours: result4.agents[1].hours
+              awfte: 82,
+              awhours: 656,
+              agencyfte: 115,
+              agencyhours: 97
             }
           }
         }
         this.sendData = {
-          forecastedAwFte: result4.agents[0].handled,
-          forecastedAwHours: result4.agents[0].hours,
-          forecastedAgencyFte: result4.agents[1].handled,
-          forecastedAgencyHours: result4.agents[1].hours
+          forecastedAwFte: 82,
+          forecastedAwHours: 656,
+          forecastedAgencyFte: 115,
+          forecastedAgencyHours: 97
         }
       } catch (error) {
         console.log(error)
