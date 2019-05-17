@@ -42,9 +42,10 @@ export const actions = {
           path: '/home'
         })
       }, 1000)
-    } catch ({ response }) {
+    } catch (error) {
+      console.log(error)
       await commit('loginFailure')
-      await dispatch('alert/error', response.statusText, { root: true })
+      await dispatch('alert/error', error.message, { root: true })
     }
   },
   logout({ commit }) {

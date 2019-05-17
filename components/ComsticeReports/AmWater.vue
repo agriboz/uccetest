@@ -32,10 +32,7 @@
               />
             </div>
           </div>
-          <button
-            class="btn btn-primary mt-2"
-            @click="hasResponse = !hasResponse"
-          >
+          <button class="btn btn-primary mt-2" @click="search">
             Search
           </button>
         </div>
@@ -251,7 +248,11 @@
       title="Report Detail"
       ok-only
     >
-      <table id="table" class="table table-bordered  text-center table-sm">
+      <table
+        v-if="hasResponse"
+        id="table"
+        class="table table-bordered  text-center table-sm"
+      >
         <colgroup>
           <col style="width: 130px" />
           <col style="width: 122px" />
@@ -441,11 +442,11 @@ export default {
     },
     sendData: {
       note: null,
-      forecasted: 14984,
-      forecastedAwFte: 82,
-      forecastedAwHours: 1232,
+      forecasted: 0,
+      forecastedAwFte: 143,
+      forecastedAwHours: 1144,
       forecastedAgencyFte: 115,
-      forecastedAgencyHours: 1142
+      forecastedAgencyHours: 1120
     },
     testItem: {
       amwaterteams: {
@@ -492,28 +493,13 @@ export default {
         {
           name: 'CSC_MAIN_N_CT',
           date: '2019-04-19',
-          offered: '13510',
+          offered: '6000',
           calltypeid: '6096',
           contained: '6468',
           overflowout: '7042'
         }
       ],
       cscdailydigest: [
-        {
-          identifier: 'BILLING_PQ',
-          date: '2019-04-19',
-          offered: '1822'
-        },
-        {
-          identifier: 'BILLING_PQ',
-          date: '2019-04-19',
-          offered: '1822'
-        },
-        {
-          identifier: 'BILLING_PQ',
-          date: '2019-04-19',
-          offered: '1822'
-        },
         {
           identifier: 'BILLING_PQ',
           date: '2019-04-19',
@@ -579,19 +565,19 @@ export default {
           amwaterteams: {
             awfte: {
               forecasted: this.sendData.forecastedAwFte,
-              actual: this.testItem.amwaterteams.actual.awfte
+              actual: this.data.amwaterteams.actual.awfte
             },
             awhours: {
               forecasted: this.sendData.forecastedAwHours,
-              actual: this.testItem.amwaterteams.actual.awhours
+              actual: this.data.amwaterteams.actual.awhours
             },
             agencyfte: {
               forecasted: this.sendData.forecastedAgencyFte,
-              actual: this.testItem.amwaterteams.actual.agencyfte
+              actual: this.data.amwaterteams.actual.agencyfte
             },
             agencyhours: {
               forecasted: this.sendData.forecastedAgencyHours,
-              actual: this.testItem.amwaterteams.actual.agencyhours
+              actual: this.data.amwaterteams.actual.agencyhours
             },
             shrinkage: {
               aw: this.shrinkAgePerc('aw'),
@@ -639,43 +625,43 @@ export default {
     },
 
     totalContained() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.contained
       }, 0)
     },
 
     totalOffered() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     },
 
     totalOverflowOut() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.overflowout
       }, 0)
     },
 
     totalOldestCall() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
+      return this.data.callshistorical.reduce((acc, item) => {
         return acc + item.maxwaittime
       }, 0)
     },
 
     totalAsa() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
+      return this.data.callshistorical.reduce((acc, item) => {
         return acc + item.asa
       }, 0)
     },
 
     totalAht() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
+      return this.data.callshistorical.reduce((acc, item) => {
         return acc + item.aht
       }, 0)
     },
 
     totalBreakdown() {
-      return this.testItem.cscdailydigest.reduce((acc, item) => {
+      return this.data.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     }
@@ -695,7 +681,7 @@ export default {
         awhours: actualAwhours,
         agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
-      } = this.testItem.amwaterteams.actual
+      } = this.data.amwaterteams.actual
 
       if (item === 'aw') {
         const totalForecast = +forecastedAwFte + +forecastedAwHours
@@ -718,17 +704,20 @@ export default {
     },
 
     breakdownPercentage(key) {
-      const offered = this.testItem.cscdailydigest.filter(
+      const offered = this.data.cscdailydigest.filter(
         item => item.identifier === key
       )
-      const result = offered.reduce((acc, item) => {
-        return ((item.offered * 100) / this.totalBreakdown).toFixed(2)
+
+      const totalOffered = offered.reduce((acc, item) => {
+        return acc + +item.offered
       }, 0)
-      return result
+
+      console.log(totalOffered)
+      return ((totalOffered * 100) / this.totalBreakdown).toFixed(2)
     },
 
     breakdownCount(key) {
-      const offered = this.testItem.cscdailydigest.filter(
+      const offered = this.data.cscdailydigest.filter(
         item => item.identifier === key
       )
       const result = offered.reduce((acc, item) => {
@@ -787,7 +776,7 @@ export default {
       this.item.endTime = await this.$moment(this.item.startTime)
         .add(1, 'day')
         .format(format)
-      console.log('dd')
+
       try {
         const cscdailydigest = await this.$axios.post(
           `cscdailydigest/daily`,
@@ -819,8 +808,6 @@ export default {
         ])
 
         this.hasResponse = true
-
-        await console.log('lan', result2)
 
         this.data = await {
           cscdailydigest: result1,
