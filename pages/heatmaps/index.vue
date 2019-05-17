@@ -149,12 +149,12 @@ export default {
     hasResponse: false,
     heatmapDetail: null,
     item: {
-      csqs: [],
+      callTypes: [],
       startTime: dateRanges(1, true, false),
       endTime: dateRanges(1, false, true),
       shift: {
-        start: '08:00',
-        end: '20:00'
+        start: 0,
+        end: 24
       }
     },
     threshold: {
