@@ -89,7 +89,7 @@
                 class="btn btn-primary ml-1"
                 @click="ignoreWeekends('sunday')"
               >
-                {{ !ignoreDays[1].ignored ? 'Show Sunday' : 'Ignore Sunay' }}
+                {{ !ignoreDays[1].ignored ? 'Show Sunday' : 'Ignore Sunday' }}
               </button>
             </div>
             <component

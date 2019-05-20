@@ -32,7 +32,7 @@
               />
             </div>
           </div>
-          <button class="btn btn-primary mt-2" @click="search">
+          <button class="btn btn-primary mt-2" @click="hasResponse = !hasResponse">
             Search
           </button>
         </div>
@@ -565,19 +565,19 @@ export default {
           amwaterteams: {
             awfte: {
               forecasted: this.sendData.forecastedAwFte,
-              actual: this.data.amwaterteams.actual.awfte
+              actual: this.testItem.amwaterteams.actual.awfte
             },
             awhours: {
               forecasted: this.sendData.forecastedAwHours,
-              actual: this.data.amwaterteams.actual.awhours
+              actual: this.testItem.amwaterteams.actual.awhours
             },
             agencyfte: {
               forecasted: this.sendData.forecastedAgencyFte,
-              actual: this.data.amwaterteams.actual.agencyfte
+              actual: this.testItem.amwaterteams.actual.agencyfte
             },
             agencyhours: {
               forecasted: this.sendData.forecastedAgencyHours,
-              actual: this.data.amwaterteams.actual.agencyhours
+              actual: this.testItem.amwaterteams.actual.agencyhours
             },
             shrinkage: {
               aw: this.shrinkAgePerc('aw'),
@@ -625,43 +625,43 @@ export default {
     },
 
     totalContained() {
-      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.contained
       }, 0)
     },
 
     totalOffered() {
-      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     },
 
     totalOverflowOut() {
-      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.overflowout
       }, 0)
     },
 
     totalOldestCall() {
-      return this.data.callshistorical.reduce((acc, item) => {
+      return this.testItem.callshistorical.reduce((acc, item) => {
         return acc + item.maxwaittime
       }, 0)
     },
 
     totalAsa() {
-      return this.data.callshistorical.reduce((acc, item) => {
+      return this.testItem.callshistorical.reduce((acc, item) => {
         return acc + item.asa
       }, 0)
     },
 
     totalAht() {
-      return this.data.callshistorical.reduce((acc, item) => {
+      return this.testItem.callshistorical.reduce((acc, item) => {
         return acc + item.aht
       }, 0)
     },
 
     totalBreakdown() {
-      return this.data.cscdailydigest.reduce((acc, item) => {
+      return this.testItem.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     }
@@ -681,7 +681,7 @@ export default {
         awhours: actualAwhours,
         agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
-      } = this.data.amwaterteams.actual
+      } = this.testItem.amwaterteams.actual
 
       if (item === 'aw') {
         const totalForecast = +forecastedAwFte + +forecastedAwHours
@@ -704,7 +704,7 @@ export default {
     },
 
     breakdownPercentage(key) {
-      const offered = this.data.cscdailydigest.filter(
+      const offered = this.testItem.cscdailydigest.filter(
         item => item.identifier === key
       )
 
@@ -717,7 +717,7 @@ export default {
     },
 
     breakdownCount(key) {
-      const offered = this.data.cscdailydigest.filter(
+      const offered = this.testItem.cscdailydigest.filter(
         item => item.identifier === key
       )
       const result = offered.reduce((acc, item) => {
@@ -767,9 +767,9 @@ export default {
       } catch (error) {
         await this.$toast.error(error.response.statusText)
       }
-    },
+    }
 
-    async search() {
+    /* async search() {
       this.hasResponse = false
       const format = 'YYYY-MM-DD'
 
@@ -792,10 +792,10 @@ export default {
           this.item
         )
 
-        /* const amwaterteams = await this.$axios.post(
+        const amwaterteams = await this.$axios.post(
           `amwaterteams/daily`,
           this.item
-        ) */
+        )
 
         const [
           { data: result1 },
@@ -809,7 +809,7 @@ export default {
 
         this.hasResponse = true
 
-        this.data = await {
+        this.testItem = await {
           cscdailydigest: result1,
           callshistorical: result2,
           cscdailyivrdigest: result3,
@@ -831,7 +831,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    }
+    } */
   }
 }
 </script>
