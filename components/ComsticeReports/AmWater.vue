@@ -32,7 +32,7 @@
               />
             </div>
           </div>
-          <button class="btn btn-primary mt-2" @click="hasResponse = !hasResponse">
+          <button class="btn btn-primary mt-2" @click="search">
             Search
           </button>
         </div>
@@ -119,7 +119,7 @@
             <td>
               {{ breakdownCount('BILLING_PQ') }}
             </td>
-            <td>%{{ breakdownPercentage('BILLING_PQ') }}</td>
+            <td>{{ breakdownPercentage('BILLING_PQ') }}%</td>
           </tr>
           <tr>
             <td>Contained</td>
@@ -133,16 +133,16 @@
               />
             </td>
             <td>{{ data.amwaterteams.actual.awfte }}</td>
-            <td rowspan="2">%{{ shrinkAgePerc('aw') }}</td>
+            <td rowspan="2">{{ shrinkAgePerc('aw') }}%</td>
             <td class="text-uppercase">Emergency</td>
             <td>
               {{ breakdownCount('EMERGENCY_PQ') }}
             </td>
-            <td>%{{ breakdownPercentage('EMERGENCY_PQ') }}</td>
+            <td>{{ breakdownPercentage('EMERGENCY_PQ') }}%</td>
           </tr>
           <tr>
             <td>Containment Rate</td>
-            <td>%{{ containmentRate }}</td>
+            <td>{{ containmentRate }}%</td>
             <td>AW Hours</td>
             <td>
               <input
@@ -156,7 +156,7 @@
             <td>
               {{ breakdownCount('MAKEPAYMENT_PQ') }}
             </td>
-            <td>%{{ breakdownPercentage('MAKEPAYMENT_PQ') }}</td>
+            <td>{{ breakdownPercentage('MAKEPAYMENT_PQ') }}%</td>
           </tr>
           <tr>
             <td>Outflow to Queue</td>
@@ -170,12 +170,12 @@
               />
             </td>
             <td>{{ data.amwaterteams.actual.agencyfte }}</td>
-            <td rowspan="2">%{{ shrinkAgePerc('agency') }}</td>
+            <td rowspan="2">{{ shrinkAgePerc('agency') }}&</td>
             <td class="text-uppercase">Other</td>
             <td>
               {{ breakdownCount('OTHER_PQ') }}
             </td>
-            <td>%{{ breakdownPercentage('OTHER_PQ') }}</td>
+            <td>{{ breakdownPercentage('OTHER_PQ') }}%</td>
           </tr>
           <tr>
             <td></td>
@@ -193,7 +193,7 @@
             <td>
               {{ breakdownCount('SERVICE_PQ') }}
             </td>
-            <td>%{{ breakdownPercentage('SERVICE_PQ') }}</td>
+            <td>{{ breakdownPercentage('SERVICE_PQ') }}%</td>
           </tr>
           <tr>
             <td colspan="9">
@@ -334,7 +334,7 @@
           <td>
             {{ report.data.cscdailydigest.billing.count }}
           </td>
-          <td>%{{ report.data.cscdailydigest.billing.percentage }}</td>
+          <td>{{ report.data.cscdailydigest.billing.percentage }}%</td>
         </tr>
         <tr>
           <td>Contained</td>
@@ -344,16 +344,16 @@
             {{ report.data.amwaterteams.awfte.forecasted }}
           </td>
           <td>{{ report.data.amwaterteams.awfte.actual }}</td>
-          <td rowspan="2">%{{ report.data.amwaterteams.shrinkage.aw }}</td>
+          <td rowspan="2">{{ report.data.amwaterteams.shrinkage.aw }}%</td>
           <td class="text-uppercase">Emergency</td>
           <td>
             {{ report.data.cscdailydigest.emergency.count }}
           </td>
-          <td>%{{ report.data.cscdailydigest.emergency.percentage }}</td>
+          <td>{{ report.data.cscdailydigest.emergency.percentage }}%</td>
         </tr>
         <tr>
           <td>Containment Rate</td>
-          <td>%{{ report.data.cscdailyivrdigest.containmentRate }}</td>
+          <td>{{ report.data.cscdailyivrdigest.containmentRate }}%</td>
           <td>AW Hours</td>
           <td>
             {{ report.data.amwaterteams.awhours.forecasted }}
@@ -363,7 +363,7 @@
           <td>
             {{ report.data.cscdailydigest.makePayment.count }}
           </td>
-          <td>%{{ report.data.cscdailydigest.makePayment.percentage }}</td>
+          <td>{{ report.data.cscdailydigest.makePayment.percentage }}%</td>
         </tr>
         <tr>
           <td>Outflow to Queue</td>
@@ -373,12 +373,12 @@
             {{ report.data.amwaterteams.agencyfte.forecasted }}
           </td>
           <td>{{ report.data.amwaterteams.agencyfte.actual }}</td>
-          <td rowspan="2">%{{ report.data.amwaterteams.shrinkage.agency }}</td>
+          <td rowspan="2">{{ report.data.amwaterteams.shrinkage.agency }}%</td>
           <td class="text-uppercase">Other</td>
           <td>
             {{ report.data.cscdailydigest.other.count }}
           </td>
-          <td>%{{ report.data.cscdailydigest.other.percentage }}</td>
+          <td>{{ report.data.cscdailydigest.other.percentage }}%</td>
         </tr>
         <tr>
           <td></td>
@@ -392,7 +392,7 @@
           <td>
             {{ breakdownCount('SERVICE_PQ') }}
           </td>
-          <td>%{{ breakdownPercentage('SERVICE_PQ') }}</td>
+          <td>{{ breakdownPercentage('SERVICE_PQ') }}%</td>
         </tr>
         <tr>
           <td colspan="9">
@@ -565,19 +565,19 @@ export default {
           amwaterteams: {
             awfte: {
               forecasted: this.sendData.forecastedAwFte,
-              actual: this.testItem.amwaterteams.actual.awfte
+              actual: this.data.amwaterteams.actual.awfte
             },
             awhours: {
               forecasted: this.sendData.forecastedAwHours,
-              actual: this.testItem.amwaterteams.actual.awhours
+              actual: this.data.amwaterteams.actual.awhours
             },
             agencyfte: {
               forecasted: this.sendData.forecastedAgencyFte,
-              actual: this.testItem.amwaterteams.actual.agencyfte
+              actual: this.data.amwaterteams.actual.agencyfte
             },
             agencyhours: {
               forecasted: this.sendData.forecastedAgencyHours,
-              actual: this.testItem.amwaterteams.actual.agencyhours
+              actual: this.data.amwaterteams.actual.agencyhours
             },
             shrinkage: {
               aw: this.shrinkAgePerc('aw'),
@@ -625,43 +625,63 @@ export default {
     },
 
     totalContained() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.contained
       }, 0)
     },
 
     totalOffered() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     },
 
     totalOverflowOut() {
-      return this.testItem.cscdailyivrdigest.reduce((acc, item) => {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
         return acc + +item.overflowout
       }, 0)
     },
 
     totalOldestCall() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
-        return acc + item.maxwaittime
+      return this.data.callshistorical.reduce(
+        (st, tot) => (st = st > tot.maxwaittime ? st : tot.maxwaittime),
+        0
+      )
+    },
+
+    totalCallSize() {
+      return this.data.callshistorical.reduce((st, en) => {
+        return st + en.handled
       }, 0)
     },
 
     totalAsa() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
-        return acc + item.asa
-      }, 0)
+      return (
+        this.data.callshistorical
+          .map(item => {
+            return item.handled * item.asa
+          })
+          .reduce((f, e) => {
+            return f + e
+          }, 0) / this.totalCallSize
+      )
     },
 
     totalAht() {
-      return this.testItem.callshistorical.reduce((acc, item) => {
-        return acc + item.aht
-      }, 0)
+      return (
+        this.data.callshistorical
+          .map(item => {
+            return item.handled * item.aht
+          })
+          .reduce((f, e) => {
+            return f + e
+          }, 0) / this.totalCallSize
+      )
+
     },
 
     totalBreakdown() {
-      return this.testItem.cscdailydigest.reduce((acc, item) => {
+      return this.data.cscdailydigest.reduce((acc, item) => {
         return acc + +item.offered
       }, 0)
     }
@@ -681,7 +701,7 @@ export default {
         awhours: actualAwhours,
         agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
-      } = this.testItem.amwaterteams.actual
+      } = this.data.amwaterteams.actual
 
       if (item === 'aw') {
         const totalForecast = +forecastedAwFte + +forecastedAwHours
@@ -704,7 +724,7 @@ export default {
     },
 
     breakdownPercentage(key) {
-      const offered = this.testItem.cscdailydigest.filter(
+      const offered = this.data.cscdailydigest.filter(
         item => item.identifier === key
       )
 
@@ -717,7 +737,7 @@ export default {
     },
 
     breakdownCount(key) {
-      const offered = this.testItem.cscdailydigest.filter(
+      const offered = this.data.cscdailydigest.filter(
         item => item.identifier === key
       )
       const result = offered.reduce((acc, item) => {
@@ -767,16 +787,15 @@ export default {
       } catch (error) {
         await this.$toast.error(error.response.statusText)
       }
-    }
+    },
 
-    /* async search() {
+    async search() {
       this.hasResponse = false
       const format = 'YYYY-MM-DD'
 
       this.item.endTime = await this.$moment(this.item.startTime)
         .add(1, 'day')
         .format(format)
-
       try {
         const cscdailydigest = await this.$axios.post(
           `cscdailydigest/daily`,
@@ -792,36 +811,32 @@ export default {
           this.item
         )
 
-        const amwaterteams = await this.$axios.post(
-          `amwaterteams/daily`,
-          this.item
-        )
+        /* const amwaterteams = await this.$axios.post(
+            `amwaterteams/daily`,
+            this.item
+          ) */
 
-        const [
-          { data: result1 },
-          { data: result2 },
-          { data: result3 }
-        ] = await Promise.all([
+        await Promise.all([
           cscdailyivrdigest,
           cscdailydigest,
           callshistorical
-        ])
-
-        this.hasResponse = true
-
-        this.testItem = await {
-          cscdailydigest: result1,
-          callshistorical: result2,
-          cscdailyivrdigest: result3,
-          amwaterteams: {
-            actual: {
-              awfte: 82,
-              awhours: 656,
-              agencyfte: 115,
-              agencyhours: 97
+        ]).then(datas => {
+          this.data = {
+            cscdailydigest: datas[1].data,
+            callshistorical: datas[2].data,
+            cscdailyivrdigest: datas[0].data,
+            amwaterteams: {
+              actual: {
+                awfte: 82,
+                awhours: 656,
+                agencyfte: 115,
+                agencyhours: 97
+              }
             }
           }
-        }
+          this.hasResponse = true
+        })
+
         this.sendData = {
           forecastedAwFte: 82,
           forecastedAwHours: 656,
@@ -831,7 +846,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    } */
+    }
   }
 }
 </script>
