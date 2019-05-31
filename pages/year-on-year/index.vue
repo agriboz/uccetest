@@ -87,12 +87,14 @@
 <script>
 import PageTitle from '@/components/PageTitle'
 import ReportFilter from '@/components/StockReportFilter'
+import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels'
 
 export default {
   layout: 'authenticated',
   components: {
     ReportFilter,
-    PageTitle
+    PageTitle,
+    ChartJsPluginDataLabels
   },
   data: () => ({
     pickedFilterType: 1,
@@ -258,7 +260,26 @@ export default {
             datasets: [],
             labels: labels.map(label => label.name)
           },
+
           options: {
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: {
+                anchor: 'end',
+                align: 'end',
+                display: function(context) {
+                  return context.dataset.data[context.dataIndex] >= 1
+                },
+                font: {
+                  weight: 'bold'
+                }
+              }
+            },
+            elements: {
+              line: {
+                fill: false
+              }
+            },
             scales: {
               yAxes: [
                 {
@@ -281,6 +302,16 @@ export default {
             labels: labels.map(label => label.name)
           },
           options: {
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: {
+                anchor: 'center',
+                align: 'center',
+                font: {
+                  weight: 'bold'
+                }
+              }
+            },
             scales: {
               yAxes: [
                 {
@@ -338,9 +369,13 @@ export default {
         changeData.push(diff)
       }
       charts.yoyChart.data.datasets.push({
+        datalabels: {
+          display: false
+        },
         label: 'Average Handle Time',
         data: averageData,
         type: 'line',
+        fill: 0,
         //yAxisID: 'csqchange-y-axis',
         lineTension: 0,
         backgroundColor: '#f00000',

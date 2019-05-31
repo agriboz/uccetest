@@ -63,23 +63,23 @@
             </td>
             <td class="font-weight-bold h1" colspan="2" rowspan="3">
               {{
-              $moment.duration(totalOldestCall, 'second').format('mm:ss', {
-              trim: false
-              })
+                $moment.duration(totalOldestCall, 'second').format('mm:ss', {
+                  trim: false
+                })
               }}
             </td>
             <td class="font-weight-bold h1" rowspan="4">
               {{
-              $moment.duration(totalAsa, 'second').format('mm:ss', {
-              trim: false
-              })
+                $moment.duration(totalAsa, 'second').format('mm:ss', {
+                  trim: false
+                })
               }}
             </td>
             <td class="font-weight-bold h1" colspan="4" rowspan="4">
               {{
-              $moment.duration(totalAht, 'second').format('mm:ss', {
-              trim: false
-              })
+                $moment.duration(totalAht, 'second').format('mm:ss', {
+                  trim: false
+                })
               }}
             </td>
           </tr>
@@ -276,29 +276,29 @@
           </td>
           <td class="font-weight-bold h1" colspan="2" rowspan="3">
             {{
-            $moment
-            .duration(report.data.callshistorical.oldestCall, 'second')
-            .format('mm:ss', {
-            trim: false
-            })
+              $moment
+                .duration(report.data.callshistorical.oldestCall, 'second')
+                .format('mm:ss', {
+                  trim: false
+                })
             }}
           </td>
           <td class="font-weight-bold h1" rowspan="4">
             {{
-            $moment
-            .duration(report.data.callshistorical.asa, 'second')
-            .format('mm:ss', {
-            trim: false
-            })
+              $moment
+                .duration(report.data.callshistorical.asa, 'second')
+                .format('mm:ss', {
+                  trim: false
+                })
             }}
           </td>
           <td class="font-weight-bold h1" colspan="4" rowspan="4">
             {{
-            $moment
-            .duration(report.data.callshistorical.aht, 'second')
-            .format('mm:ss', {
-            trim: false
-            })
+              $moment
+                .duration(report.data.callshistorical.aht, 'second')
+                .format('mm:ss', {
+                  trim: false
+                })
             }}
           </td>
         </tr>
@@ -412,447 +412,446 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      hasResponse: false,
-      modal: false,
-      reports: [],
-      report: null,
-      currentPage: 1,
-      perPage: 10,
-      pageOptions: [5, 10, 15],
-      tableFields: [
-        { key: 'date', label: 'Date' },
-        { key: 'name', label: 'Report Name' },
-        { key: 'actions', label: 'Actions' }
-      ],
-      item: {},
-      data: {
-        cscdailydigest: [],
-        cscdailyivrdigest: [],
-        callshistorical: [],
-        amwaterteams: {
-          actual: {
-            awfte: 82,
-            awhours: 656,
-            agencyfte: 115,
-            agencyhours: 917
-          }
+export default {
+  data: () => ({
+    hasResponse: false,
+    modal: false,
+    reports: [],
+    report: null,
+    currentPage: 1,
+    perPage: 10,
+    pageOptions: [5, 10, 15],
+    tableFields: [
+      { key: 'date', label: 'Date' },
+      { key: 'name', label: 'Report Name' },
+      { key: 'actions', label: 'Actions' }
+    ],
+    item: {},
+    data: {
+      cscdailydigest: [],
+      cscdailyivrdigest: [],
+      callshistorical: [],
+      amwaterteams: {
+        actual: {
+          awfte: 82,
+          awhours: 656,
+          agencyfte: 115,
+          agencyhours: 917
+        }
+      }
+    },
+    sendData: {
+      note: null,
+      forecasted: 0,
+      forecastedAwFte: 143,
+      forecastedAwHours: 1144,
+      forecastedAgencyFte: 115,
+      forecastedAgencyHours: 1120
+    },
+    testItem: {
+      amwaterteams: {
+        actual: {
+          awfte: 82,
+          awhours: 656,
+          agencyfte: 115,
+          agencyhours: 917
         }
       },
-      sendData: {
-        note: null,
-        forecasted: 0,
-        forecastedAwFte: 143,
-        forecastedAwHours: 1144,
-        forecastedAgencyFte: 115,
-        forecastedAgencyHours: 1120
-      },
-      testItem: {
-        amwaterteams: {
-          actual: {
-            awfte: 82,
-            awhours: 656,
-            agencyfte: 115,
-            agencyhours: 917
-          }
+      callshistorical: [
+        {
+          offered: 356,
+          handled: 346,
+          id: 6084,
+          answered: 350,
+          slanswered: 283,
+          abandoned: 10,
+          maxwaittime: 317,
+          asa: 36,
+          aht: 529
         },
-        callshistorical: [
-          {
-            offered: 356,
-            handled: 346,
-            id: 6084,
-            answered: 350,
-            slanswered: 283,
-            abandoned: 10,
-            maxwaittime: 317,
-            asa: 36,
-            aht: 529
-          },
-          {
-            offered: 356,
-            handled: 346,
-            id: 6084,
-            answered: 350,
-            slanswered: 283,
-            abandoned: 10,
-            maxwaittime: 317,
-            asa: 36,
-            aht: 529
-          }
-        ],
-        cscdailyivrdigest: [
-          {
-            name: 'CSC_MAIN_N_CT',
-            date: '2019-04-19',
-            offered: '13510',
-            calltypeid: '6096',
-            contained: '6468',
-            overflowout: '7042'
-          },
-          {
-            name: 'CSC_MAIN_N_CT',
-            date: '2019-04-19',
-            offered: '6000',
-            calltypeid: '6096',
-            contained: '6468',
-            overflowout: '7042'
-          }
-        ],
-        cscdailydigest: [
-          {
-            identifier: 'BILLING_PQ',
-            date: '2019-04-19',
-            offered: '1822'
-          },
-          {
-            identifier: 'EMERGENCY_PQ',
-            date: '2019-04-19',
-            offered: '947'
-          },
-          {
-            identifier: 'MAKEPAYMENT_PQ',
-            date: '2019-04-19',
-            offered: '386'
-          },
-          {
-            identifier: 'OTHER_PQ',
-            date: '2019-04-19',
-            offered: '1916'
-          },
-          {
-            identifier: 'SERVICE_PQ',
-            date: '2019-04-19',
-            offered: '1974'
-          },
-          {
-            identifier: 'BILLING_PQ',
-            date: '2019-04-19',
-            offered: '1822'
-          },
-          {
-            identifier: 'EMERGENCY_PQ',
-            date: '2019-04-19',
-            offered: '947'
-          },
-          {
-            identifier: 'MAKEPAYMENT_PQ',
-            date: '2019-04-19',
-            offered: '386'
-          },
-          {
-            identifier: 'OTHER_PQ',
-            date: '2019-04-19',
-            offered: '1916'
-          },
-          {
-            identifier: 'SERVICE_PQ',
-            date: '2019-04-19',
-            offered: '1974'
-          }
-        ]
-      }
-    }),
+        {
+          offered: 356,
+          handled: 346,
+          id: 6084,
+          answered: 350,
+          slanswered: 283,
+          abandoned: 10,
+          maxwaittime: 317,
+          asa: 36,
+          aht: 529
+        }
+      ],
+      cscdailyivrdigest: [
+        {
+          name: 'CSC_MAIN_N_CT',
+          date: '2019-04-19',
+          offered: '13510',
+          calltypeid: '6096',
+          contained: '6468',
+          overflowout: '7042'
+        },
+        {
+          name: 'CSC_MAIN_N_CT',
+          date: '2019-04-19',
+          offered: '6000',
+          calltypeid: '6096',
+          contained: '6468',
+          overflowout: '7042'
+        }
+      ],
+      cscdailydigest: [
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'EMERGENCY_PQ',
+          date: '2019-04-19',
+          offered: '947'
+        },
+        {
+          identifier: 'MAKEPAYMENT_PQ',
+          date: '2019-04-19',
+          offered: '386'
+        },
+        {
+          identifier: 'OTHER_PQ',
+          date: '2019-04-19',
+          offered: '1916'
+        },
+        {
+          identifier: 'SERVICE_PQ',
+          date: '2019-04-19',
+          offered: '1974'
+        },
+        {
+          identifier: 'BILLING_PQ',
+          date: '2019-04-19',
+          offered: '1822'
+        },
+        {
+          identifier: 'EMERGENCY_PQ',
+          date: '2019-04-19',
+          offered: '947'
+        },
+        {
+          identifier: 'MAKEPAYMENT_PQ',
+          date: '2019-04-19',
+          offered: '386'
+        },
+        {
+          identifier: 'OTHER_PQ',
+          date: '2019-04-19',
+          offered: '1916'
+        },
+        {
+          identifier: 'SERVICE_PQ',
+          date: '2019-04-19',
+          offered: '1974'
+        }
+      ]
+    }
+  }),
 
-    computed: {
-      saveData() {
-        return {
-          name: `AMWater-${this.item.startTime}`,
-          date: this.item.startTime,
-          data: {
-            note: this.sendData.note,
-            forecasted: this.sendData.forecasted,
-            amwaterteams: {
-              awfte: {
-                forecasted: this.sendData.forecastedAwFte,
-                actual: this.data.amwaterteams.actual.awfte
-              },
-              awhours: {
-                forecasted: this.sendData.forecastedAwHours,
-                actual: this.data.amwaterteams.actual.awhours
-              },
-              agencyfte: {
-                forecasted: this.sendData.forecastedAgencyFte,
-                actual: this.data.amwaterteams.actual.agencyfte
-              },
-              agencyhours: {
-                forecasted: this.sendData.forecastedAgencyHours,
-                actual: this.data.amwaterteams.actual.agencyhours
-              },
-              shrinkage: {
-                aw: this.shrinkAgePerc('aw'),
-                agency: this.shrinkAgePerc('agency')
-              }
+  computed: {
+    saveData() {
+      return {
+        name: `AMWater-${this.item.startTime}`,
+        date: this.item.startTime,
+        data: {
+          note: this.sendData.note,
+          forecasted: this.sendData.forecasted,
+          amwaterteams: {
+            awfte: {
+              forecasted: this.sendData.forecastedAwFte,
+              actual: this.data.amwaterteams.actual.awfte
             },
-            callshistorical: {
-              oldestCall: this.totalOldestCall,
-              asa: this.totalAsa,
-              aht: this.totalAht
+            awhours: {
+              forecasted: this.sendData.forecastedAwHours,
+              actual: this.data.amwaterteams.actual.awhours
             },
-            cscdailyivrdigest: {
-              volumeIn: this.totalOffered,
-              contained: this.totalContained,
-              outflowToQueue: this.totalOverflowOut,
-              containmentRate: this.containmentRate
+            agencyfte: {
+              forecasted: this.sendData.forecastedAgencyFte,
+              actual: this.data.amwaterteams.actual.agencyfte
             },
-            cscdailydigest: {
-              billing: {
-                count: this.breakdownCount('BILLING_PQ'),
-                percentage: this.breakdownPercentage('BILLING_PQ')
-              },
-              emergency: {
-                count: this.breakdownCount('EMERGENCY_PQ'),
-                percentage: this.breakdownPercentage('EMERGENCY_PQ')
-              },
-              makePayment: {
-                count: this.breakdownCount('MAKEPAYMENT_PQ'),
-                percentage: this.breakdownPercentage('MAKEPAYMENT_PQ')
-              },
-              other: {
-                count: this.breakdownCount('OTHER_PQ'),
-                percentage: this.breakdownPercentage('OTHER_PQ')
-              },
-              service: {
-                count: this.breakdownCount('SERVICE_PQ'),
-                percentage: this.breakdownPercentage('SERVICE_PQ')
-              }
+            agencyhours: {
+              forecasted: this.sendData.forecastedAgencyHours,
+              actual: this.data.amwaterteams.actual.agencyhours
+            },
+            shrinkage: {
+              aw: this.shrinkAgePerc('aw'),
+              agency: this.shrinkAgePerc('agency')
+            }
+          },
+          callshistorical: {
+            oldestCall: this.totalOldestCall,
+            asa: this.totalAsa,
+            aht: this.totalAht
+          },
+          cscdailyivrdigest: {
+            volumeIn: this.totalOffered,
+            contained: this.totalContained,
+            outflowToQueue: this.totalOverflowOut,
+            containmentRate: this.containmentRate
+          },
+          cscdailydigest: {
+            billing: {
+              count: this.breakdownCount('BILLING_PQ'),
+              percentage: this.breakdownPercentage('BILLING_PQ')
+            },
+            emergency: {
+              count: this.breakdownCount('EMERGENCY_PQ'),
+              percentage: this.breakdownPercentage('EMERGENCY_PQ')
+            },
+            makePayment: {
+              count: this.breakdownCount('MAKEPAYMENT_PQ'),
+              percentage: this.breakdownPercentage('MAKEPAYMENT_PQ')
+            },
+            other: {
+              count: this.breakdownCount('OTHER_PQ'),
+              percentage: this.breakdownPercentage('OTHER_PQ')
+            },
+            service: {
+              count: this.breakdownCount('SERVICE_PQ'),
+              percentage: this.breakdownPercentage('SERVICE_PQ')
             }
           }
         }
-      },
-      containmentRate() {
-        return (100 * (+this.totalContained / +this.totalOffered)).toFixed(2)
-      },
+      }
+    },
+    containmentRate() {
+      return (100 * (+this.totalContained / +this.totalOffered)).toFixed(2)
+    },
 
-      totalContained() {
-        return this.data.cscdailyivrdigest.reduce((acc, item) => {
-          return acc + +item.contained
-        }, 0)
-      },
+    totalContained() {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+        return acc + +item.contained
+      }, 0)
+    },
 
-      totalOffered() {
-        return this.data.cscdailyivrdigest.reduce((acc, item) => {
-          return acc + +item.offered
-        }, 0)
-      },
+    totalOffered() {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
+    },
 
-      totalOverflowOut() {
-        return this.data.cscdailyivrdigest.reduce((acc, item) => {
-          return acc + +item.overflowout
-        }, 0)
-      },
+    totalOverflowOut() {
+      return this.data.cscdailyivrdigest.reduce((acc, item) => {
+        return acc + +item.overflowout
+      }, 0)
+    },
 
-      totalOldestCall() {
-        return this.data.callshistorical.reduce(
-          (st, tot) => (st = st > tot.maxwaittime ? st : tot.maxwaittime),
-          0
-        )
-      },
+    totalOldestCall() {
+      return this.data.callshistorical.reduce(
+        (st, tot) => (st = st > tot.maxwaittime ? st : tot.maxwaittime),
+        0
+      )
+    },
 
-      totalCallSize() {
-        return this.data.callshistorical.reduce((st, en) => {
-          return st + en.handled
-        }, 0)
-      },
+    totalCallSize() {
+      return this.data.callshistorical.reduce((st, en) => {
+        return st + en.handled
+      }, 0)
+    },
 
-      totalAsa() {
-        return (
-          this.data.callshistorical
-            .map(item => {
-              return item.handled * item.asa
-            })
-            .reduce((f, e) => {
-              return f + e
-            }, 0) / this.totalCallSize
-        )
-      },
+    totalAsa() {
+      return (
+        this.data.callshistorical
+          .map(item => {
+            return item.handled * item.asa
+          })
+          .reduce((f, e) => {
+            return f + e
+          }, 0) / this.totalCallSize
+      )
+    },
 
-      totalAht() {
-        return (
-          this.data.callshistorical
-            .map(item => {
-              return item.handled * item.aht
-            })
-            .reduce((f, e) => {
-              return f + e
-            }, 0) / this.totalCallSize
-        )
+    totalAht() {
+      return (
+        this.data.callshistorical
+          .map(item => {
+            return item.handled * item.aht
+          })
+          .reduce((f, e) => {
+            return f + e
+          }, 0) / this.totalCallSize
+      )
+    },
 
-      },
+    totalBreakdown() {
+      return this.data.cscdailydigest.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
+    }
+  },
 
-      totalBreakdown() {
-        return this.data.cscdailydigest.reduce((acc, item) => {
-          return acc + +item.offered
-        }, 0)
+  methods: {
+    shrinkAgePerc(item) {
+      const {
+        forecastedAwFte,
+        forecastedAwHours,
+        forecastedAgencyFte,
+        forecastedAgencyHours
+      } = this.sendData
+
+      const {
+        awfte: actualAwfte,
+        awhours: actualAwhours,
+        agencyfte: actualAgencyfte,
+        agencyhours: actualAgencyhours
+      } = this.data.amwaterteams.actual
+
+      if (item === 'aw') {
+        const totalForecast = +forecastedAwFte + +forecastedAwHours
+        const totalActual = actualAwfte + actualAwhours
+        const minusTotals = (totalForecast - totalActual) * 100
+        const result = minusTotals / totalForecast
+        const toFixed = result.toFixed(2)
+        return toFixed
+      }
+
+      if (item === 'agency') {
+        const totalForecast = +forecastedAgencyFte + +forecastedAgencyHours
+        const totalActual = actualAgencyfte + actualAgencyhours
+        const minusTotals = (totalForecast - totalActual) * 100
+        const result = minusTotals / totalForecast
+        const toFixed = result.toFixed(2)
+        console.log(actualAgencyhours)
+        return toFixed
       }
     },
 
-    methods: {
-      shrinkAgePerc(item) {
-        const {
-          forecastedAwFte,
-          forecastedAwHours,
-          forecastedAgencyFte,
-          forecastedAgencyHours
-        } = this.sendData
+    breakdownPercentage(key) {
+      const offered = this.data.cscdailydigest.filter(
+        item => item.identifier === key
+      )
 
-        const {
-          awfte: actualAwfte,
-          awhours: actualAwhours,
-          agencyfte: actualAgencyfte,
-          agencyhours: actualAgencyhours
-        } = this.data.amwaterteams.actual
+      const totalOffered = offered.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
 
-        if (item === 'aw') {
-          const totalForecast = +forecastedAwFte + +forecastedAwHours
-          const totalActual = actualAwfte + actualAwhours
-          const minusTotals = (totalForecast - totalActual) * 100
-          const result = minusTotals / totalForecast
-          const toFixed = result.toFixed(2)
-          return toFixed
+      console.log(totalOffered)
+      return ((totalOffered * 100) / this.totalBreakdown).toFixed(2)
+    },
+
+    breakdownCount(key) {
+      const offered = this.data.cscdailydigest.filter(
+        item => item.identifier === key
+      )
+      const result = offered.reduce((acc, item) => {
+        return acc + +item.offered
+      }, 0)
+      return result
+    },
+
+    exportTableToExcel() {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+        template =
+          '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>',
+        base64 = function(s) {
+          return window.btoa(unescape(encodeURIComponent(s)))
+        },
+        format = function(s, c) {
+          return s.replace(/{(\w+)}/g, function(m, p) {
+            return c[p]
+          })
         }
+      return (table, name) => {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+        var link = document.createElement('a')
+        link.download = `AMWater-${this.report.date}`
+        link.href = uri + base64(format(template, ctx))
+        link.click()
+        // window.location.href = uri + base64(format(template, ctx))
+      }
+    },
 
-        if (item === 'agency') {
-          const totalForecast = +forecastedAgencyFte + +forecastedAgencyHours
-          const totalActual = actualAgencyfte + actualAgencyhours
-          const minusTotals = (totalForecast - totalActual) * 100
-          const result = minusTotals / totalForecast
-          const toFixed = result.toFixed(2)
-          console.log(actualAgencyhours)
-          return toFixed
-        }
-      },
+    async getReports() {
+      const { data } = await this.$axios.get('daily-metrics')
+      this.reports = data
+    },
 
-      breakdownPercentage(key) {
-        const offered = this.data.cscdailydigest.filter(
-          item => item.identifier === key
+    async getReportById(id) {
+      const { data } = await this.$axios.get(`daily-metrics/${id}`)
+      this.report = await data
+      this.modal = await true
+    },
+
+    async saveReport() {
+      try {
+        await this.$axios.post(`daily-metrics`, this.saveData)
+        await this.$toast.success('Report Created')
+      } catch (error) {
+        await this.$toast.error(error.response.statusText)
+      }
+    },
+
+    async search() {
+      this.hasResponse = false
+      const format = 'YYYY-MM-DD'
+
+      this.item.endTime = await this.$moment(this.item.startTime)
+        .add(1, 'day')
+        .format(format)
+      try {
+        const cscdailydigest = await this.$axios.post(
+          `cscdailydigest/daily`,
+          this.item
+        )
+        const callshistorical = await this.$axios.post(
+          `callshistorical/daily`,
+          this.item
         )
 
-        const totalOffered = offered.reduce((acc, item) => {
-          return acc + +item.offered
-        }, 0)
-
-        console.log(totalOffered)
-        return ((totalOffered * 100) / this.totalBreakdown).toFixed(2)
-      },
-
-      breakdownCount(key) {
-        const offered = this.data.cscdailydigest.filter(
-          item => item.identifier === key
+        const cscdailyivrdigest = await this.$axios.post(
+          `cscdailyivrdigest/daily`,
+          this.item
         )
-        const result = offered.reduce((acc, item) => {
-          return acc + +item.offered
-        }, 0)
-        return result
-      },
 
-      exportTableToExcel() {
-        var uri = 'data:application/vnd.ms-excel;base64,',
-          template =
-            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>',
-          base64 = function(s) {
-            return window.btoa(unescape(encodeURIComponent(s)))
-          },
-          format = function(s, c) {
-            return s.replace(/{(\w+)}/g, function(m, p) {
-              return c[p]
-            })
-          }
-        return (table, name) => {
-          if (!table.nodeType) table = document.getElementById(table)
-          var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
-          var link = document.createElement('a')
-          link.download = `AMWater-${this.report.date}`
-          link.href = uri + base64(format(template, ctx))
-          link.click()
-          // window.location.href = uri + base64(format(template, ctx))
-        }
-      },
-
-      async getReports() {
-        const { data } = await this.$axios.get('daily-metrics')
-        this.reports = data
-      },
-
-      async getReportById(id) {
-        const { data } = await this.$axios.get(`daily-metrics/${id}`)
-        this.report = await data
-        this.modal = await true
-      },
-
-      async saveReport() {
-        try {
-          await this.$axios.post(`daily-metrics`, this.saveData)
-          await this.$toast.success('Report Created')
-        } catch (error) {
-          await this.$toast.error(error.response.statusText)
-        }
-      },
-
-      async search() {
-        this.hasResponse = false
-        const format = 'YYYY-MM-DD'
-
-        this.item.endTime = await this.$moment(this.item.startTime)
-          .add(1, 'day')
-          .format(format)
-        try {
-          const cscdailydigest = await this.$axios.post(
-            `cscdailydigest/daily`,
-            this.item
-          )
-          const callshistorical = await this.$axios.post(
-            `callshistorical/daily`,
-            this.item
-          )
-
-          const cscdailyivrdigest = await this.$axios.post(
-            `cscdailyivrdigest/daily`,
-            this.item
-          )
-
-          /* const amwaterteams = await this.$axios.post(
+        /* const amwaterteams = await this.$axios.post(
               `amwaterteams/daily`,
               this.item
             ) */
 
-          await Promise.all([
-            cscdailyivrdigest,
-            cscdailydigest,
-            callshistorical
-          ]).then(datas => {
-            this.data = {
-              cscdailydigest: datas[1].data,
-              callshistorical: datas[2].data,
-              cscdailyivrdigest: datas[0].data,
-              amwaterteams: {
-                actual: {
-                  awfte: 82,
-                  awhours: 656,
-                  agencyfte: 115,
-                  agencyhours: 97
-                }
+        await Promise.all([
+          cscdailyivrdigest,
+          cscdailydigest,
+          callshistorical
+        ]).then(datas => {
+          this.data = {
+            cscdailydigest: datas[1].data,
+            callshistorical: datas[2].data,
+            cscdailyivrdigest: datas[0].data,
+            amwaterteams: {
+              actual: {
+                awfte: 82,
+                awhours: 656,
+                agencyfte: 115,
+                agencyhours: 97
               }
             }
-            this.hasResponse = true
-          })
-
-          this.sendData = {
-            forecastedAwFte: 82,
-            forecastedAwHours: 656,
-            forecastedAgencyFte: 115,
-            forecastedAgencyHours: 97
           }
-        } catch (error) {
-          console.log(error)
+          this.hasResponse = true
+        })
+
+        this.sendData = {
+          forecastedAwFte: 82,
+          forecastedAwHours: 656,
+          forecastedAgencyFte: 115,
+          forecastedAgencyHours: 97
         }
+      } catch (error) {
+        console.log(error)
       }
     }
   }
+}
 </script>
 
 <style scoped>
-  .table > tr > td {
-    vertical-align: middle;
-  }
+.table > tr > td {
+  vertical-align: middle;
+}
 </style>
