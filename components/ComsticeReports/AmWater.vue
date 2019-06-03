@@ -170,7 +170,7 @@
               />
             </td>
             <td>{{ data.amwaterteams.actual.agencyfte }}</td>
-            <td rowspan="2">{{ shrinkAgePerc('agency') }}&</td>
+            <td rowspan="2">{{ shrinkAgePerc('agency') }}%</td>
             <td class="text-uppercase">Other</td>
             <td>
               {{ breakdownCount('OTHER_PQ') }}
