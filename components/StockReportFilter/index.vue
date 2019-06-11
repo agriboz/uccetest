@@ -29,9 +29,9 @@
         class="form-control col-xl-6 col-lg-3 col-md-6"
         @change="changeDates"
       >
-        <option v-for="d in dateRanges" :key="d.id" :value="d">
-          {{ d.name }}
-        </option>
+        <option v-for="d in dateRanges" :key="d.id" :value="d">{{
+          d.name
+        }}</option>
       </select>
     </div>
     <div v-if="!relativeDate" class="form-group">
@@ -64,14 +64,13 @@
         </div>
       </div>
     </div>
+
     <div v-if="item.startYear" class="row">
       <div class="col-md-3">
         <div class="form-group">
           <label>Start Date</label>
           <select v-model="item.startYear" class="form-control">
-            <option v-for="y in yearRange" :key="y" :value="y">
-              {{ y }}
-            </option>
+            <option v-for="y in yearRange" :key="y" :value="y">{{ y }}</option>
           </select>
         </div>
       </div>
@@ -79,9 +78,7 @@
         <div class="form-group">
           <label>End Date</label>
           <select v-model="item.endYear" class="form-control">
-            <option v-for="y in yearRange" :key="y" :value="y">
-              {{ y }}
-            </option>
+            <option v-for="y in yearRange" :key="y" :value="y">{{ y }}</option>
           </select>
         </div>
       </div>
@@ -115,6 +112,21 @@
       @updateSelected="item.queues = $event"
       @updateBase="optionsQueues.baseList = $event"
     />
+
+    <duallist-box
+      v-if="item.agents"
+      class="mb-2"
+      :base-list="optionsAgents.baseList"
+      :selected-list="item.agents"
+      :title="optionsAgents.title"
+      @updateSelected="item.agents = $event"
+      @updateBase="optionsAgents.baseList = $event"
+    />
+
+    <div v-if="isVisibleItem.counter" class="form-group">
+      <label>Counter</label>
+      <input v-model="item.counter" type="text" class="form-control w-50" />
+    </div>
 
     <div v-if="isSearchable" class="row modal-footer">
       <button class="btn btn-primary" @click="search">Search</button>
@@ -150,6 +162,13 @@ export default {
       required: true,
       type: Object
     },
+
+    isVisibleItem: {
+      required: false,
+      default: () => ({}),
+      type: Object
+    },
+
     showFooter: {
       required: true,
       type: Boolean
@@ -203,7 +222,7 @@ export default {
     selectedDate: null
   }),
   computed: {
-    ...mapState('shared', ['callTypes', 'skills', 'csqs', 'queues']),
+    ...mapState('shared', ['callTypes', 'skills', 'csqs', 'queues', 'agents']),
 
     yearRange() {
       const subtractYear = this.$moment().subtract(5, 'years')
@@ -212,6 +231,14 @@ export default {
       const years = Array.from(range.by('year'))
 
       return years.map(m => m.format('YYYY'))
+    },
+
+    optionsAgents() {
+      return {
+        baseList: this.agents,
+        selectedList: [],
+        title: 'Agents'
+      }
     },
 
     optionsCallTypes() {
@@ -250,6 +277,13 @@ export default {
 
   beforeMount() {
     this.selectedDate = this.dateRanges[0]
+
+    if (this.item.agents) {
+      this.getShared({
+        endpoint: 'shared/agents',
+        key: 'agents'
+      })
+    }
 
     if (this.item.callTypes) {
       this.getShared({

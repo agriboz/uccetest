@@ -1,4 +1,5 @@
 export const state = () => ({
+  agents: [],
   callTypes: [],
   skills: [],
   queues: [],
