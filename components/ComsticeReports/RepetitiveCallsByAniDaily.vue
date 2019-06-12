@@ -264,12 +264,10 @@ export default {
     },
 
     async search() {
-      const config = {
-        method: 'post',
-        data: this.item,
-        url: process.env.javaURL + `repeatcallsani/bydate`
-      }
-      const { data } = await this.$axios(config)
+      const { data } = await this.$axios.post(
+        `repeatcallsani/bydate`,
+        this.item
+      )
       this.reportData = await data
     }
   }

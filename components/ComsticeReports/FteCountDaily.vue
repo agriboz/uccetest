@@ -172,12 +172,7 @@ export default {
     },
 
     async search() {
-      const config = {
-        method: 'post',
-        data: this.item,
-        url: process.env.javaURL + `ftecount/byid`
-      }
-      const { data } = await this.$axios(config)
+      const { data } = await this.$axios.post(`ftecount/byid`, this.item)
       this.reportData = await data
     }
   }
