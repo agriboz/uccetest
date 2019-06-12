@@ -30,8 +30,8 @@
           </a>
           <ul class="side-nav-second-level" aria-expanded="false">
             <li>
-              <n-link :to="'/comstice-reports/averege-speed-answer'"
-                >Averege Speed Answer</n-link
+              <n-link :to="'/comstice-reports/average-speed-answer'"
+                >Average Speed Answer</n-link
               >
             </li>
             <li>
