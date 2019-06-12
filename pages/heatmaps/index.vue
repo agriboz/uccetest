@@ -1,20 +1,19 @@
 <template>
   <div class="container-fluid">
     <!-- start page title -->
-    <page-title title="Heatmaps" />
+    <page-title title="Heatmaps"/>
     <!-- end page title -->
     <div class="row">
       <div class="col-12">
         <div class="card">
+          <!-- <save-filter :item="item" /> -->
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Heatmap List</label>
                   <select v-model="selectedHeatmap" class="form-control">
-                    <option v-for="h in heatmapList" :key="h.id" :value="h">
-                      {{ h.name }}
-                    </option>
+                    <option v-for="h in heatmapList" :key="h.id" :value="h">{{ h.name }}</option>
                   </select>
                 </div>
               </div>
@@ -45,52 +44,38 @@
                   </select>
                 </div>
               </div>
-            </div> -->
+            </div>-->
             <div class="form-group">
-              <button
-                v-if="!hasResponse"
-                class="btn btn-primary mr-1"
-                @click="search"
-              >
-                Search
-              </button>
+              <button v-if="!hasResponse" class="btn btn-primary mr-1" @click="search">Search</button>
               <button
                 v-if="hasResponse"
                 class="btn btn-warning"
                 @click="hasResponse = !hasResponse"
-              >
-                Filter
-              </button>
+              >Filter</button>
               <button
                 v-if="hasResponse"
                 class="btn btn-info ml-1"
                 @click="openThresholdModal = true"
-              >
-                Change Threshold
-              </button>
+              >Change Threshold</button>
               <button
                 v-if="hasResponse"
                 class="btn btn-primary ml-1"
                 @click="downloadAsPng"
-              >
-                Download as PNG
-              </button>
+              >Download as PNG</button>
               <button
                 v-if="hasResponse"
                 class="btn btn-primary ml-1"
                 @click="ignoreWeekends('saturday')"
               >
                 {{
-                  !ignoreDays[0].ignored ? 'Show Saturday' : 'Ignore Saturday'
+                !ignoreDays[0].ignored ? 'Show Saturday' : 'Ignore Saturday'
                 }}
               </button>
               <button
                 v-if="hasResponse"
                 class="btn btn-primary ml-1"
                 @click="ignoreWeekends('sunday')"
-              >
-                {{ !ignoreDays[1].ignored ? 'Show Sunday' : 'Ignore Sunday' }}
-              </button>
+              >{{ !ignoreDays[1].ignored ? 'Show Sunday' : 'Ignore Sunday' }}</button>
             </div>
             <component
               :is="heatmapComponent"
@@ -114,7 +99,7 @@
               type="text"
               class="form-control"
               placeholder="Please write the threshold value"
-            />
+            >
           </div>
           <div class="form-group">
             <label>Threshold 2: (Orange)</label>
@@ -123,7 +108,7 @@
               type="text"
               class="form-control"
               placeholder="Please write the threshold value"
-            />
+            >
           </div>
         </div>
       </section>
@@ -135,6 +120,7 @@
 <script>
 import PageTitle from '@/components/PageTitle'
 import ReportFilter from '@/components/StockReportFilter'
+import SaveFilter from '@/components/SaveFilter'
 
 import html2canvas from 'html2canvas'
 import dateRanges from '@/utils/dateRanges'
@@ -143,7 +129,8 @@ export default {
   layout: 'authenticated',
   components: {
     ReportFilter,
-    PageTitle
+    PageTitle,
+    SaveFilter
   },
   data: () => ({
     hasResponse: false,
