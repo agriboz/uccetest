@@ -32,9 +32,17 @@
               />
             </div>
           </div>
-          <button class="btn btn-primary mt-2" @click="search">
-            Search
-          </button>
+
+          <duallist-box
+            class="mb-2 mt-2"
+            :base-list="optionsCallTypes.baseList"
+            :selected-list="item.callTypes"
+            :title="optionsCallTypes.title"
+            @updateSelected="item.callTypes = $event"
+            @updateBase="optionsCallTypes.baseList = $event"
+          />
+
+          <button class="btn btn-primary mt-2" @click="search">Search</button>
         </div>
         <table
           v-if="hasResponse"
@@ -58,9 +66,7 @@
             <th colspan="4">AHT</th>
           </tr>
           <tr>
-            <td colspan="2">
-              {{ totalOverflowOut }}
-            </td>
+            <td colspan="2">{{ totalOverflowOut }}</td>
             <td class="font-weight-bold h1" colspan="2" rowspan="3">
               {{
                 $moment.duration(totalOldestCall, 'second').format('mm:ss', {
@@ -116,9 +122,7 @@
             <td class="font-weight-bold">Actual</td>
             <td class="font-weight-bold">Shrinkage</td>
             <td class="text-uppercase">Billing</td>
-            <td>
-              {{ breakdownCount('BILLING_PQ') }}
-            </td>
+            <td>{{ breakdownCount('BILLING_PQ') }}</td>
             <td>{{ breakdownPercentage('BILLING_PQ') }}%</td>
           </tr>
           <tr>
@@ -135,9 +139,7 @@
             <td>{{ data.amwaterteams.actual.awfte }}</td>
             <td rowspan="2">{{ shrinkAgePerc('aw') }}%</td>
             <td class="text-uppercase">Emergency</td>
-            <td>
-              {{ breakdownCount('EMERGENCY_PQ') }}
-            </td>
+            <td>{{ breakdownCount('EMERGENCY_PQ') }}</td>
             <td>{{ breakdownPercentage('EMERGENCY_PQ') }}%</td>
           </tr>
           <tr>
@@ -153,9 +155,7 @@
             </td>
             <td>{{ data.amwaterteams.actual.awhours }}</td>
             <td class="text-uppercase">Make Payment</td>
-            <td>
-              {{ breakdownCount('MAKEPAYMENT_PQ') }}
-            </td>
+            <td>{{ breakdownCount('MAKEPAYMENT_PQ') }}</td>
             <td>{{ breakdownPercentage('MAKEPAYMENT_PQ') }}%</td>
           </tr>
           <tr>
@@ -172,9 +172,7 @@
             <td>{{ data.amwaterteams.actual.agencyfte }}</td>
             <td rowspan="2">{{ shrinkAgePerc('agency') }}%</td>
             <td class="text-uppercase">Other</td>
-            <td>
-              {{ breakdownCount('OTHER_PQ') }}
-            </td>
+            <td>{{ breakdownCount('OTHER_PQ') }}</td>
             <td>{{ breakdownPercentage('OTHER_PQ') }}%</td>
           </tr>
           <tr>
@@ -190,9 +188,7 @@
             </td>
             <td>{{ data.amwaterteams.actual.agencyhours }}</td>
             <td class="text-uppercase">Service</td>
-            <td>
-              {{ breakdownCount('SERVICE_PQ') }}
-            </td>
+            <td>{{ breakdownCount('SERVICE_PQ') }}</td>
             <td>{{ breakdownPercentage('SERVICE_PQ') }}%</td>
           </tr>
           <tr>
@@ -251,7 +247,7 @@
       <table
         v-if="hasResponse"
         id="table"
-        class="table table-bordered  text-center table-sm"
+        class="table table-bordered text-center table-sm"
       >
         <colgroup>
           <col style="width: 130px" />
@@ -304,9 +300,7 @@
         </tr>
         <tr>
           <td>Forecasted</td>
-          <td>
-            {{ report.data.forecasted }}
-          </td>
+          <td>{{ report.data.forecasted }}</td>
         </tr>
         <tr>
           <td colspan="2" rowspan="2"></td>
@@ -331,73 +325,53 @@
           <td class="font-weight-bold">Actual</td>
           <td class="font-weight-bold">Shrinkage</td>
           <td class="text-uppercase">Billing</td>
-          <td>
-            {{ report.data.cscdailydigest.billing.count }}
-          </td>
+          <td>{{ report.data.cscdailydigest.billing.count }}</td>
           <td>{{ report.data.cscdailydigest.billing.percentage }}%</td>
         </tr>
         <tr>
           <td>Contained</td>
           <td>{{ report.data.cscdailyivrdigest.contained }}</td>
           <td>AW FTE</td>
-          <td>
-            {{ report.data.amwaterteams.awfte.forecasted }}
-          </td>
+          <td>{{ report.data.amwaterteams.awfte.forecasted }}</td>
           <td>{{ report.data.amwaterteams.awfte.actual }}</td>
           <td rowspan="2">{{ report.data.amwaterteams.shrinkage.aw }}%</td>
           <td class="text-uppercase">Emergency</td>
-          <td>
-            {{ report.data.cscdailydigest.emergency.count }}
-          </td>
+          <td>{{ report.data.cscdailydigest.emergency.count }}</td>
           <td>{{ report.data.cscdailydigest.emergency.percentage }}%</td>
         </tr>
         <tr>
           <td>Containment Rate</td>
           <td>{{ report.data.cscdailyivrdigest.containmentRate }}%</td>
           <td>AW Hours</td>
-          <td>
-            {{ report.data.amwaterteams.awhours.forecasted }}
-          </td>
+          <td>{{ report.data.amwaterteams.awhours.forecasted }}</td>
           <td>{{ report.data.amwaterteams.awhours.actual }}</td>
           <td class="text-uppercase">Make Payment</td>
-          <td>
-            {{ report.data.cscdailydigest.makePayment.count }}
-          </td>
+          <td>{{ report.data.cscdailydigest.makePayment.count }}</td>
           <td>{{ report.data.cscdailydigest.makePayment.percentage }}%</td>
         </tr>
         <tr>
           <td>Outflow to Queue</td>
           <td>{{ report.data.cscdailyivrdigest.outflowToQueue }}</td>
           <td>Agency FTE</td>
-          <td>
-            {{ report.data.amwaterteams.agencyfte.forecasted }}
-          </td>
+          <td>{{ report.data.amwaterteams.agencyfte.forecasted }}</td>
           <td>{{ report.data.amwaterteams.agencyfte.actual }}</td>
           <td rowspan="2">{{ report.data.amwaterteams.shrinkage.agency }}%</td>
           <td class="text-uppercase">Other</td>
-          <td>
-            {{ report.data.cscdailydigest.other.count }}
-          </td>
+          <td>{{ report.data.cscdailydigest.other.count }}</td>
           <td>{{ report.data.cscdailydigest.other.percentage }}%</td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <td>Agency Hours</td>
-          <td>
-            {{ report.data.amwaterteams.agencyhours.forecasted }}
-          </td>
+          <td>{{ report.data.amwaterteams.agencyhours.forecasted }}</td>
           <td>{{ report.data.amwaterteams.agencyhours.actual }}</td>
           <td class="text-uppercase">Service</td>
-          <td>
-            {{ breakdownCount('SERVICE_PQ') }}
-          </td>
+          <td>{{ breakdownCount('SERVICE_PQ') }}</td>
           <td>{{ breakdownPercentage('SERVICE_PQ') }}%</td>
         </tr>
         <tr>
-          <td colspan="9">
-            {{ report.data.note }}
-          </td>
+          <td colspan="9">{{ report.data.note }}</td>
         </tr>
       </table>
 
@@ -412,7 +386,14 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+import DuallistBox from '@/components/DuallistBox'
+
 export default {
+  components: {
+    DuallistBox
+  },
+
   data: () => ({
     hasResponse: false,
     modal: false,
@@ -426,7 +407,10 @@ export default {
       { key: 'name', label: 'Report Name' },
       { key: 'actions', label: 'Actions' }
     ],
-    item: {},
+    item: {
+      startTime: null,
+      callTypes: []
+    },
     data: {
       cscdailydigest: [],
       cscdailyivrdigest: [],
@@ -555,6 +539,16 @@ export default {
   }),
 
   computed: {
+    ...mapState('shared', ['callTypes']),
+
+    optionsCallTypes() {
+      return {
+        baseList: this.callTypes,
+        selectedList: [],
+        title: 'Call Types'
+      }
+    },
+
     saveData() {
       return {
         name: `AMWater-${this.item.startTime}`,
@@ -686,7 +680,20 @@ export default {
     }
   },
 
+  beforeMount() {
+    if (this.item.callTypes) {
+      this.getShared({
+        endpoint: 'shared/calltypes',
+        key: 'callTypes'
+      })
+    }
+  },
+
   methods: {
+    ...mapActions({
+      getShared: 'shared/getShared'
+    }),
+
     shrinkAgePerc(item) {
       const {
         forecastedAwFte,
