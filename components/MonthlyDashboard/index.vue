@@ -59,9 +59,9 @@
     </b-form-group>
     <bar-chart
       ref="monthlyChart"
+      :key="reRenderBetterWay"
       :chart-data="chartData"
       :options="chartOptions"
-      :key="reRenderBetterWay"
     />
 
     <b-modal v-model="openThresholdModal" title="Change Threshold">
