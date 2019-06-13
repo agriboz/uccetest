@@ -83,10 +83,15 @@
         </div>
       </div>
     </div>
+
     <duallist-box
       v-if="item.callTypes"
       class="mb-2"
-      :base-list="optionsCallTypes.baseList"
+      :base-list="
+        optionsCallTypes.hasFilter.length
+          ? optionsCallTypes.hasFilter
+          : optionsCallTypes.baseList
+      "
       :selected-list="item.callTypes"
       :title="optionsCallTypes.title"
       @updateSelected="item.callTypes = $event"
@@ -106,7 +111,11 @@
     <duallist-box
       v-if="item.queues"
       class="mb-2"
-      :base-list="optionsQueues.baseList"
+      :base-list="
+        optionsQueues.hasFilter.length
+          ? optionsQueues.hasFilter
+          : optionsQueues.baseList
+      "
       :selected-list="item.queues"
       :title="optionsQueues.title"
       @updateSelected="item.queues = $event"
@@ -116,7 +125,11 @@
     <duallist-box
       v-if="item.agents"
       class="mb-2"
-      :base-list="optionsAgents.baseList"
+      :base-list="
+        optionsAgents.hasFilter.length
+          ? optionsAgents.hasFilter
+          : optionsAgents.baseList
+      "
       :selected-list="item.agents"
       :title="optionsAgents.title"
       @updateSelected="item.agents = $event"
@@ -235,6 +248,9 @@ export default {
 
     optionsAgents() {
       return {
+        hasFilter: this.agents.filter(
+          item => !this.item.agents.some(j => j.id === item.id)
+        ),
         baseList: this.agents,
         selectedList: [],
         title: 'Agents'
@@ -243,6 +259,9 @@ export default {
 
     optionsCallTypes() {
       return {
+        hasFilter: this.callTypes.filter(
+          item => !this.item.callTypes.some(j => j.id === item.id)
+        ),
         baseList: this.callTypes,
         selectedList: [],
         title: 'Call Types'
@@ -257,6 +276,9 @@ export default {
     },
     optionsQueues() {
       return {
+        hasFilter: this.queues.filter(
+          item => !this.item.queues.some(j => j.id === item.id)
+        ),
         baseList: this.queues,
         selectedList: [],
         title: 'Precision Queue'

@@ -6,7 +6,11 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <!-- <save-filter :item="item" /> -->
+          <save-filter
+            :item="{ callTypes: item.callTypes }"
+            @updateFilter="item.callTypes = $event.callTypes"
+          />
+
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
@@ -27,22 +31,22 @@
               :url="'/teamnotreadypercentage'"
               :item="item"
             />
-            <!-- <div v-if="!hasResponse" class="form-group">
+            <!--  <div v-if="!hasResponse" class="form-group">
               <div class="row">
                 <div class="col-md-6">
                   <label>Shift Start Time</label>
                   <select v-model="item.shift.start" class="form-control">
-                    <option v-for="s in range(23, true)" :key="s" :value="s">{{
-                      s
-                    }}</option>
+                    <option v-for="s in range(23, true)" :key="s" :value="s">
+                      {{ s }}
+                    </option>
                   </select>
                 </div>
                 <div class="col-md-6">
                   <label>Shift End Time</label>
                   <select v-model="item.shift.end" class="form-control">
-                    <option v-for="s in range(23, true)" :key="s" :value="s">{{
-                      s
-                    }}</option>
+                    <option v-for="s in range(23, true)" :key="s" :value="s">
+                      {{ s }}
+                    </option>
                   </select>
                 </div>
               </div>

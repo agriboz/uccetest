@@ -6,15 +6,24 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
+          <save-filter
+            class="mb-2"
+            :item="{ callTypes: item.callTypes, queues: item.queues }"
+            @updateFilter="
+              item.callTypes = $event.callTypes
+              item.queues = $event.queues
+            "
+          />
+
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Year On Year List</label>
                   <select v-model="selectedYoy" class="form-control">
-                    <option v-for="y in yoyList" :key="y.id" :value="y">
-                      {{ y.name }}
-                    </option>
+                    <option v-for="y in yoyList" :key="y.id" :value="y">{{
+                      y.name
+                    }}</option>
                   </select>
                 </div>
               </div>
@@ -33,9 +42,9 @@
                     class="custom-control-input"
                     @change="setFilterType(f.id)"
                   />
-                  <label class="custom-control-label" :for="f.id">{{
-                    f.name
-                  }}</label>
+                  <label class="custom-control-label" :for="f.id">
+                    {{ f.name }}
+                  </label>
                 </div>
               </div>
             </div>
@@ -88,13 +97,15 @@
 import PageTitle from '@/components/PageTitle'
 import ReportFilter from '@/components/StockReportFilter'
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels'
+import SaveFilter from '@/components/SaveFilter'
 
 export default {
   layout: 'authenticated',
   components: {
     ReportFilter,
     PageTitle,
-    ChartJsPluginDataLabels
+    ChartJsPluginDataLabels,
+    SaveFilter
   },
   data: () => ({
     pickedFilterType: 1,
@@ -331,7 +342,7 @@ export default {
         let months = year.data.reduce((map, obj) => {
           console.log(months)
           // eslint-disable-next-line
-          if ( team ) {
+          if (team) {
             if (obj.csq === team) map[obj.month] = parseInt(obj[type]) || null
           } else {
             if (!map[obj.month]) map[obj.month] = 0

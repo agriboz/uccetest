@@ -2,6 +2,11 @@
   <section>
     <b-tabs class="nav-variant" lazy>
       <b-tab class="p-3" title="Create Report">
+        <save-filter
+          class="mb-2"
+          :item="{ callTypes: item.callTypes }"
+          @updateFilter="item.callTypes = $event.callTypes"
+        />
         <div class="form-group">
           <div class="row">
             <div class="col-md-6">
@@ -35,7 +40,11 @@
 
           <duallist-box
             class="mb-2 mt-2"
-            :base-list="optionsCallTypes.baseList"
+            :base-list="
+              optionsCallTypes.hasFilter.length
+                ? optionsCallTypes.hasFilter
+                : optionsCallTypes.baseList
+            "
             :selected-list="item.callTypes"
             :title="optionsCallTypes.title"
             @updateSelected="item.callTypes = $event"
@@ -388,10 +397,12 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import DuallistBox from '@/components/DuallistBox'
+import SaveFilter from '@/components/SaveFilter'
 
 export default {
   components: {
-    DuallistBox
+    DuallistBox,
+    SaveFilter
   },
 
   data: () => ({
@@ -543,6 +554,9 @@ export default {
 
     optionsCallTypes() {
       return {
+        hasFilter: this.callTypes.filter(
+          item => !this.item.callTypes.some(j => j.id === item.id)
+        ),
         baseList: this.callTypes,
         selectedList: [],
         title: 'Call Types'

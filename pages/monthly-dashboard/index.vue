@@ -6,6 +6,11 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
+          <save-filter
+            class="mb-2"
+            :item="{ callTypes: item.callTypes }"
+            @updateFilter="item.callTypes = $event.callTypes"
+          />
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
@@ -19,9 +24,8 @@
                       v-for="m in monthlyDashboardList"
                       :key="m.id"
                       :value="m"
+                      >{{ m.name }}</option
                     >
-                      {{ m.name }}
-                    </option>
                   </select>
                 </div>
               </div>
@@ -60,23 +64,24 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <duallist-box
-                  v-if="item.callTypes"
-                  class="mb-2"
-                  :base-list="optionsCallTypes.baseList"
-                  :selected-list="item.callTypes"
-                  :title="optionsCallTypes.title"
-                  @updateSelected="item.callTypes = $event"
-                  @updateBase="optionsCallTypes.baseList = $event"
-                />
-              </div>
             </div>
 
+            <duallist-box
+              v-if="item.callTypes && !hasResponse"
+              class="mt-2"
+              :base-list="
+                optionsCallTypes.hasFilter.length
+                  ? optionsCallTypes.hasFilter
+                  : optionsCallTypes.baseList
+              "
+              :selected-list="item.callTypes"
+              :title="optionsCallTypes.title"
+              @updateSelected="item.callTypes = $event"
+              @updateBase="optionsCallTypes.baseList = $event"
+            />
+
             <div v-if="!hasResponse" class="form-group">
-              <button class="btn btn-primary" @click="search">
-                Search
-              </button>
+              <button class="btn btn-primary" @click="search">Search</button>
             </div>
 
             <component
@@ -100,13 +105,15 @@ import { mapActions, mapState, mapMutations } from 'vuex'
 import PageTitle from '@/components/PageTitle'
 import ReportFilter from '@/components/StockReportFilter'
 import DuallistBox from '@/components/DuallistBox'
+import SaveFilter from '@/components/SaveFilter'
 
 export default {
   layout: 'authenticated',
   components: {
     ReportFilter,
     PageTitle,
-    DuallistBox
+    DuallistBox,
+    SaveFilter
   },
   data: () => ({
     item: {
@@ -176,6 +183,12 @@ export default {
         name: 'Max Handle Time',
         componentName: 'MaxHandleTime',
         key: 'maxhandletime'
+      },
+      {
+        id: 11,
+        name: 'Average Speed Of Answer',
+        componentName: 'AverageSpeedOfAnswer',
+        key: 'asa'
       }
     ],
     title: 'Comstice Quartz - Monthly Dashboard'
@@ -192,6 +205,9 @@ export default {
 
     optionsCallTypes() {
       return {
+        hasFilter: this.callTypes.filter(
+          item => !this.item.callTypes.some(j => j.id === item.id)
+        ),
         baseList: this.callTypes,
         selectedList: [],
         title: 'Call Types'

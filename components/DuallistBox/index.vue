@@ -11,12 +11,7 @@
             placeholder="Search"
           />
         </div>
-        <transition-group
-          v-if="filteredBase.length"
-          class="list-group"
-          tag="ul"
-          name="list-item"
-        >
+        <ul v-if="filteredBase.length" class="list-group" name="list-item">
           <li
             v-for="b in filteredBase"
             :key="b.id"
@@ -25,7 +20,7 @@
           >
             {{ b.name }}
           </li>
-        </transition-group>
+        </ul>
       </div>
       <transition name="fade">
         <div v-if="filteredBase.length" class="btn-wrapper">
@@ -44,12 +39,7 @@
           />
         </div>
 
-        <transition-group
-          v-if="filteredSelected.length"
-          class="list-group"
-          tag="ul"
-          name="list-item"
-        >
+        <ul v-if="filteredSelected.length" class="list-group" name="list-item">
           <li
             v-for="b in filteredSelected"
             :key="b.id"
@@ -58,7 +48,7 @@
           >
             {{ b.name }}
           </li>
-        </transition-group>
+        </ul>
       </div>
       <transition name="fade">
         <div v-if="filteredSelected.length" class="btn-wrapper">
@@ -132,7 +122,6 @@ export default {
       )
 
       this.baseValue = ''
-      console.log(this.baseListLocal)
     },
 
     transferToRight(item) {

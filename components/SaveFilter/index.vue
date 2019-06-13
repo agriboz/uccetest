@@ -1,7 +1,6 @@
 <template>
   <section class="p-3 bg-light d-flex justify-content-between">
-    {{ item }}
-    <div class="input-group">
+    <div class="input-group w-25">
       <input
         v-model="filterName"
         type="text"
@@ -15,9 +14,12 @@
       </div>
     </div>
     <b-dropdown text="My Saved Searches" variant="primary">
-      <b-dropdown-item>Item 1</b-dropdown-item>
-      <b-dropdown-item>Item 2</b-dropdown-item>
-      <b-dropdown-item>Item 3</b-dropdown-item>
+      <b-dropdown-item
+        v-for="f in filters"
+        :key="f.id"
+        @click="selectFilter(f)"
+        >{{ f.filterName }}</b-dropdown-item
+      >
     </b-dropdown>
   </section>
 </template>
@@ -31,6 +33,7 @@ export default {
     }
   },
   data: () => ({
+    filters: [],
     filterName: null
   }),
   computed: {
@@ -41,10 +44,28 @@ export default {
       }
     }
   },
+
+  async beforeMount() {
+    await this.getFilters()
+  },
+
   methods: {
+    selectFilter(f) {
+      console.log(f.filter)
+      this.$emit('updateFilter', f.filter)
+    },
+
+    async getFilters() {
+      const { data } = await this.$axios.get('save-filter')
+      this.filters = await data
+    },
+
     async save() {
       const { data } = await this.$axios.post(`save-filter`, this.data)
-      data ? this.$toast.success('Saved: Search Criteria') : null
+      data
+        ? (this.$toast.success('Saved: Search Criteria'),
+          await this.getFilters())
+        : null
     }
   }
 }

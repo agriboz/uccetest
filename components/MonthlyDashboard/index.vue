@@ -1,9 +1,7 @@
 <template>
   <section>
     <div class="form-group">
-      <button class="btn btn-warning" @click="filter">
-        Filter
-      </button>
+      <button class="btn btn-warning" @click="filter">Filter</button>
       <button
         v-if="item.hasResponse"
         class="btn btn-primary"
@@ -59,7 +57,6 @@
         :options="checkOptions"
       />
     </b-form-group>
-
     <bar-chart
       ref="monthlyChart"
       :chart-data="chartData"
@@ -167,8 +164,58 @@ export default {
           display: false
         },
         onClick: this.onClick,
+
         tooltips: {
-          position: 'nearest'
+          callbacks: {
+            label: (tooltipItem, data) => {
+              var tooltipValue =
+                data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+
+              const timeValues = [5, 6, 9, 10, 11]
+              const rateValues = [1, 2, 7, 8]
+
+              if (timeValues.includes(this.selectedMonthlyDashboard.id)) {
+                return (
+                  this.selectedMonthlyDashboard.name +
+                  ': ' +
+                  this.$moment
+                    .duration(tooltipValue, 'seconds')
+                    .format('mm:ss', { trim: false })
+                )
+              }
+              if (rateValues.includes(this.selectedMonthlyDashboard.id)) {
+                return `${this.selectedMonthlyDashboard.name}: ${tooltipValue}%`
+              }
+
+              return tooltipValue
+            }
+          }
+        },
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            /* display: function(context) {
+              return context.dataset.data[context.dataIndex] >= 1
+            }, */
+            /* eslint-disable */
+            formatter: (value, context) => {
+              const timeValues = [5, 6, 9, 10, 11]
+              const rateValues = [1, 2, 7, 8]
+
+              if (timeValues.includes(this.selectedMonthlyDashboard.id)) {
+                return this.$moment
+                  .duration(value, 'seconds')
+                  .format('mm:ss', { trim: false })
+              }
+              if (rateValues.includes(this.selectedMonthlyDashboard.id)) {
+                return `${value}%`
+              }
+            },
+            font: {
+              weight: 'bold'
+            }
+          }
         },
         scales: {
           xAxes: [

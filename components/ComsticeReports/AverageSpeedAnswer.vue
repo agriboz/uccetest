@@ -3,6 +3,10 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
+          <save-filter
+            :item="{ callTypes: item.callTypes }"
+            @updateFilter="item.callTypes = $event.callTypes"
+          />
           <div class="card-body">
             <report-filter
               v-if="!hasResponse"
@@ -22,13 +26,15 @@
 <script>
 import BubleChart from '@/components/Charts/bubleChart'
 import ReportFilter from '@/components/StockReportFilter'
+import SaveFilter from '@/components/SaveFilter'
 
 import dateRanges from '@/utils/dateRanges'
 
 export default {
   components: {
     ReportFilter,
-    BubleChart
+    BubleChart,
+    SaveFilter
   },
 
   data: () => ({

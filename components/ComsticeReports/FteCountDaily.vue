@@ -3,6 +3,11 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
+          <save-filter
+            class="mb-2"
+            :item="{ agents: item.agents }"
+            @updateFilter="item.agents = $event.agents"
+          />
           <div class="card-body">
             <report-filter
               :show-footer="false"
@@ -106,12 +111,14 @@
 
 <script>
 import ReportFilter from '@/components/StockReportFilter'
+import SaveFilter from '@/components/SaveFilter'
 
 import dateRanges from '@/utils/dateRanges'
 
 export default {
   components: {
-    ReportFilter
+    ReportFilter,
+    SaveFilter
   },
 
   data: () => ({
