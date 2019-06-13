@@ -207,7 +207,7 @@ export default {
               if (timeValues.includes(this.selectedMonthlyDashboard.id)) {
                 return this.$moment
                   .duration(value, 'seconds')
-                  .format('mm:ss', { trim: false })
+                  .format('hh:mm:ss', { trim: false })
               }
               if (rateValues.includes(this.selectedMonthlyDashboard.id)) {
                 return `${value}%`
