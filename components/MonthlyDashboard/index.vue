@@ -181,7 +181,7 @@ export default {
                   ': ' +
                   this.$moment
                     .duration(tooltipValue, 'seconds')
-                    .format('mm:ss', { trim: false })
+                    .format('hh:mm:ss', { trim: false })
                 )
               }
               if (rateValues.includes(this.selectedMonthlyDashboard.id)) {
