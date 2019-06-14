@@ -18,7 +18,7 @@
             class="list-group-item"
             @click="transferToRight(b)"
           >
-            {{ b.name }}
+            {{ isAgent ? b.enterpriseName : b.name }}
           </li>
         </ul>
       </div>
@@ -46,7 +46,7 @@
             class="list-group-item selected"
             @click="transferToLeft(b)"
           >
-            {{ b.name }}
+            {{ isAgent ? b.enterpriseName : b.name }}
           </li>
         </ul>
       </div>
@@ -65,6 +65,10 @@ export default {
     title: {
       required: true,
       type: String
+    },
+    isAgent: {
+      required: false,
+      type: Boolean
     },
     baseList: {
       required: true,
@@ -99,14 +103,26 @@ export default {
     },
     filteredBase() {
       return this.baseListLocal.filter(item => {
-        return item.name.toLowerCase().includes(this.baseValue.toLowerCase())
+        if (this.isAgent) {
+          return item.enterpriseName
+            .toLowerCase()
+            .includes(this.baseValue.toLowerCase())
+        } else {
+          return item.name.toLowerCase().includes(this.baseValue.toLowerCase())
+        }
       })
     },
     filteredSelected() {
       return this.selectedListLocal.filter(item => {
-        return item.name
-          .toLowerCase()
-          .includes(this.selectedValue.toLowerCase())
+        if (this.isAgent) {
+          return item.enterpriseName
+            .toLowerCase()
+            .includes(this.selectedValue.toLowerCase())
+        } else {
+          return item.name
+            .toLowerCase()
+            .includes(this.selectedValue.toLowerCase())
+        }
       })
     }
   },

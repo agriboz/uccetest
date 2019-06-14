@@ -6,11 +6,6 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <save-filter
-            :item="{ callTypes: item.callTypes }"
-            @updateFilter="item.callTypes = $event.callTypes"
-          />
-
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
@@ -30,6 +25,12 @@
               :is-searchable="false"
               :url="'/teamnotreadypercentage'"
               :item="item"
+            />
+            <save-filter
+              v-if="!hasResponse"
+              class="mt-2 mb-2"
+              :item="{ callTypes: item.callTypes }"
+              @updateFilter="item.callTypes = $event.callTypes"
             />
             <!--  <div v-if="!hasResponse" class="form-group">
               <div class="row">
@@ -194,12 +195,7 @@ export default {
         componentName: 'CallAbandonRate',
         key: 'calls_abandoned_rate'
       },
-      {
-        id: 3,
-        name: 'Average Wait Time',
-        componentName: 'AverageWaitTime',
-        key: 'avg_queue_time_weighted_average'
-      },
+
       {
         id: 4,
         name: 'Average Handle Time',

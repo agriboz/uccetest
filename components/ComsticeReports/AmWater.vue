@@ -2,11 +2,6 @@
   <section>
     <b-tabs class="nav-variant" lazy>
       <b-tab class="p-3" title="Create Report">
-        <save-filter
-          class="mb-2"
-          :item="{ callTypes: item.callTypes }"
-          @updateFilter="item.callTypes = $event.callTypes"
-        />
         <div class="form-group">
           <div class="row">
             <div class="col-md-6">
@@ -49,6 +44,12 @@
             :title="optionsCallTypes.title"
             @updateSelected="item.callTypes = $event"
             @updateBase="optionsCallTypes.baseList = $event"
+          />
+
+          <save-filter
+            class="mt-2 mb-2"
+            :item="{ callTypes: item.callTypes }"
+            @updateFilter="item.callTypes = $event.callTypes"
           />
 
           <button class="btn btn-primary mt-2" @click="search">Search</button>
@@ -832,9 +833,9 @@ export default {
         )
 
         /* const amwaterteams = await this.$axios.post(
-              `amwaterteams/daily`,
-              this.item
-            ) */
+                `amwaterteams/daily`,
+                this.item
+              ) */
 
         await Promise.all([
           cscdailyivrdigest,

@@ -6,24 +6,15 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <save-filter
-            class="mb-2"
-            :item="{ callTypes: item.callTypes, queues: item.queues }"
-            @updateFilter="
-              item.callTypes = $event.callTypes
-              item.queues = $event.queues
-            "
-          />
-
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Year On Year List</label>
                   <select v-model="selectedYoy" class="form-control">
-                    <option v-for="y in yoyList" :key="y.id" :value="y">{{
-                      y.name
-                    }}</option>
+                    <option v-for="y in yoyList" :key="y.id" :value="y">
+                      {{ y.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -42,9 +33,9 @@
                     class="custom-control-input"
                     @change="setFilterType(f.id)"
                   />
-                  <label class="custom-control-label" :for="f.id">
-                    {{ f.name }}
-                  </label>
+                  <label class="custom-control-label" :for="f.id">{{
+                    f.name
+                  }}</label>
                 </div>
               </div>
             </div>
@@ -54,6 +45,16 @@
               :show-footer="false"
               :is-searchable="false"
               :item.sync="item"
+            />
+
+            <save-filter
+              v-if="!hasResponse"
+              class="mb-2"
+              :item="{ callTypes: item.callTypes, queues: item.queues }"
+              @updateFilter="
+                item.callTypes = $event.callTypes
+                item.queues = $event.queues
+              "
             />
 
             <div class="form-group">
@@ -108,6 +109,7 @@ export default {
     SaveFilter
   },
   data: () => ({
+    gradient: null,
     pickedFilterType: 1,
     item: {
       callTypes: []
@@ -273,6 +275,10 @@ export default {
           },
 
           options: {
+            title: {
+              display: true,
+              text: this.selectedYoy.name
+            },
             maintainAspectRatio: false,
             plugins: {
               datalabels: {
@@ -316,6 +322,11 @@ export default {
             maintainAspectRatio: false,
             plugins: {
               datalabels: {
+                /* color: function(context) {
+                  return context.active
+                    ? 'white'
+                    : context.dataset.backgroundColor
+                }, */
                 anchor: 'center',
                 align: 'center',
                 font: {
@@ -377,7 +388,9 @@ export default {
         let thisYear = set[set.length - 1]
         let lastYear = set[set.length - 2]
         let diff = Math.ceil(((thisYear - lastYear) / lastYear) * 100)
-        changeData.push(diff)
+        console.log(diff)
+        let setDiffToZero = diff === -100 ? 0 : diff
+        changeData.push(setDiffToZero)
       }
       charts.yoyChart.data.datasets.push({
         datalabels: {
@@ -387,7 +400,6 @@ export default {
         data: averageData,
         type: 'line',
         fill: 0,
-        //yAxisID: 'csqchange-y-axis',
         lineTension: 0,
         backgroundColor: '#f00000',
         borderColor: '#f00000'
@@ -395,15 +407,19 @@ export default {
       charts.yoyChangeChart.data.datasets.push({
         label: 'Change Percentage',
         data: changeData,
+        datalabels: {
+          anchor: 'center',
+          align: 'center'
+        },
         type: 'bar',
-        backgroundColor: '#ff6d00',
-        borderColor: '#ff6d00'
+        backgroundColor: '#727cf5',
+        borderColor: '#727cf5'
       })
-      charts.yoyChangeChart.options.scales.yAxes[0].ticks.max =
+      /* charts.yoyChangeChart.options.scales.yAxes[0].ticks.max =
         Math.max[changeData]
 
       charts.yoyChangeChart.options.scales.yAxes[0].ticks.min =
-        Math.min[changeData]
+        Math.min[changeData] */
 
       return charts
     },

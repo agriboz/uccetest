@@ -6,11 +6,6 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <save-filter
-            class="mb-2"
-            :item="{ callTypes: item.callTypes }"
-            @updateFilter="item.callTypes = $event.callTypes"
-          />
           <div class="card-body">
             <div v-if="!hasResponse" class="row">
               <div class="col-md-6">
@@ -43,7 +38,7 @@
                       no-header
                       auto-close
                       label="Select Date"
-                      formatted="YYYY-MM"
+                      formatted="YYYY-MM-DD"
                       color="#727cf5"
                       enable-button-validate
                     />
@@ -57,7 +52,7 @@
                       no-header
                       auto-close
                       label="Select Date"
-                      formatted="YYYY-MM"
+                      formatted="YYYY-MM-DD"
                       color="#727cf5"
                       enable-button-validate
                     />
@@ -78,6 +73,13 @@
               :title="optionsCallTypes.title"
               @updateSelected="item.callTypes = $event"
               @updateBase="optionsCallTypes.baseList = $event"
+            />
+
+            <save-filter
+              v-if="!hasResponse"
+              class="mt-2 mb-2"
+              :item="{ callTypes: item.callTypes }"
+              @updateFilter="item.callTypes = $event.callTypes"
             />
 
             <div v-if="!hasResponse" class="form-group">

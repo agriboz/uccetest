@@ -3,21 +3,45 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <save-filter
-            class="mb-2"
-            :item="{ agents: item.agents }"
-            @updateFilter="item.agents = $event.agents"
-          />
           <div class="card-body">
             <report-filter
+              v-if="!reportData.length"
               :show-footer="false"
               :is-searchable="false"
               :item="item"
             />
-
-            <div class="form-group">
+            <save-filter
+              v-if="!reportData.length"
+              class="mb-2"
+              :item="{ agents: item.agents }"
+              @updateFilter="item.agents = $event.agents"
+            />
+            <div v-if="!reportData.length" class="form-group">
               <button class="btn btn-primary" @click="search">Search</button>
             </div>
+
+            <button
+              v-if="reportData.length"
+              class="btn btn-warning"
+              @click="reportData = []"
+            >
+              Back to Filter
+            </button>
+
+            <export-excel
+              v-if="reportData.length"
+              class="btn btn-primary"
+              type="csv"
+              :fields="jsonFields"
+              :data="reportData"
+              style="cursor: pointer"
+            >
+              <i
+                v-b-tooltip.hover
+                title="Download Excel"
+                class="icon-excel d-flex"
+              ></i>
+            </export-excel>
             <b-row v-if="reportData.length">
               <b-col md="6" class="my-1">
                 <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
@@ -122,13 +146,16 @@ export default {
   },
 
   data: () => ({
+    jsonFields: {
+      Date: 'date',
+      'Login Duration': 'logindur'
+    },
     fields: [
       { key: 'date', label: 'Date', sortable: true },
       { key: 'logindur', label: 'Duration', sortable: true }
     ],
     currentPage: 1,
     perPage: 5,
-    pageOptions: [5, 10, 15],
     sortBy: null,
     sortDesc: false,
     sortDirection: 'asc',
@@ -148,7 +175,6 @@ export default {
         date: '2019-04-16'
       }
     ], */
-
     item: {
       agents: [],
       startTime: dateRanges(1, true, false),
@@ -159,6 +185,31 @@ export default {
   computed: {
     totalRows() {
       return this.reportData.length
+    },
+
+    pageOptions() {
+      return [
+        {
+          text: '5',
+          value: 5
+        },
+        {
+          text: '10',
+          value: 10
+        },
+        {
+          text: '15',
+          value: 15
+        },
+        {
+          text: '20',
+          value: 20
+        },
+        {
+          text: 'All',
+          value: this.reportData.length
+        }
+      ]
     },
 
     sortOptions() {
@@ -172,6 +223,21 @@ export default {
   },
 
   methods: {
+    csvExport(arrData) {
+      let csvContent = 'data:text/csv;charset=utf-8,'
+      csvContent += [
+        Object.keys(arrData[0]).join(';'),
+        ...arrData.map(item => Object.values(item).join(';'))
+      ]
+        .join('\n')
+        .replace(/(^\[)|(\]$)/gm, '')
+
+      const data = encodeURI(csvContent)
+      const link = document.createElement('a')
+      link.setAttribute('href', data)
+      link.setAttribute('download', 'export.csv')
+      link.click()
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length

@@ -5,15 +5,40 @@
         <div class="card">
           <div class="card-body">
             <report-filter
+              v-if="!reportData.length"
               :show-footer="false"
               :is-searchable="false"
               :is-visible-item="isVisibleItem"
               :item="item"
             />
 
-            <div class="form-group">
+            <div v-if="!reportData.length" class="form-group">
               <button class="btn btn-primary" @click="search">Search</button>
             </div>
+
+            <button
+              v-if="reportData.length"
+              class="btn btn-warning"
+              @click="reportData = []"
+            >
+              Back to Filter
+            </button>
+
+            <export-excel
+              v-if="reportData.length"
+              class="btn btn-primary"
+              type="csv"
+              :fields="jsonFields"
+              :data="reportData"
+              style="cursor: pointer"
+            >
+              <i
+                v-b-tooltip.hover
+                title="Download Excel"
+                class="icon-excel d-flex"
+              ></i>
+            </export-excel>
+
             <b-row v-if="reportData.length">
               <b-col md="6" class="my-1">
                 <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
@@ -116,13 +141,16 @@ export default {
   },
 
   data: () => ({
+    jsonFields: {
+      Date: 'date',
+      Count: 'count'
+    },
     fields: [
       { key: 'date', label: 'Date', sortable: true },
       { key: 'count', label: 'Count', sortable: true }
     ],
     currentPage: 1,
     perPage: 5,
-    pageOptions: [5, 10, 15],
     sortBy: null,
     sortDesc: false,
     sortDirection: 'asc',
@@ -153,6 +181,31 @@ export default {
   }),
 
   computed: {
+    pageOptions() {
+      return [
+        {
+          text: '5',
+          value: 5
+        },
+        {
+          text: '10',
+          value: 10
+        },
+        {
+          text: '15',
+          value: 15
+        },
+        {
+          text: '20',
+          value: 20
+        },
+        {
+          text: 'All',
+          value: this.reportData.length
+        }
+      ]
+    },
+
     totalRows() {
       return this.reportData.length
     },

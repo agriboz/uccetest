@@ -5,15 +5,40 @@
         <div class="card">
           <div class="card-body">
             <report-filter
+              v-if="!reportData.length"
               :show-footer="false"
               :is-searchable="false"
               :is-visible-item="isVisibleItem"
               :item="item"
             />
 
-            <div class="form-group">
+            <div v-if="!reportData.length" class="form-group">
               <button class="btn btn-primary" @click="search">Search</button>
             </div>
+
+            <button
+              v-if="reportData.length"
+              class="btn btn-warning"
+              @click="reportData = []"
+            >
+              Back to Filter
+            </button>
+
+            <export-excel
+              v-if="reportData.length"
+              class="btn btn-primary"
+              type="csv"
+              :fields="jsonFields"
+              :data="reportData"
+              style="cursor: pointer"
+            >
+              <i
+                v-b-tooltip.hover
+                title="Download Excel"
+                class="icon-excel d-flex"
+              ></i>
+            </export-excel>
+
             <b-row v-if="reportData.length">
               <b-col md="6" class="my-1">
                 <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
@@ -116,20 +141,65 @@ export default {
   },
 
   data: () => ({
+    jsonFields: {
+      Date: 'date',
+      Count: 'count',
+      ANI: 'ani'
+    },
     fields: [
       { key: 'date', label: 'Date', sortable: true },
       { key: 'count', label: 'Count', sortable: true },
-      { key: 'ani', label: 'ANI' }
+      { key: 'ani', label: 'ANI', sortable: true }
     ],
     currentPage: 1,
     perPage: 5,
-    pageOptions: [5, 10, 15],
+    // pageOptions: [5, 10, 15, 20],
     sortBy: null,
     sortDesc: false,
     sortDirection: 'asc',
     filter: null,
     reportData: [],
     /* reportData: [
+      {
+        count: '6',
+        date: '2019-04-16',
+        ani: '4002204'
+      },
+      {
+        count: '18',
+        date: '2019-04-16',
+        ani: '4356740057'
+      },
+      {
+        count: '21',
+        date: '2019-04-16',
+        ani: '3043481084'
+      },
+      {
+        count: '6',
+        date: '2019-04-15',
+        ani: '6094702637'
+      },
+      {
+        count: '6',
+        date: '2019-04-16',
+        ani: '6185313086'
+      },
+      {
+        count: '11',
+        date: '2019-04-15',
+        ani: '2017686111'
+      },
+      {
+        count: '5',
+        date: '2019-04-16',
+        ani: '6198524100'
+      },
+      {
+        count: '8',
+        date: '2019-04-15',
+        ani: '3044257660'
+      },
       {
         count: '6',
         date: '2019-04-16',
@@ -244,6 +314,31 @@ export default {
   computed: {
     totalRows() {
       return this.reportData.length
+    },
+
+    pageOptions() {
+      return [
+        {
+          text: '5',
+          value: 5
+        },
+        {
+          text: '10',
+          value: 10
+        },
+        {
+          text: '15',
+          value: 15
+        },
+        {
+          text: '20',
+          value: 20
+        },
+        {
+          text: 'All',
+          value: this.reportData.length
+        }
+      ]
     },
 
     sortOptions() {

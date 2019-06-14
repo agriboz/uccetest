@@ -29,9 +29,9 @@
         class="form-control col-xl-6 col-lg-3 col-md-6"
         @change="changeDates"
       >
-        <option v-for="d in dateRanges" :key="d.id" :value="d">{{
-          d.name
-        }}</option>
+        <option v-for="d in dateRanges" :key="d.id" :value="d">
+          {{ d.name }}
+        </option>
       </select>
     </div>
     <div v-if="!relativeDate" class="form-group">
@@ -125,6 +125,7 @@
     <duallist-box
       v-if="item.agents"
       class="mb-2"
+      :is-agent="true"
       :base-list="
         optionsAgents.hasFilter.length
           ? optionsAgents.hasFilter

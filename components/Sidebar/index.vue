@@ -16,7 +16,7 @@
       <!--- Sidemenu -->
       <ul class="metismenu side-nav">
         <li class="side-nav-item">
-          <n-link :to="'/'" class="side-nav-link">
+          <n-link :to="'/home'" class="side-nav-link">
             <i class="icon-home"></i>
             <span>Home</span>
           </n-link>

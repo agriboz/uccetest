@@ -47,6 +47,7 @@ export default {
     { src: '~/plugins/axios.js' },
     { src: '~/plugins/momentDuration.js' },
     { src: '~/plugins/momentRange.js' },
+    { src: '~/plugins/excelExport.js' },
     { src: '~/plugins/datepicker.js' }
   ],
 

@@ -11,7 +11,7 @@
       v-if="data.yoyChangeChart"
       ref="yoyChartChange"
       :chart-data="data.yoyChangeChart.data"
-      :options="data.yoyChangeChart.options"
+      :options="changeChartOptions"
     />
   </section>
 </template>
@@ -26,6 +26,38 @@ export default {
       type: Object,
       default: null,
       requured: true
+    }
+  },
+  computed: {
+    changeChartOptions() {
+      return {
+        maintainAspectRatio: false,
+
+        plugins: {
+          datalabels: {
+            color: function(context) {
+              return context.active ? 'white' : context.dataset.backgroundColor
+            },
+            anchor: 'center',
+            align: 'center',
+            font: {
+              weight: 'bold'
+            }
+          }
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: false,
+                min: -100,
+                max: 100,
+                stepSize: 10
+              }
+            }
+          ]
+        }
+      }
     }
   }
 }
