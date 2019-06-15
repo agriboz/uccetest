@@ -107,16 +107,18 @@ export default {
       required: true,
       type: Object,
       default: null
+    },
+
+    threshold: {
+      required: true,
+      type: Object,
+      default: null
     }
   },
 
   data: () => ({
     data: null,
     openThresholdModal: false,
-    threshold: {
-      threshold1: 85,
-      threshold2: 65
-    },
     chartData: null,
     isChartClicked: 0,
     selectedOption: 'week',
@@ -147,13 +149,23 @@ export default {
 
     bgColor() {
       const { key } = this.selectedMonthlyDashboard
-      return this.data.map(item =>
-        item[key] >= this.threshold.threshold1
-          ? '#29af39'
-          : item[key] >= this.threshold.threshold2
-          ? '#ff7e30'
-          : '#fa4a4a'
-      )
+      if (this.threshold.order === 1) {
+        return this.data.map(item =>
+          item[key] >= this.threshold.threshold1
+            ? '#29af39'
+            : item[key] >= this.threshold.threshold2
+            ? '#ff7e30'
+            : '#fa4a4a'
+        )
+      } else {
+        return this.data.map(item =>
+          item[key] >= this.threshold.threshold1
+            ? '#fa4a4a'
+            : item[key] >= this.threshold.threshold2
+            ? '#ff7e30'
+            : '#29af39'
+        )
+      }
     },
 
     chartOptions() {
@@ -331,13 +343,20 @@ export default {
     async search(item, label, dataField) {
       const { data } = await this.$axios.post(item.url, item.payload)
       this.data = await data
-      const backgroundColor = await this.data.map(item =>
-        item[dataField] >= 85
+      const backgroundColor = this.threshold.order !== 1 ?
+        await this.data.map(item =>
+        item[dataField] >= this.threshold.threshold1
           ? '#fa4a4a'
-          : item[dataField] >= 65
+          : item[dataField] >= this.threshold.threshold2
           ? '#ff7e30'
           : '#29af39'
-      )
+      ) : await this.data.map(item =>
+          item[dataField] >= this.threshold.threshold1
+            ? '#29af39'
+            : item[dataField] >= this.threshold.threshold2
+            ? '#ff7e30'
+            : '#fa4a4a'
+        )
 
       this.chartData = await {
         labels: this.data.map(item => item[label]),

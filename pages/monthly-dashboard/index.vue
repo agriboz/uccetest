@@ -90,6 +90,7 @@
               :is="monthlyDashboardComponent"
               v-if="hasResponse"
               :selected-monthly-dashboard="selectedMonthlyDashboard"
+              :threshold="threshold"
               :item="{ hasResponse, payload: item }"
               @filter="hasResponse = $event"
             />
@@ -151,12 +152,6 @@ export default {
         key: 'service_level_rate'
       },
       {
-        id: 5,
-        name: 'Avg Wait Time',
-        componentName: 'AvgWaitTime',
-        key: 'service_level_rate'
-      },
-      {
         id: 6,
         name: 'Avg Handle Time',
         componentName: 'AvgHandleTime',
@@ -193,6 +188,11 @@ export default {
         key: 'asa'
       }
     ],
+    threshold: {
+      threshold1: null,
+      threshold2: null,
+      order: null
+    },
     title: 'Comstice Quartz - Monthly Dashboard'
   }),
 
@@ -245,9 +245,78 @@ export default {
       setShared: 'shared/setShared'
     }),
 
+    addThreshold(componentName) {
+      const maker = componentName =>
+        ({
+          callAnswerRate: {
+            threshold1: 90,
+            threshold2: 70,
+            order: 1 //descending
+          },
+          CallAbandonRate: {
+            threshold1: 20,
+            threshold2: 10,
+            order: 0 //ascending
+          },
+          ServiceLevelRate: {
+            threshold1: 90,
+            threshold2: 70,
+            order: 1
+          },
+          FTECount: {
+            threshold1: 150,
+            threshold2: 100,
+            order: 0
+          },
+          AvgHandleTime: {
+            threshold1: this.$moment
+              .duration(420, 'seconds')
+              .format('mm:ss', { trim: false }),
+            threshold2: this.$moment
+              .duration(300, 'seconds')
+              .format('mm:ss', { trim: false }),
+            order: 0
+          },
+          MaxWaitTime: {
+            threshold1: this.$moment
+              .duration(900, 'seconds')
+              .format('mm:ss', { trim: false }),
+            threshold2: this.$moment
+              .duration(600, 'seconds')
+              .format('mm:ss', { trim: false }),
+            order: 0
+          },
+          CallsPresented: {
+            threshold1: 2000,
+            threshold2: 1000,
+            order: 0
+          },
+          CallsHandled: {
+            threshold1: 2000,
+            threshold2: 1000,
+            order: 0
+          },
+          CallsAbandoned: {
+            threshold1: 200,
+            threshold2: 100,
+            order: 0
+          },
+          AverageSpeedOfAnswer: {
+            threshold1: 10,
+            threshold2: 5,
+            order: 0
+          }
+        }[componentName])
+
+      this.threshold = maker(componentName)
+    },
+
     async search() {
       this.monthlyDashboardComponent = await null
       this.hasResponse = await false
+      console.log(this.selectedMonthlyDashboard)
+      this.addThreshold(this.selectedMonthlyDashboard.componentName)
+      console.log(this.threshold)
       this.monthlyDashboardComponent = async () =>
         await import(`@/components/MonthlyDashboard`)
       this.hasResponse = await true

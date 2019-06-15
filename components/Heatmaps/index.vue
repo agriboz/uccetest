@@ -101,11 +101,19 @@ export default {
 
   methods: {
     setBackground(data) {
-      return data <= this.threshold.threshold2
-        ? '#fa4a4a'
-        : data <= this.threshold.threshold1
-        ? '#ff7e30'
-        : '#29af39'
+      if (this.threshold.order === 1) {
+        return data <= this.threshold.threshold2
+          ? '#fa4a4a'
+          : data <= this.threshold.threshold1
+          ? '#ff7e30'
+          : '#29af39'
+      } else {
+        return data <= this.threshold.threshold2
+          ? '#29af39'
+          : data <= this.threshold.threshold1
+          ? '#ff7e30'
+          : '#fa4a4a'
+      }
     }
   }
 }

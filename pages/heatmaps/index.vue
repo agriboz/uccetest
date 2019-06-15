@@ -167,7 +167,8 @@ export default {
     },
     threshold: {
       threshold1: null,
-      threshold2: null
+      threshold2: null,
+      order: null
     },
     openThresholdModal: false,
     ignoreDays: [
@@ -260,6 +261,53 @@ export default {
       }
     },
 
+    addThreshold(componentName) {
+      const maker = componentName =>
+        ({
+          CallAnswerRate: {
+            threshold1: 90,
+            threshold2: 70,
+            order: 1 //descending
+          },
+          CallAbandonRate: {
+            threshold1: 20,
+            threshold2: 10,
+            order: 0 //ascending
+          },
+          ServiceLevel: {
+            threshold1: 90,
+            threshold2: 70,
+            order: 1
+          },
+          AverageHandleTime: {
+            threshold1: this.$moment
+              .duration(420, 'seconds')
+              .format('mm:ss', { trim: false }),
+            threshold2: this.$moment
+              .duration(300, 'seconds')
+              .format('mm:ss', { trim: false }),
+            order: 0
+          },
+          CallsPresented: {
+            threshold1: 2000,
+            threshold2: 1000,
+            order: 0
+          },
+          CallsHandled: {
+            threshold1: 2000,
+            threshold2: 1000,
+            order: 0
+          },
+          CallsAbandoned: {
+            threshold1: 200,
+            threshold2: 100,
+            order: 0
+          }
+        }[componentName])
+
+      this.threshold = maker(componentName)
+    },
+
     range(num, beginAtZero) {
       const count = Array.from(
         { length: beginAtZero ? num + 1 : num },
@@ -300,38 +348,40 @@ export default {
       this.hasResponse = await true
       this.heatmapDetail = await data
 
-      if (
-        // should refactor them codes. it is written in bad conditions!
-        this.selectedHeatmap.componentName === 'CallAnswerRate' ||
-        this.selectedHeatmap.componentName === 'ServiceLevel'
-      ) {
-        this.threshold.threshold1 = this.heatmapDetail.legend.orange
-        this.threshold.threshold2 = this.heatmapDetail.legend.red
-      } else if (this.selectedHeatmap.componentName === 'CallAbandonRate') {
-        this.threshold.threshold1 = this.heatmapDetail.legend.red
-        this.threshold.threshold2 = this.heatmapDetail.legend.orange
-      } else if (this.selectedHeatmap.componentName === 'AverageWaitTime') {
-        this.threshold.threshold1 = this.$moment
-          .duration(this.heatmapDetail.legend.red, 'seconds')
-          .format('mm:ss', { trim: false })
-        this.threshold.threshold2 = this.$moment
-          .duration(this.heatmapDetail.legend.orange, 'seconds')
-          .format('mm:ss', { trim: false })
-      } else if (
-        this.selectedHeatmap.componentName === 'CallsPresented' ||
-        this.selectedHeatmap.componentName === 'CallsAbandoned' ||
-        this.selectedHeatmap.componentName === 'CallsHandled'
-      ) {
-        this.threshold.threshold1 = 0
-        this.threshold.threshold2 = 0
-      } else {
-        this.threshold.threshold1 = this.$moment
-          .duration(this.heatmapDetail.legend.red, 'seconds')
-          .format('mm:ss', { trim: false })
-        this.threshold.threshold2 = this.$moment
-          .duration(this.heatmapDetail.legend.orange, 'seconds')
-          .format('mm:ss', { trim: false })
-      }
+      // if (
+      //   // should refactor them codes. it is written in bad conditions!
+      //   this.selectedHeatmap.componentName === 'CallAnswerRate' ||
+      //   this.selectedHeatmap.componentName === 'ServiceLevel'
+      // ) {
+      //   this.threshold.threshold1 = this.heatmapDetail.legend.orange
+      //   this.threshold.threshold2 = this.heatmapDetail.legend.red
+      // } else if (this.selectedHeatmap.componentName === 'CallAbandonRate') {
+      //   this.threshold.threshold1 = this.heatmapDetail.legend.red
+      //   this.threshold.threshold2 = this.heatmapDetail.legend.orange
+      // } else if (this.selectedHeatmap.componentName === 'AverageWaitTime') {
+      //   this.threshold.threshold1 = this.$moment
+      //     .duration(this.heatmapDetail.legend.red, 'seconds')
+      //     .format('mm:ss', { trim: false })
+      //   this.threshold.threshold2 = this.$moment
+      //     .duration(this.heatmapDetail.legend.orange, 'seconds')
+      //     .format('mm:ss', { trim: false })
+      // } else if (
+      //   this.selectedHeatmap.componentName === 'CallsPresented' ||
+      //   this.selectedHeatmap.componentName === 'CallsAbandoned' ||
+      //   this.selectedHeatmap.componentName === 'CallsHandled'
+      // ) {
+      //   this.threshold.threshold1 = 0
+      //   this.threshold.threshold2 = 0
+      // } else {
+      //   this.threshold.threshold1 = this.$moment
+      //     .duration(this.heatmapDetail.legend.red, 'seconds')
+      //     .format('mm:ss', { trim: false })
+      //   this.threshold.threshold2 = this.$moment
+      //     .duration(this.heatmapDetail.legend.orange, 'seconds')
+      //     .format('mm:ss', { trim: false })
+      // }
+
+      this.addThreshold(this.selectedHeatmap.componentName)
 
       this.heatmapComponent = async () => await import(`@/components/Heatmaps`)
     }
