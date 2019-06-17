@@ -2,7 +2,7 @@
   <section>
     <b-tabs class="nav-variant" lazy>
       <b-tab class="p-3" title="Create Report">
-        <div class="form-group">
+        <div v-show="!hasResponse" class="form-group">
           <div class="row">
             <div class="col-md-6">
               <label>Select Date</label>
@@ -54,6 +54,13 @@
 
           <button class="btn btn-primary mt-2" @click="search">Search</button>
         </div>
+        <button
+          v-if="hasResponse"
+          class="btn btn-warning mb-2"
+          @click="hasResponse = !hasResponse"
+        >
+          Back to Filter
+        </button>
         <table
           v-if="hasResponse"
           class="table table-bordered text-center table-sm"
@@ -113,8 +120,17 @@
             <td colspan="2" rowspan="2"></td>
           </tr>
           <tr>
-            <td class="font-weight-bold">PA Emergency</td>
-            <td>15:30 Interval</td>
+            <td class="font-weight-bold">
+              {{ maxwaittimebyid[0].name }} PA Emergency
+            </td>
+            <td>
+              {{
+                $moment
+                  .duration(maxwaittimebyid[0].waittime, 'seconds')
+                  .format('mm:ss', { trim: false })
+              }}
+              {{ $moment(maxwaittimebyid[0].date).hour() }}
+            </td>
           </tr>
           <tr>
             <td colspan="9"></td>
@@ -427,6 +443,7 @@ export default {
       cscdailydigest: [],
       cscdailyivrdigest: [],
       callshistorical: [],
+      maxwaittimebyid: [],
       amwaterteams: {
         actual: {
           awfte: 82,
@@ -832,6 +849,16 @@ export default {
           this.item
         )
 
+        const maxwaittimebyid = await this.$axios.post(
+          `maxwaittime/byid`,
+          {
+            startTime: this.item.startTime,
+            endTime: this.item.endTime,
+            calltypeList: this.item.callTypes.map(item => item.id)
+          },
+          { baseURL: process.env.javaURL }
+        )
+
         /* const amwaterteams = await this.$axios.post(
                 `amwaterteams/daily`,
                 this.item
@@ -840,12 +867,14 @@ export default {
         await Promise.all([
           cscdailyivrdigest,
           cscdailydigest,
-          callshistorical
+          callshistorical,
+          maxwaittimebyid
         ]).then(datas => {
           this.data = {
             cscdailydigest: datas[1].data,
             callshistorical: datas[2].data,
             cscdailyivrdigest: datas[0].data,
+            maxwaittimebyid: datas[3].data,
             amwaterteams: {
               actual: {
                 awfte: 82,

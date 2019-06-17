@@ -158,18 +158,6 @@ export default {
         key: 'aht'
       },
       {
-        id: 7,
-        name: 'Agent Occupancy',
-        componentName: 'AgentOccupancy',
-        key: 'agent_occupancy_rate'
-      },
-      {
-        id: 8,
-        name: 'Agent Efficiency',
-        componentName: 'AgentEfficiency',
-        key: 'agent_efficiency_rate'
-      },
-      {
         id: 9,
         name: 'Max Wait Time',
         componentName: 'MaxWaitTime',
