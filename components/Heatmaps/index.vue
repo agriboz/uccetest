@@ -24,14 +24,15 @@
           }"
           class="item-numbers"
         >
-          <span v-if="isAverageKey">
+          <span v-if="isTimeFormat">
             {{
               $moment
-                .duration(tt.avg_queue_time_weighted_average, 'seconds')
+                .duration(tt[selectedHeatmap.key], 'seconds')
                 .format('mm:ss', { trim: false })
             }}
           </span>
-          <span v-else>{{ tt[selectedHeatmap.key] }}%</span>
+          <span v-if="isPercentageFormat">{{ tt[selectedHeatmap.key] }}%</span>
+          <span v-if="isCountFormat">{{ tt[selectedHeatmap.key] }}</span>
         </div>
       </div>
     </div>
@@ -45,20 +46,44 @@
       <div class="item-perc">
         <div class="item-inner">
           <div class="perc-block orange" />
-          <span v-if="isAverageKey"
-            >{{ threshold.threshold2 }} - {{ threshold.threshold1 }}</span
+          <span v-if="isTimeFormat"
+            >{{
+              $moment
+                .duration(threshold.threshold2, 'seconds')
+                .format('mm:ss', { trim: false })
+            }}
+            -
+            {{
+              $moment
+                .duration(threshold.threshold1, 'seconds')
+                .format('mm:ss', { trim: false })
+            }}</span
           >
-          <span v-else>
-            % {{ +threshold.threshold2 + 1 }} - %
+
+          <span v-if="isCountFormat">
+            {{ threshold.threshold2 }} -
             {{ threshold.threshold1 }}
+          </span>
+
+          <span v-if="isPercentageFormat">
+            {{ +threshold.threshold2 + 1 }}% - {{ threshold.threshold1 }}%
           </span>
         </div>
       </div>
       <div class="item-perc">
         <div class="item-inner">
           <div class="perc-block red" />
-          <span v-if="isAverageKey">{{ threshold.threshold1 }} - 00:59:59</span>
-          <span v-else>% 0 - % {{ threshold.threshold2 }}</span>
+          <span v-if="isTimeFormat">
+            {{
+              $moment
+                .duration(+threshold.threshold1 + 1, 'seconds')
+                .format('mm:ss', { trim: false })
+            }}</span
+          >
+          <span v-if="isPercentageFormat">
+            {{ +threshold.threshold1 + 1 }}%
+          </span>
+          <span v-if="isCountFormat"> {{ +threshold.threshold1 + 1 }} </span>
         </div>
       </div>
     </div>
@@ -91,10 +116,30 @@ export default {
   },
 
   computed: {
-    isAverageKey() {
+    isTimeFormat() {
       return (
-        this.selectedHeatmap.key === 'avg_queue_time_weighted_average' ||
-        this.selectedHeatmap.key === 'avg_handle_time_weighted_average'
+        this.selectedHeatmap.key === 'asa' ||
+        this.selectedHeatmap.key === 'aht' ||
+        this.selectedHeatmap.key === 'asa' ||
+        this.selectedHeatmap.key === 'total_handled_time'
+      )
+    },
+    isPercentageFormat() {
+      return (
+        this.selectedHeatmap.key === 'call_answer_rate' ||
+        this.selectedHeatmap.key === 'calls_abandoned_rate' ||
+        this.selectedHeatmap.key === 'percent_distribution_aht' ||
+        this.selectedHeatmap.key === 'service_level_rate' ||
+        this.selectedHeatmap.key === 'percent_distribution_calls_received'
+      )
+    },
+    isCountFormat() {
+      return (
+        this.selectedHeatmap.key === 'calls_abandoned' ||
+        this.selectedHeatmap.key === 'calls_answered' ||
+        this.selectedHeatmap.key === 'calls_handled' ||
+        this.selectedHeatmap.key === 'calls_presented' ||
+        this.selectedHeatmap.key === 'handle_sl_met'
       )
     }
   },

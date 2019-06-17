@@ -60,8 +60,7 @@ export default {
     '@nuxtjs/toast',
     '@nuxtjs/moment',
     // Doc: https://bootstrap-vue.js.org/docs/
-    'bootstrap-vue/nuxt',
-    '@nuxtjs/pwa'
+    'bootstrap-vue/nuxt'
   ],
   /*
    ** Axios module configuration
@@ -76,6 +75,8 @@ export default {
    ** Build configuration
    */
   build: {
+    analyze: true,
+
     /*
      ** You can extend webpack config here
      */

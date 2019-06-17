@@ -20,7 +20,7 @@
               </div>
             </div>
             <report-filter
-              v-if="!hasResponse"
+              v-show="!hasResponse"
               :show-footer="false"
               :is-searchable="false"
               :url="'/teamnotreadypercentage'"
@@ -196,12 +196,24 @@ export default {
         componentName: 'CallAbandonRate',
         key: 'calls_abandoned_rate'
       },
+      {
+        id: 9,
+        name: 'Percent Distribution Calls Received',
+        componentName: 'PercentDistributionCallsReceived',
+        key: 'percent_distribution_calls_received'
+      },
+      {
+        id: 10,
+        name: 'Percent Distribution AHT',
+        componentName: 'PercentDistributionAht',
+        key: 'percent_distribution_aht'
+      },
 
       {
         id: 4,
         name: 'Average Handle Time',
         componentName: 'AverageHandleTime',
-        key: 'avg_handle_time_weighted_average'
+        key: 'aht'
       },
       {
         id: 5,
@@ -226,6 +238,12 @@ export default {
         name: 'Calls Abandoned',
         componentName: 'CallsAbandoned',
         key: 'calls_abandoned'
+      },
+      {
+        id: 11,
+        name: 'Average Speed Of Answer',
+        componentName: 'AverageSpeedOfAnswer',
+        key: 'asa'
       }
     ],
     title: 'Comstice Quartz - Heatmaps'
@@ -264,6 +282,21 @@ export default {
     addThreshold(componentName) {
       const maker = componentName =>
         ({
+          AverageSpeedOfAnswer: {
+            threshold1: 10,
+            threshold2: 5,
+            order: 0
+          },
+          PercentDistributionCallsReceived: {
+            threshold1: 20,
+            threshold2: 10,
+            order: 0
+          },
+          PercentDistributionAht: {
+            threshold1: 110,
+            threshold2: 90,
+            order: 0
+          },
           CallAnswerRate: {
             threshold1: 90,
             threshold2: 70,

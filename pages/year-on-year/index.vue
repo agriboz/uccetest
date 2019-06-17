@@ -154,43 +154,49 @@ export default {
         id: 4,
         name: 'Average Handle Time',
         componentName: 'AverageHandleTime',
-        key: 'avg-handle-time'
+        key: 'average-handled-time'
       },
       {
         id: 5,
-        name: 'Average Wait Time',
-        componentName: 'AverageWaitTime',
-        key: 'avg-wait-time'
+        name: 'Max Wait Time',
+        componentName: 'MaxWaitTime',
+        key: 'max-wait-time'
       },
       {
         id: 6,
-        name: 'Sla Answer Percentage',
+        name: 'Service Level',
         componentName: 'SlaAnswerPercentage',
         key: 'sla-answer-percentage'
       },
       {
         id: 7,
-        name: 'CSQ Answer Rate',
-        componentName: 'CSQAnswerRate',
-        key: 'csq-answer-rate'
+        name: 'Answer Rate',
+        componentName: 'CallsAnswerRate',
+        key: 'calls-answer-rate'
       },
       {
         id: 8,
-        name: 'CSQ Abandon Rate',
-        componentName: 'CSQAbandonRate',
-        key: 'csq-abandon-rate'
+        name: 'Abandon Rate',
+        componentName: 'CallsAbandonRate',
+        key: 'calls-abandon-rate'
       },
       {
         id: 9,
-        name: 'Agent Occupancy',
-        componentName: 'AgentOccupancy',
-        key: 'agent-occupancy'
+        name: 'Percent Distribution Calls Received',
+        componentName: 'PercentDistributionCallsReceived',
+        key: 'percent-distribution-calls-received'
       },
       {
         id: 10,
-        name: 'Agent Efficiency',
-        componentName: 'AgentEfficiency',
-        key: 'agent-efficiency'
+        name: 'Percent Distribution AHT',
+        componentName: 'PercentDistributionAht',
+        key: 'percent-distribution-aht'
+      },
+      {
+        id: 11,
+        name: 'Average Speed Of Answer',
+        componentName: 'AverageSpeedOfAnswer',
+        key: 'average-speed-answered'
       }
     ],
     title: 'Comstice Quartz - Year On Year'

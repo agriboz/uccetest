@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-body">
             <report-filter
-              v-if="!reportData.length"
+              v-show="!reportData.length"
               :show-footer="false"
               :is-searchable="false"
               :item="item"

@@ -3,19 +3,20 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <save-filter
-            :item="{ callTypes: item.callTypes }"
-            @updateFilter="item.callTypes = $event.callTypes"
-          />
           <div class="card-body">
             <report-filter
-              v-if="!hasResponse"
+              v-show="!hasResponse"
               :show-footer="false"
               :is-searchable="false"
               :url="'/teamnotreadypercentage'"
               :item="item"
             />
-            <buble-chart :chart-data="chartData" :options="chartOptions" />
+            <button class="btn btn-primary mb-2" @click="search">Search</button>
+            <save-filter
+              :item="{ callTypes: item.callTypes }"
+              @updateFilter="item.callTypes = $event.callTypes"
+            />
+            <scatter-chart :chart-data="chartData" :options="chartOptions" />
           </div>
         </div>
       </div>
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-import BubleChart from '@/components/Charts/bubleChart'
+import ScatterChart from '@/components/Charts/scatterChart'
 import ReportFilter from '@/components/StockReportFilter'
 import SaveFilter from '@/components/SaveFilter'
 
@@ -33,7 +34,7 @@ import dateRanges from '@/utils/dateRanges'
 export default {
   components: {
     ReportFilter,
-    BubleChart,
+    ScatterChart,
     SaveFilter
   },
 
@@ -196,6 +197,13 @@ export default {
           ]
         } */
       ]
+    }
+  },
+
+  methods: {
+    search() {
+      const { data } = this.$axios.post('callshistdigest/hourly', this.item)
+      console.log(data)
     }
   }
 }
