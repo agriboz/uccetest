@@ -126,7 +126,7 @@
             <td>
               {{
                 $moment
-                  .duration(data.maxwaittimebyid[0].waittime, 'seconds')
+                  .duration(data.maxwaittimebyid[0].waittime, 'second')
                   .format('mm:ss', { trim: false })
               }}
               -
@@ -339,7 +339,7 @@
           <td>
             {{
               $moment
-                .duration(report.data.maxwaittimebyid.waittime, 'seconds')
+                .duration(report.data.maxwaittimebyid.waittime, 'second')
                 .format('mm:ss', { trim: false })
             }}
             -
