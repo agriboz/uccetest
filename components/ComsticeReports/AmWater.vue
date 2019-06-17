@@ -332,8 +332,17 @@
           <td colspan="2" rowspan="2"></td>
         </tr>
         <tr>
-          <td class="font-weight-bold">PA Emergency</td>
-          <td>15:30 Interval</td>
+          <td class="font-weight-bold">
+            {{ report.data.maxwaittimebyid.name }} PA Emergency
+          </td>
+          <td>
+            {{
+              $moment
+                .duration(report.data.maxwaittimebyid.waittime, 'seconds')
+                .format('mm:ss', { trim: false })
+            }}
+            {{ $moment(report.data.maxwaittimebyid.date).hour() }}
+          </td>
         </tr>
         <tr>
           <td colspan="9"></td>
@@ -610,6 +619,11 @@ export default {
               agency: this.shrinkAgePerc('agency')
             }
           },
+          maxwaittimebyid: {
+            name: this.data.maxwaittimebyid[0].name,
+            waittime: this.data.maxwaittimebyid[0].waittime,
+            date: this.data.maxwaittimebyid[0].date
+          },
           callshistorical: {
             oldestCall: this.totalOldestCall,
             asa: this.totalAsa,
@@ -851,12 +865,7 @@ export default {
 
         const maxwaittimebyid = await this.$axios.post(
           `maxwaittime/byid`,
-          {
-            startTime: this.item.startTime,
-            endTime: this.item.endTime,
-            calltypeList: this.item.callTypes.map(item => item.id)
-          },
-          { baseURL: process.env.javaURL }
+          this.item
         )
 
         /* const amwaterteams = await this.$axios.post(
