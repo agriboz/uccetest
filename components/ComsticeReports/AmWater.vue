@@ -119,7 +119,7 @@
           <tr>
             <td colspan="2" rowspan="2"></td>
           </tr>
-          <!-- <tr>
+          <tr>
             <td class="font-weight-bold">
               {{ maxwaittimebyid[0].name }} PA Emergency
             </td>
@@ -131,7 +131,7 @@
               }}
               {{ $moment(maxwaittimebyid[0].date).hour() }}
             </td>
-          </tr> -->
+          </tr>
           <tr>
             <td colspan="9"></td>
           </tr>
@@ -331,7 +331,7 @@
         <tr>
           <td colspan="2" rowspan="2"></td>
         </tr>
-        <!-- <tr>
+        <tr>
           <td class="font-weight-bold">
             {{ report.data.maxwaittimebyid.name }} PA Emergency
           </td>
@@ -343,7 +343,7 @@
             }}
             {{ $moment(report.data.maxwaittimebyid.date).hour() }}
           </td>
-        </tr> -->
+        </tr>
         <tr>
           <td colspan="9"></td>
         </tr>
@@ -452,7 +452,7 @@ export default {
       cscdailydigest: [],
       cscdailyivrdigest: [],
       callshistorical: [],
-      // maxwaittimebyid: [],
+      maxwaittimebyid: [],
       amwaterteams: {
         actual: {
           awfte: 82,
@@ -619,11 +619,11 @@ export default {
               agency: this.shrinkAgePerc('agency')
             }
           },
-          /*  maxwaittimebyid: {
+          maxwaittimebyid: {
             name: this.data.maxwaittimebyid[0].name,
             waittime: this.data.maxwaittimebyid[0].waittime,
             date: this.data.maxwaittimebyid[0].date
-          }, */
+          },
           callshistorical: {
             oldestCall: this.totalOldestCall,
             asa: this.totalAsa,
@@ -863,10 +863,10 @@ export default {
           this.item
         )
 
-        /* const maxwaittimebyid = await this.$axios.post(
+        const maxwaittimebyid = await this.$axios.post(
           `maxwaittime/byid`,
           this.item
-        ) */
+        )
 
         /* const amwaterteams = await this.$axios.post(
                 `amwaterteams/daily`,
@@ -876,14 +876,14 @@ export default {
         await Promise.all([
           cscdailyivrdigest,
           cscdailydigest,
-          callshistorical
-          // maxwaittimebyid
+          callshistorical,
+          maxwaittimebyid
         ]).then(datas => {
           this.data = {
             cscdailydigest: datas[1].data,
             callshistorical: datas[2].data,
             cscdailyivrdigest: datas[0].data,
-            // maxwaittimebyid: datas[3].data,
+            maxwaittimebyid: datas[3].data,
             amwaterteams: {
               actual: {
                 awfte: 82,
