@@ -121,15 +121,15 @@
           </tr>
           <tr>
             <td class="font-weight-bold">
-              {{ maxwaittimebyid[0].name }} PA Emergency
+              {{ data.maxwaittimebyid[0].name }} PA Emergency
             </td>
             <td>
               {{
                 $moment
-                  .duration(maxwaittimebyid[0].waittime, 'seconds')
+                  .duration(data.maxwaittimebyid[0].waittime, 'seconds')
                   .format('mm:ss', { trim: false })
               }}
-              {{ $moment(maxwaittimebyid[0].date).hour() }}
+              {{ $moment(data.maxwaittimebyid[0].date).hour() }}
             </td>
           </tr>
           <tr>
