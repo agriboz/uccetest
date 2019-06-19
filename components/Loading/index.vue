@@ -1,5 +1,10 @@
 <template>
   <div v-if="loading" class="loading-page">
+    <i
+      class="mdi mdi-close cancel-request"
+      title="Cancel Requests"
+      @click="cancelRequest"
+    ></i>
     <div class="spinner">
       <div class="double-bounce1" />
       <div class="double-bounce2" />
@@ -8,17 +13,33 @@
 </template>
 
 <script>
+import { cancelTokenSources } from '@/plugins/axios'
+
 export default {
   props: {
     loading: {
       required: true,
       type: Boolean
     }
+  },
+
+  methods: {
+    cancelRequest() {
+      for (const [cancel] of cancelTokenSources) {
+        cancel('Requests Cancelled')
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+.cancel-request {
+  font-size: 1.5rem;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 .loading-page {
   top: 0;
   left: 0;

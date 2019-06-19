@@ -56,8 +56,12 @@ export default {
     },
 
     async getFilters() {
-      const { data } = await this.$axios.get('save-filter')
-      this.filters = await data
+      try {
+        const { data } = await this.$axios.get('save-filter')
+        this.filters = await data
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async save() {

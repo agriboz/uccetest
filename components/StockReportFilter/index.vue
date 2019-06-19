@@ -137,6 +137,20 @@
       @updateBase="optionsAgents.baseList = $event"
     />
 
+    <duallist-box
+      v-if="item.teams"
+      class="mb-2"
+      :base-list="
+        optionsTeams.hasFilter.length
+          ? optionsTeams.hasFilter
+          : optionsTeams.baseList
+      "
+      :selected-list="item.teams"
+      :title="optionsTeams.title"
+      @updateSelected="item.teams = $event"
+      @updateBase="optionsTeams.baseList = $event"
+    />
+
     <div v-if="isVisibleItem.counter" class="form-group">
       <label>Counter</label>
       <input v-model="item.counter" type="text" class="form-control w-50" />
@@ -236,7 +250,7 @@ export default {
     selectedDate: null
   }),
   computed: {
-    ...mapState('shared', ['callTypes', 'skills', 'csqs', 'queues', 'agents']),
+    ...mapState('shared', ['callTypes', 'skills', 'teams', 'queues', 'agents']),
 
     yearRange() {
       const subtractYear = this.$moment().subtract(5, 'years')
@@ -284,6 +298,17 @@ export default {
         selectedList: [],
         title: 'Precision Queue'
       }
+    },
+
+    optionsTeams() {
+      return {
+        hasFilter: this.teams.filter(
+          item => !this.item.teams.some(j => j.id === item.id)
+        ),
+        baseList: this.teams,
+        selectedList: [],
+        title: 'Teams'
+      }
     }
   },
 
@@ -293,6 +318,13 @@ export default {
         this.getShared({
           endpoint: 'shared/queues',
           key: 'queues'
+        })
+      }
+
+      if (this.item.teams) {
+        this.getShared({
+          endpoint: 'shared/teams',
+          key: 'teams'
         })
       }
     }
@@ -326,6 +358,13 @@ export default {
       this.getShared({
         endpoint: 'shared/skills',
         key: 'skills'
+      })
+    }
+
+    if (this.item.teams) {
+      this.getShared({
+        endpoint: 'shared/teams',
+        key: 'teams'
       })
     }
   },

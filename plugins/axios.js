@@ -1,3 +1,5 @@
+import axios from 'axios'
+export const cancelTokenSources = new Map()
 export default function({ app, $axios, store, redirect }) {
   $axios.onResponse(
     response => {
@@ -20,8 +22,16 @@ export default function({ app, $axios, store, redirect }) {
         config.headers.Authorization = `Bearer ${token.token}`
       }
 
+      if (!config.hasOwnProperty('cancelToken')) {
+        // Exclude requests that don't require cancel
+        const source = axios.CancelToken.source()
+        cancelTokenSources.set(source.cancel) // join the cancel queue
+        config.cancelToken = source.token
+      }
+
       return config
     },
+
     error => {
       return Promise.reject(error)
     }
@@ -32,6 +42,15 @@ export default function({ app, $axios, store, redirect }) {
     store.commit('setLoading', false)
 
     const code = parseInt(error.response && error.response.status)
+
+    if (error && error.config && error.config.progress === false) {
+      return
+    }
+
+    if (axios.isCancel(error)) {
+      console.log(error.message)
+      app.$toast.info(error.message)
+    }
 
     if (code === 422) {
       app.$toast.error(error.response.data.message)

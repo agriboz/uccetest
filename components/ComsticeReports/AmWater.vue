@@ -876,7 +876,10 @@ export default {
 
         const amwaterteams = await this.$axios.post(
           `amwaterteams/daily`,
-          this.item
+          this.item,
+          {
+            baseURL: process.env.javaURL
+          }
         )
 
         /* awfte: result4.agents[0].handled,

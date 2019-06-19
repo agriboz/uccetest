@@ -359,11 +359,15 @@ export default {
     },
 
     async search() {
-      const { data } = await this.$axios.post(
-        `repeatcallsani/bydate`,
-        this.item
-      )
-      this.reportData = await data
+      try {
+        const { data } = await this.$axios.post(
+          `repeatcallsani/bydate`,
+          this.item
+        )
+        this.reportData = await data
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

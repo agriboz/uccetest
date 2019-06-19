@@ -4,12 +4,37 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <report-filter
-              v-show="!reportData.length"
-              :show-footer="false"
-              :is-searchable="false"
-              :item="item"
-            />
+            <div class="row">
+              <div class="col-md-6">
+                <report-filter
+                  v-show="!reportData.length"
+                  :show-footer="false"
+                  :is-searchable="false"
+                  :item="item"
+                />
+              </div>
+              <div class="col-md-6">
+                <div
+                  v-for="f in filterTypes"
+                  :key="f.id"
+                  class="custom-control custom-radio"
+                >
+                  <input
+                    :id="f.id"
+                    v-model="pickedFilterType"
+                    :value="f.id"
+                    type="radio"
+                    :name="f.id"
+                    class="custom-control-input"
+                    @change="setFilterType(f.id)"
+                  />
+                  <label class="custom-control-label" :for="f.id">{{
+                    f.name
+                  }}</label>
+                </div>
+              </div>
+            </div>
+
             <save-filter
               v-if="!reportData.length"
               class="mb-2"
@@ -146,6 +171,19 @@ export default {
   },
 
   data: () => ({
+    pickedFilterType: 1,
+    filterTypes: [
+      {
+        id: 1,
+        name: 'Agents',
+        key: 'agents'
+      },
+      {
+        id: 2,
+        name: 'Teams',
+        key: 'teams'
+      }
+    ],
     jsonFields: {
       Date: 'date',
       'Login Duration': 'logindur'
@@ -223,6 +261,19 @@ export default {
   },
 
   methods: {
+    async setFilterType(id) {
+      console.log(id)
+      if (id === 1) {
+        delete this.item.teams
+        this.item = await { ...this.item, ...{ agents: [] } }
+      }
+      if (id === 2) {
+        delete this.item.agents
+        this.item = await { ...this.item, ...{ teams: [] } }
+      }
+      console.log(this.item)
+    },
+
     csvExport(arrData) {
       let csvContent = 'data:text/csv;charset=utf-8,'
       csvContent += [
@@ -245,8 +296,12 @@ export default {
     },
 
     async search() {
-      const { data } = await this.$axios.post(`ftecount/byid`, this.item)
-      this.reportData = await data
+      try {
+        const { data } = await this.$axios.post(`ftecount/byid`, this.item)
+        this.reportData = await data
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
