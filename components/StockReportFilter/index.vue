@@ -323,7 +323,7 @@ export default {
 
       if (this.item.teams) {
         this.getShared({
-          endpoint: 'shared/teams',
+          endpoint: 'teamlist/allteams',
           key: 'teams'
         })
       }
@@ -363,7 +363,7 @@ export default {
 
     if (this.item.teams) {
       this.getShared({
-        endpoint: 'shared/teams',
+        endpoint: 'teamlist/allteams',
         key: 'teams'
       })
     }
