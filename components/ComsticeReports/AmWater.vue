@@ -127,13 +127,13 @@
               {{
                 $moment
                   .duration(+data.maxwaittimebyid[0].waittime, 'second')
-                  .format('mm:ss A', {
+                  .format('mm:ss', {
                     trim: false
                   })
               }}
 
               -
-              {{ $moment(data.maxwaittimebyid[0].date).format('hh:mm') }}
+              {{ $moment(data.maxwaittimebyid[0].date).format('hh:mm A') }}
             </td>
           </tr>
           <tr>
@@ -347,7 +347,7 @@
                 .format('mm:ss', { trim: false })
             }}
             -
-            {{ $moment(report.data.maxwaittimebyid.date).format('hh:mm') }}
+            {{ $moment(report.data.maxwaittimebyid.date).format('hh:mm A') }}
           </td>
         </tr>
         <tr>
@@ -461,10 +461,10 @@ export default {
       maxwaittimebyid: [],
       amwaterteams: {
         actual: {
-          awfte: 82,
-          awhours: 656,
-          agencyfte: 115,
-          agencyhours: 917
+          awfte: 0,
+          awhours: 0,
+          agencyfte: 0,
+          agencyhours: 0
         }
       }
     },
@@ -849,11 +849,9 @@ export default {
 
     async search() {
       this.hasResponse = false
-      const format = 'YYYY-MM-DD'
+      // const format = 'YYYY-MM-DD'
 
-      this.item.endTime = await this.$moment(this.item.startTime)
-        .add(1, 'day')
-        .format(format)
+      this.item.endTime = this.item.startTime
       try {
         const cscdailydigest = await this.$axios.post(
           `cscdailydigest/daily`,
