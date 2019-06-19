@@ -127,7 +127,7 @@
               {{
                 $moment
                   .duration(+data.maxwaittimebyid[0].waittime, 'second')
-                  .format('mm:ss', {
+                  .format('mm:ss A', {
                     trim: false
                   })
               }}
@@ -337,12 +337,13 @@
         </tr>
         <tr>
           <td class="font-weight-bold">
+            {{ report.data.maxwaittimebyid }}
             {{ report.data.maxwaittimebyid.name }}
           </td>
           <td>
             {{
               $moment
-                .duration(report.data.maxwaittimebyid.waittime, 'second')
+                .duration(+report.data.maxwaittimebyid.waittime, 'second')
                 .format('mm:ss', { trim: false })
             }}
             -
@@ -873,16 +874,22 @@ export default {
           this.item
         )
 
-        /* const amwaterteams = await this.$axios.post(
-                `amwaterteams/daily`,
-                this.item
-              ) */
+        const amwaterteams = await this.$axios.post(
+          `amwaterteams/daily`,
+          this.item
+        )
+
+        /* awfte: result4.agents[0].handled,
+             awhours: result4.agents[0].hours,
+             agencyfte: result4.agents[1].handled,
+             agencyhours: result4.agents[1].hours */
 
         await Promise.all([
           cscdailyivrdigest,
           cscdailydigest,
           callshistorical,
-          maxwaittimebyid
+          maxwaittimebyid,
+          amwaterteams
         ]).then(datas => {
           this.data = {
             cscdailydigest: datas[1].data,
@@ -891,9 +898,9 @@ export default {
             maxwaittimebyid: datas[3].data,
             amwaterteams: {
               actual: {
-                awfte: 82,
+                awfte: datas[4][0].handled,
                 awhours: 656,
-                agencyfte: 115,
+                agencyfte: datas[4][1].handled,
                 agencyhours: 97
               }
             }
