@@ -897,9 +897,9 @@ export default {
             amwaterteams: {
               actual: {
                 awfte: datas[4].data[0].handled,
-                awhours: 656,
+                awhours: 0,
                 agencyfte: datas[4].data[1].handled,
-                agencyhours: 97
+                agencyhours: 0
               }
             }
           }
@@ -907,10 +907,10 @@ export default {
         })
 
         this.sendData = {
-          forecastedAwFte: 82,
-          forecastedAwHours: 656,
-          forecastedAgencyFte: 115,
-          forecastedAgencyHours: 97
+          forecastedAwFte: 0,
+          forecastedAwHours: 0,
+          forecastedAgencyFte: 0,
+          forecastedAgencyHours: 0
         }
       } catch (error) {
         console.log(error)
