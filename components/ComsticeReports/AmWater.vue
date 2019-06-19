@@ -898,9 +898,9 @@ export default {
             maxwaittimebyid: datas[3].data,
             amwaterteams: {
               actual: {
-                awfte: datas[4][0].handled,
+                awfte: datas[4].data[0].handled,
                 awhours: 656,
-                agencyfte: datas[4][1].handled,
+                agencyfte: datas[4].data[1].handled,
                 agencyhours: 97
               }
             }
