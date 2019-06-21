@@ -190,7 +190,7 @@ export default {
     },
     fields: [
       { key: 'date', label: 'Date', sortable: true },
-      { key: 'logindur', label: 'Duration', sortable: true }
+      { key: 'logindur', label: 'FTE Count', sortable: true }
     ],
     currentPage: 1,
     perPage: 5,

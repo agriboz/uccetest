@@ -183,7 +183,13 @@
                 class="form-control"
               />
             </td>
-            <td>{{ data.amwaterteams.actual.awhours }}</td>
+            <td>
+              <input
+                v-model="data.amwaterteams.actual.awhours"
+                type="text"
+                class="form-control"
+              />
+            </td>
             <td class="text-uppercase">Make Payment</td>
             <td>{{ breakdownCount('MAKEPAYMENT_PQ') }}</td>
             <td>{{ breakdownPercentage('MAKEPAYMENT_PQ') }}%</td>
@@ -216,7 +222,13 @@
                 class="form-control"
               />
             </td>
-            <td>{{ data.amwaterteams.actual.agencyhours }}</td>
+            <td>
+              <input
+                v-model="data.amwaterteams.actual.agencyhours"
+                type="text"
+                class="form-control"
+              />
+            </td>
             <td class="text-uppercase">Service</td>
             <td>{{ breakdownCount('SERVICE_PQ') }}</td>
             <td>{{ breakdownPercentage('SERVICE_PQ') }}%</td>
