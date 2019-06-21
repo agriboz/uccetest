@@ -184,7 +184,10 @@
                 v-model="data.amwaterteams.actual.awhours"
                 type="text"
                 class="form-control"
-                @input="data.amwaterteams.actual.awfte = 0"
+                @input="
+                  data.amwaterteams.actual.awfte =
+                    data.amwaterteams.actual.awhours / 8
+                "
               />
             </td>
             <td class="text-uppercase">Make Payment</td>
@@ -222,7 +225,7 @@
                 class="form-control"
                 @input="
                   data.amwaterteams.actual.agencyfte =
-                    data.amwaterteams.actual.agencyfte / 8
+                    data.amwaterteams.actual.agencyhours / 8
                 "
               />
             </td>
