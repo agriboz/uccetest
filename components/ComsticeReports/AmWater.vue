@@ -909,9 +909,9 @@ export default {
             amwaterteams: {
               actual: {
                 awfte: datas[4].data[0].handled,
-                awhours: 0,
+                awhours: datas[4].data[0].handled,
                 agencyfte: datas[4].data[1].handled,
-                agencyhours: 0
+                agencyhours: datas[4].data[1].handled
               }
             }
           }
