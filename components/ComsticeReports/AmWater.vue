@@ -909,9 +909,9 @@ export default {
             amwaterteams: {
               actual: {
                 awfte: datas[4].data[0].handled,
-                awhours: datas[4].data[0].handled,
+                awhours: 0,
                 agencyfte: datas[4].data[1].handled,
-                agencyhours: datas[4].data[1].handled
+                agencyhours: 0
               }
             }
           }
@@ -919,9 +919,9 @@ export default {
         })
 
         this.sendData = {
-          forecastedAwFte: 0,
+          forecastedAwFte: this.data.amwaterteams.actual.awfte,
           forecastedAwHours: 0,
-          forecastedAgencyFte: 0,
+          forecastedAgencyFte: this.data.amwaterteams.actual.agencyfte,
           forecastedAgencyHours: 0
         }
       } catch (error) {
