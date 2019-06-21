@@ -177,6 +177,9 @@
                 v-model="sendData.forecastedAwHours"
                 type="text"
                 class="form-control"
+                @input="
+                  sendData.forecastedAwFte = sendData.forecastedAwHours / 8
+                "
               />
             </td>
             <td>
@@ -216,6 +219,10 @@
                 v-model="sendData.forecastedAgencyHours"
                 type="text"
                 class="form-control"
+                @input="
+                  sendData.forecastedAgencyFte =
+                    sendData.forecastedAgencyHours / 8
+                "
               />
             </td>
             <td>
