@@ -766,36 +766,27 @@ export default {
     }),
 
     shrinkAgePerc(item) {
-      const {
-        forecastedAwFte,
-        forecastedAwHours,
-        forecastedAgencyFte,
-        forecastedAgencyHours
-      } = this.sendData
+      const { forecastedAwHours, forecastedAgencyHours } = this.sendData
 
       const {
-        awfte: actualAwfte,
         awhours: actualAwhours,
-        agencyfte: actualAgencyfte,
         agencyhours: actualAgencyhours
       } = this.data.amwaterteams.actual
 
       if (item === 'aw') {
-        const totalForecast = +forecastedAwFte + +forecastedAwHours
-        const totalActual = actualAwfte + actualAwhours
-        const minusTotals = (totalForecast - totalActual) * 100
-        const result = minusTotals / totalForecast
-        const toFixed = result.toFixed(2)
+        const totalForecast =
+          (100 * (+forecastedAwHours - +actualAwhours)) / forecastedAwHours
+
+        const toFixed = totalForecast.toFixed(2)
         return toFixed
       }
 
       if (item === 'agency') {
-        const totalForecast = +forecastedAgencyFte + +forecastedAgencyHours
-        const totalActual = actualAgencyfte + actualAgencyhours
-        const minusTotals = (totalForecast - totalActual) * 100
-        const result = minusTotals / totalForecast
-        const toFixed = result.toFixed(2)
-        console.log(actualAgencyhours)
+        const totalForecast =
+          (100 * (+forecastedAgencyHours - +actualAgencyhours)) /
+          forecastedAgencyHours
+        const toFixed = totalForecast.toFixed(2)
+
         return toFixed
       }
     },
