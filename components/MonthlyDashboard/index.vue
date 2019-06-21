@@ -117,7 +117,7 @@ export default {
   },
 
   data: () => ({
-    data: null,
+    data: [],
     openThresholdModal: false,
     chartData: null,
     isChartClicked: 0,
@@ -140,11 +140,40 @@ export default {
   computed: {
     chartTitle() {
       const { name } = this.selectedMonthlyDashboard
-      return `Monthly Dashboard - ${name} - Time Interval: ${this.$moment(
-        this.item.payload.startTime
-      ).format('YYYY-MM-DD')} - ${this.$moment(
-        this.item.payload.endTime
-      ).format('YYYY-MM-DD')}`
+      let titles = {
+        // first: this.data.length ? this.data[0].month : null,
+        // last: this.data.length ? this.data[this.data.length - 1].month : null
+      }
+
+      console.log(this.isChartClicked, this.selectedOption, titles)
+
+      if (this.isChartClicked === 0) {
+        titles = {
+          first: this.data.length ? this.data[0].month : null,
+          last: this.data.length ? this.data[this.data.length - 1].month : null
+        }
+      }
+
+      if (this.isChartClicked === 1) {
+        titles = {
+          first: this.data.length ? this.data[0].week : null,
+          last: this.data.length ? this.data[this.data.length - 1].week : null
+        }
+      }
+
+      if (this.isChartClicked === 2) {
+        titles = {
+          first: this.data.length ? this.data[0].day : null,
+          last: this.data.length ? this.data[this.data.length - 1].day : null
+        }
+      }
+
+      console.log(this.data, this.selectedOption)
+      return `${name} - ${titles.first} - ${
+        titles.last
+      } - Time Interval: ${this.$moment(this.item.payload.startTime).format(
+        'YYYY-MM-DD'
+      )} - ${this.$moment(this.item.payload.endTime).format('YYYY-MM-DD')}`
     },
 
     bgColor() {
@@ -312,7 +341,7 @@ export default {
         )
       }
 
-      if (this.isChartClicked === 1 && this.selectedOption === 'day') {
+      if (this.isChartClicked === 2 && this.selectedOption === 'day') {
         this.month = this.clickedLabel
         this.search(
           {

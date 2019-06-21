@@ -13,7 +13,7 @@
                   :item="item"
                 />
               </div>
-              <div class="col-md-6">
+              <div v-show="!reportData.length" class="col-md-6">
                 <div
                   v-for="f in filterTypes"
                   :key="f.id"

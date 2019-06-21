@@ -130,7 +130,7 @@ export default {
       {
         id: 1,
         name: 'Call Answer Rate',
-        componentName: 'callAnswerRate',
+        componentName: 'CallAnswerRate',
         key: 'calls_answered_rate'
       },
       {
@@ -138,6 +138,24 @@ export default {
         name: 'Call Abandon Rate',
         componentName: 'CallAbandonRate',
         key: 'calls_abandoned_rate'
+      },
+      {
+        id: 12,
+        name: 'Call Received',
+        componentName: 'CallReceived',
+        key: 'calls_presented'
+      },
+      {
+        id: 13,
+        name: 'Call Answered',
+        componentName: 'CallAnswered',
+        key: 'calls_answered'
+      },
+      {
+        id: 14,
+        name: 'Call Abandoned',
+        componentName: 'CallAbandoned',
+        key: 'calls_abandoned'
       },
       {
         id: 3,
@@ -236,7 +254,22 @@ export default {
     addThreshold(componentName) {
       const maker = componentName =>
         ({
-          callAnswerRate: {
+          CallAbandoned: {
+            threshold1: 5000,
+            threshold2: 1000,
+            order: 0 //descending
+          },
+          CallAnswered: {
+            threshold1: 5000,
+            threshold2: 1000,
+            order: 0 //descending
+          },
+          CallReceived: {
+            threshold1: 5000,
+            threshold2: 1000,
+            order: 0 //descending
+          },
+          CallAnswerRate: {
             threshold1: 90,
             threshold2: 70,
             order: 1 //descending
