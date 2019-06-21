@@ -160,11 +160,7 @@
             <td>{{ totalContained }}</td>
             <td>AW FTE</td>
             <td>
-              <input
-                v-model="sendData.forecastedAwFte"
-                type="text"
-                class="form-control"
-              />
+              {{ sendData.forecastedAwFte }}
             </td>
             <td>{{ data.amwaterteams.actual.awfte }}</td>
             <td rowspan="2">{{ shrinkAgePerc('aw') }}%</td>
@@ -199,11 +195,7 @@
             <td>{{ totalOverflowOut }}</td>
             <td>Agency FTE</td>
             <td>
-              <input
-                v-model="sendData.forecastedAgencyFte"
-                type="text"
-                class="form-control"
-              />
+              {{ sendData.forecastedAgencyFte }}
             </td>
             <td>{{ data.amwaterteams.actual.agencyfte }}</td>
             <td rowspan="2">{{ shrinkAgePerc('agency') }}%</td>
@@ -909,9 +901,9 @@ export default {
             amwaterteams: {
               actual: {
                 awfte: datas[4].data[0].handled,
-                awhours: 0,
+                awhours: datas[4].data[0].handled / 8,
                 agencyfte: datas[4].data[1].handled,
-                agencyhours: 0
+                agencyhours: datas[4].data[0].handled / 8
               }
             }
           }
@@ -920,9 +912,9 @@ export default {
 
         this.sendData = {
           forecastedAwFte: this.data.amwaterteams.actual.awfte,
-          forecastedAwHours: 0,
+          forecastedAwHours: this.data.amwaterteams.actual.awhours,
           forecastedAgencyFte: this.data.amwaterteams.actual.agencyfte,
-          forecastedAgencyHours: 0
+          forecastedAgencyHours: this.data.amwaterteams.actual.agencyhours
         }
       } catch (error) {
         console.log(error)

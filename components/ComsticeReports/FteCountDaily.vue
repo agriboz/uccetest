@@ -38,7 +38,7 @@
             <save-filter
               v-if="!reportData.length"
               class="mb-2"
-              :item="{ agents: item.agents }"
+              :item="{ agents: item.agents, teams: item.teams }"
               @updateFilter="item.agents = $event.agents"
             />
             <div v-if="!reportData.length" class="form-group">
