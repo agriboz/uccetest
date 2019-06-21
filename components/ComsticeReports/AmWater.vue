@@ -184,10 +184,7 @@
                 v-model="data.amwaterteams.actual.awhours"
                 type="text"
                 class="form-control"
-                @input="
-                  data.amwaterteams.actual.awfte =
-                    data.amwaterteams.actual.awfte / 8
-                "
+                @input="data.amwaterteams.actual.awfte = 0"
               />
             </td>
             <td class="text-uppercase">Make Payment</td>
