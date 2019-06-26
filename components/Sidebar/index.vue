@@ -81,6 +81,21 @@
           </n-link>
         </li>
         <li class="side-nav-item">
+          <a href="#" class="side-nav-link">
+            <i class="icon-stock-reports"></i>
+            <span>Admin</span>
+            <span class="menu-arrow"></span>
+          </a>
+          <ul class="side-nav-second-level" aria-expanded="false">
+            <li>
+              <n-link :to="'/admin/create-user'">Create User</n-link>
+            </li>
+            <li>
+              <n-link :to="'/admin/rate-calculation'">Rate Calculation</n-link>
+            </li>
+          </ul>
+        </li>
+        <li class="side-nav-item">
           <n-link :to="'/logout'" class="side-nav-link">
             <i class="icon-sign-out" />
             <span>Sign Out</span>
