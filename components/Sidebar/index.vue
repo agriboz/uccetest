@@ -29,11 +29,6 @@
             <span class="menu-arrow"></span>
           </a>
           <ul class="side-nav-second-level" aria-expanded="false">
-            <!-- <li>
-              <n-link :to="'/comstice-reports/average-speed-answer'"
-                >Average Speed Answer</n-link
-              >
-            </li> -->
             <li>
               <n-link :to="'/comstice-reports/am-Water'">AMWater</n-link>
             </li>

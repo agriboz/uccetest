@@ -67,8 +67,8 @@ export default {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    // baseURL: '//172.16.8.7:3100/'
-    baseURL: 'https://entplcwsx002.amwater.net:2778'
+    baseURL: '//172.16.8.7:3100/'
+    // baseURL: 'https://entplcwsx002.amwater.net:2778'
   },
 
   /*
