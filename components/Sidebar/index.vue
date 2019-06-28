@@ -3,7 +3,7 @@
   <div class="left-side-menu">
     <div id="left-side-menu-container" class="slimscroll-menu">
       <!-- LOGO -->
-      <a href="index.html" class="logo text-center">
+      <n-link :to="'/'" class="logo text-center">
         <span class="logo-lg">
           <img src="../../assets/images/quartz-logo.png" alt height="32" />
           <span class="text-white font-medium-1">UCCE</span>
@@ -11,7 +11,7 @@
         <span class="logo-sm">
           <img src="../../assets/images/quartz-logo.png" alt height="16" />
         </span>
-      </a>
+      </n-link>
 
       <!--- Sidemenu -->
       <ul class="metismenu side-nav">

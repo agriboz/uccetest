@@ -18,10 +18,16 @@
         v-for="f in filters"
         :key="f.id"
         @click="selectFilter(f)"
-        >{{ f.filterName }}</b-dropdown-item
+        >{{ f.filterName }} <span @click="openModal = !openModal; filterID = f.id"> &times; <span> </b-dropdown-item
       >
     </b-dropdown>
+    <b-modal title="Delete Filter" @ok="removeFilter">
+      <p>
+        Are you sure want to delete selected filter?
+      </p>
+  </b-modal>
   </section>
+  
 </template>
 
 <script>
@@ -33,6 +39,8 @@ export default {
     }
   },
   data: () => ({
+    filterID: null,
+    openModal: false,
     filters: [],
     filterName: null
   }),
@@ -53,6 +61,15 @@ export default {
     selectFilter(f) {
       console.log(f.filter)
       this.$emit('updateFilter', f.filter)
+    },
+
+    async removeFilter() {
+      try {
+        await this.$axios.delete(`save-filter/${this.filterID}`)
+        await this.getFilters()
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async getFilters() {
