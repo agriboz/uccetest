@@ -126,7 +126,7 @@ export default {
     },
     isPercentageFormat() {
       return (
-        this.selectedHeatmap.key === 'call_answer_rate' ||
+        this.selectedHeatmap.key === 'calls_answer_rate' ||
         this.selectedHeatmap.key === 'calls_abandoned_rate' ||
         this.selectedHeatmap.key === 'percent_distribution_aht' ||
         this.selectedHeatmap.key === 'service_level_rate' ||

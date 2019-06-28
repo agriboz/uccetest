@@ -188,7 +188,7 @@ export default {
         id: 1,
         name: 'Call Answer Rate',
         componentName: 'CallAnswerRate',
-        key: 'call_answer_rate'
+        key: 'calls_answer_rate'
       },
       {
         id: 2,
