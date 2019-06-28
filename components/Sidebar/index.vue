@@ -80,7 +80,7 @@
             <span>Forecasting</span>
           </n-link>
         </li>
-        <li class="side-nav-item">
+        <li v-if="$store.state.user.agentId === -1" class="side-nav-item">
           <a href="#" class="side-nav-link">
             <i class="icon-stock-reports"></i>
             <span>Admin</span>

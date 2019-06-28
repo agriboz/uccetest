@@ -23,8 +23,10 @@
           </span>
         </template>
         <b-dropdown-item>
-          <i class="mdi mdi-logout mr-1"></i>
-          <span>Logout</span>
+          <n-link :to="'/logout'" class="side-nav-link">
+            <i class="mdi mdi-logout mr-1" />
+            <span>Sign Out</span>
+          </n-link>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </ul>

@@ -74,6 +74,7 @@ export default {
   components: {
     PageTitle
   },
+  middleware: 'admin',
   data: () => ({
     item: {
       username: null
