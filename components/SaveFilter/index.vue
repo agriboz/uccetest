@@ -21,7 +21,7 @@
         >{{ f.filterName }} <span @click="openModal = !openModal; filterID = f.id"> &times; <span> </b-dropdown-item
       >
     </b-dropdown>
-    <b-modal title="Delete Filter" @ok="removeFilter">
+    <b-modal title="Delete Filter" v-model="openModal" @ok="removeFilter">
       <p>
         Are you sure want to delete selected filter?
       </p>
