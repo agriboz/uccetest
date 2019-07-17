@@ -14,20 +14,24 @@
       </div>
     </div>
     <b-dropdown text="My Saved Searches" variant="primary">
-      <b-dropdown-item
-        v-for="f in filters"
-        :key="f.id"
-        @click="selectFilter(f)"
-        >{{ f.filterName }} <span @click="openModal = !openModal; filterID = f.id"> &times; <span> </b-dropdown-item
-      >
+      <b-dropdown-item v-for="f in filters" :key="f.id" @click="selectFilter(f)"
+        >{{ f.filterName }}
+        <span
+          @click="
+            openModal = !openModal
+            filterID = f.id
+          "
+        >
+          &times;
+        </span>
+      </b-dropdown-item>
     </b-dropdown>
-    <b-modal title="Delete Filter" v-model="openModal" @ok="removeFilter">
+    <b-modal v-model="openModal" title="Delete Filter" @ok="removeFilter">
       <p>
         Are you sure want to delete selected filter?
       </p>
-  </b-modal>
+    </b-modal>
   </section>
-  
 </template>
 
 <script>

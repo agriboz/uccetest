@@ -33,7 +33,8 @@
     "vee-validate": "^2.2.10",
     "vue-chartjs": "^3.4.2",
     "vue-ctk-date-time-picker": "^2.1.1",
-    "vue-excel-export": "^0.1.3"
+    "vue-excel-export": "^0.1.3",
+    "vue-slimscroll": "^1.0.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
