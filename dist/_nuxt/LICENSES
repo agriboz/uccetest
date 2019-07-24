@@ -50,12 +50,6 @@
  */
 
 /*!
- * vue-no-ssr v1.1.1
- * (c) 2018-present egoist <0x142857@gmail.com>
- * Released under the MIT License.
- */
-
-/*!
 * metismenujs - v1.0.3
 * MetisMenu with Vanilla-JS
 * https://github.com/onokumus/metismenujs#readme
@@ -78,6 +72,12 @@
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
     ***************************************************************************** */
+
+/*!
+ * vue-no-ssr v1.1.1
+ * (c) 2018-present egoist <0x142857@gmail.com>
+ * Released under the MIT License.
+ */
 
 /**
   * vee-validate v2.2.10
