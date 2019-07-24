@@ -1279,6 +1279,7 @@ export default {
 
   methods: {
     openReportDefinition(reportName, reportTitle) {
+      console.log(reportName)
       this.reportDefModal = !this.reportDefModal
       this.reportTitle = reportTitle
       this.reportDefinitonComponent = () =>
