@@ -27,11 +27,11 @@
         </li>
 
         <li class="side-nav-item">
-          <a href="#" class="side-nav-link">
+          <n-link :to="'/stock-reports'" class="side-nav-link">
             <i class="icon-stock-reports"></i>
             <span>Stock Reports</span>
             <span class="menu-arrow"></span>
-          </a>
+          </n-link>
           <ul class="side-nav-second-level">
             <li class="side-nav-item">
               <a href="#">
