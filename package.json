@@ -22,7 +22,7 @@
     "chartjs-plugin-datalabels": "^0.6.0",
     "cross-env": "^5.2.0",
     "html2canvas": "^1.0.0-rc.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "metismenujs": "^1.0.3",
