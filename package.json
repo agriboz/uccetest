@@ -29,7 +29,7 @@
     "moment-duration-format": "^2.3.2",
     "moment-range": "^4.0.2",
     "nuxt": "^2.8.1",
-    "papaparse": "^5.0.0",
+    "papaparse": "^5.2.0",
     "vee-validate": "^2.2.10",
     "vue-chartjs": "^3.4.2",
     "vue-ctk-date-time-picker": "^2.1.1",
